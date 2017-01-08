@@ -10,16 +10,37 @@ namespace SSMM.Services
 {
     public class ProductService
     {
-        public static List<PruductDto> GetAll()
+        public static ProductDto Query(string id)
         {
-            var models = new List<PruductDto>();
+            using (var DB = new SSMMEntities())
+            {
+                var product = DB.Pruduct.Find(id);
+                if (product == null)
+                    return null;
+                return new ProductDto()
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Description = product.Description,
+                    Traffic = product.Traffic,
+                    ExpirationDay = product.ExpirationDay,
+                    Price = product.Price,
+                    IsRest = product.IsRest,
+                    SortNum = product.SortNum
+                };
+            }
+        }
+
+        public static List<ProductDto> GetAll()
+        {
+            var models = new List<ProductDto>();
             using (var DB = new SSMMEntities())
             {
                 var result = DB.Pruduct.OrderByDescending(x => x.SortNum)
                                   .ToList();
                 result.ForEach(x =>
                 {
-                    models.Add(new PruductDto()
+                    models.Add(new ProductDto()
                     {
                         Id = x.Id,
                         Name = x.Name,
@@ -44,9 +65,9 @@ namespace SSMM.Services
         /// <param name="totalcount"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static List<PruductDto> GetList(int offset, int limit, out int totalcount, string key = null)
+        public static List<ProductDto> GetList(int offset, int limit, out int totalcount, string key = null)
         {
-            var models = new List<PruductDto>();
+            var models = new List<ProductDto>();
             using (var DB = new SSMMEntities())
             {
                 var list = DB.Pruduct.Where(x => true);
@@ -59,7 +80,7 @@ namespace SSMM.Services
                                   .ToList();
                 result.ForEach(x =>
                 {
-                    models.Add(new PruductDto()
+                    models.Add(new ProductDto()
                     {
                         Id = x.Id,
                         Name = x.Name,
@@ -80,7 +101,7 @@ namespace SSMM.Services
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public static bool Add(PruductDto dto)
+        public static bool Add(ProductDto dto)
         {
             using (var DB = new SSMMEntities())
             {
@@ -104,7 +125,7 @@ namespace SSMM.Services
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public static bool Update(PruductDto dto)
+        public static bool Update(ProductDto dto)
         {
             using (var DB = new SSMMEntities())
             {

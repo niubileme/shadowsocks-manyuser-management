@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SSMM.Model
 {
-    public class PruductDto
+    public class ProductDto
     {
         public string Id { get; set; }
         public string Name { get; set; }

@@ -46,7 +46,7 @@
     <Compile Include="NoticeDto.cs" />
     <Compile Include="OrderDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PruductDto.cs" />
+    <Compile Include="ProductDto.cs" />
     <Compile Include="ServerNodeDto.cs" />
     <Compile Include="SettingDto.cs" />
     <Compile Include="UserDto.cs" />

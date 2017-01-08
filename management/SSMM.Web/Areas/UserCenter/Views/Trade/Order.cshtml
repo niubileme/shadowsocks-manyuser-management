@@ -1,214 +1,95 @@
-﻿
+﻿@using SSMM.Model;
 @{
     ViewBag.Title = "订单详情";
     Layout = "~/Areas/UserCenter/Views/Shared/_UserCenterLayout.cshtml";
+
+    var Product = ViewData["Product"] as ProductDto;
 }
 
 <div class="row">
     <div class="col-lg-12">
         <div class="wrapper wrapper-content ">
             <div class="ibox-content p-xl">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h5>From:</h5>
-                        <address>
-                            <strong>Inspinia, Inc.</strong><br>
-                            106 Jorg Avenu, 600/10<br>
-                            Chicago, VT 32456<br>
-                            <abbr title="Phone">P:</abbr> (123) 601-4590
-                        </address>
-                    </div>
-
-                    <div class="col-sm-6 text-right">
-                        <h4>Invoice No.</h4>
-                        <h4 class="text-navy">INV-000567F7-00</h4>
-                        <span>To:</span>
-                        <address>
-                            <strong>Corporate, Inc.</strong><br>
-                            112 Street Avenu, 1080<br>
-                            Miami, CT 445611<br>
-                            <abbr title="Phone">P:</abbr> (120) 9000-4321
-                        </address>
-                        <p>
-                            <span><strong>Invoice Date:</strong> Marh 18, 2014</span><br>
-                            <span><strong>Due Date:</strong> March 24, 2014</span>
-                        </p>
-                    </div>
-                </div>
 
                 <div class="table-responsive m-t">
                     <table class="table invoice-table">
                         <thead>
                             <tr>
-                                <th>Item List</th>
-                                <th>Quantity</th>
-                                <th>Unit Price</th>
-                                <th>Tax</th>
-                                <th>Total Price</th>
+                                <th>产品名称</th>
+                                <th>使用流量</th>
+                                <th>有效时间</th>
+                                <th>产品价格</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>
-                                    <div><strong>Admin Theme with psd project layouts</strong></div>
-                                    <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
+                                    <div><strong>@(Product.Name)</strong></div>
                                 </td>
-                                <td>1</td>
-                                <td>$26.00</td>
-                                <td>$5.98</td>
-                                <td>$31,98</td>
+                                <td>@(Product.Traffic)G</td>
+                                <td>@(Product.ExpirationDay)天</td>
+                                <td>@(Product.Price.ToString("0.00"))元</td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <div><strong>Wodpress Them customization</strong></div>
-                                    <small>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                        Eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                    </small>
-                                </td>
-                                <td>2</td>
-                                <td>$80.00</td>
-                                <td>$36.80</td>
-                                <td>$196.80</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div><strong>Angular JS &amp; Node JS Application</strong></div>
-                                    <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
-                                </td>
-                                <td>3</td>
-                                <td>$420.00</td>
-                                <td>$193.20</td>
-                                <td>$1033.20</td>
-                            </tr>
-
                         </tbody>
                     </table>
-                </div><!-- /table-responsive -->
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 text-left">
+                        @(Html.Raw(Product.Description))
+                    </div>
+                </div>
+
+                <div class="row m-t-xl">
+                    <div class="col-sm-12">
+                        <h4>设置连接密码</h4>
+                        <hr style="margin:0;"/>
+                        <div class="form-group m-t col-sm-3">
+                            <input type="password" name="sspassword" placeholder="必须，使用ss需要的密码。" class="form-control" required="required" >
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row m-t-lg">
+                    <div class="col-sm-12">
+                        <h4>优惠码</h4>
+                        <hr style="margin:0;" />
+                        <div class="form-group m-t col-sm-3">
+                            <input type="text" name="promocode" class="form-control" placeholder="可选，如果您有一个优惠码。" >
+                        </div>
+                        <div class="form-group m-t col-sm-6">
+                            <a class="btn btn-warning">验证</a>
+                        </div>
+                    </div>
+                </div>
 
                 <table class="table invoice-total">
                     <tbody>
                         <tr>
-                            <td><strong>Sub Total :</strong></td>
-                            <td>$1026.00</td>
+                            <td><strong>产品价格 :</strong></td>
+                            <td>@(Product.Price.ToString("0.00"))元</td>
                         </tr>
                         <tr>
-                            <td><strong>TAX :</strong></td>
-                            <td>$235.98</td>
+                            <td><strong>优惠 :</strong></td>
+                            <td>0.00元</td>
                         </tr>
                         <tr>
-                            <td><strong>TOTAL :</strong></td>
-                            <td>$1261.98</td>
+                            <td><strong>总数 :</strong></td>
+                            <td>@(Product.Price.ToString("0.00"))元</td>
                         </tr>
                     </tbody>
                 </table>
+
                 <div class="text-right">
-                    <button class="btn btn-primary"><i class="fa fa-dollar"></i> Make A Payment</button>
+                    <button class="btn btn-primary">支付</button>
                 </div>
 
-                <div class="well m-t">
-                    <strong>Comments</strong>
-                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less
-                </div>
+
             </div>
         </div>
     </div>
-</div><section class="order-checkout space2x">
-    <div class="container">
-
-        <div id="order-standard_cart">
-
-            <div class="row">
-
-                <div class="col-md-12">
-
-                    <form id="frmConfigureProduct" onsubmit="catchEnter(event);">
-
-                        <div class="row">
-                            <div class="col-md-8">
-
-                                <div class="header-lined">
-                                    <h1>可选配置</h1>
-                                </div>
-
-                                <p>配置您想要的选项，并继续结账。</p>
-
-                                <div class="product-info">
-                                    <p class="product-title">休闲套餐-20G/月</p>
-                                    <p>1080p~4k<br>美国、新加坡、俄罗斯、韩国、台湾、日本等19条高速线路<br>分别对电信、联通进行优化<br>开启udp转发 <br>IPV4/IPV6支持<br><strong>推广可获20%佣金</strong><br>Windows/Mac/Android/iOS全平台通用<br><font color="green"><strong>24小时全自动开通，付款后立即自动开通</strong></font></p>
-                                </div>
-
-                                <div class="sub-heading">
-                                    <span>附加信息</span>
-                                </div>
-
-                                <div class="field-container">
-                                    <div class="form-group">
-                                        <label for="customfield22">请设置您的ss连接密码</label>
-                                        <input type="password" name="customfield[22]" id="customfield22" value="" size="30" class="form-control">
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-md-4 check-side" id="scrollingPanelContainer">
-                                <div id="orderSummary" style="margin-top: 413px;">
-                                    <div class="header-lined">
-                                        <h1>订单总结</h1>
-                                    </div>
-                                    <div class="order-summary">
-                                        <div class="loader" id="orderSummaryLoader" style="display: none;">
-                                            <i class="fa fa-fw fa-refresh fa-spin"></i>
-                                        </div>
-                                        <div class="summary-container" id="producttotal">
-                                            <span class="product-name">休闲套餐-20G/月</span>
-                                            <span class="product-group">艾斯计时套餐</span>
-
-                                            <div class="clearfix">
-                                                <span class="pull-left">休闲套餐-20G/月</span>
-                                                <span class="pull-right">￥15.00元</span>
-                                            </div>
+</div>
 
 
-
-                                            <div class="summary-totals">
-                                                <div class="clearfix">
-                                                    <span class="pull-left">手续费:</span>
-                                                    <span class="pull-right">￥0.00元</span>
-                                                </div>
-                                                <div class="clearfix">
-                                                    <span class="pull-left">每月:</span>
-                                                    <span class="pull-right">￥15.00元</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="total-due-today">
-                                                <span class="amt">￥15.00元</span>
-                                                <span>截至今天总计</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="text-right check-btm">
-                                    <a href="javascript:;" onclick="javascript:history.go(-1);" class="btn btn-default btn-check pull-left">
-                                        <i class="fa fa-angle-double-left" aria-hidden="true"></i> 回去
-                                    </a>
-
-                                    <button type="button" id="btnCompleteProductConfig" class="btn btn-success btn-check" onclick="addtocart()">
-                                        继续
-                                        &nbsp;<i class="fa fa-arrow-circle-right"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 

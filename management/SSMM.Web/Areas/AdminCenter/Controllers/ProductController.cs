@@ -46,7 +46,7 @@ namespace SSMM.Web.Areas.AdminCenter.Controllers
             {
                 return Json(new { result = false, info = "缺少必要参数。" }, JsonRequestBehavior.DenyGet);
             }
-            var dto = new PruductDto()
+            var dto = new ProductDto()
             {
                 Id = id,
                 Name = name,
@@ -77,7 +77,7 @@ namespace SSMM.Web.Areas.AdminCenter.Controllers
             {
                 return Json(new { result = false, info = "缺少必要参数" }, JsonRequestBehavior.DenyGet);
             }
-            var dto = new PruductDto()
+            var dto = new ProductDto()
             {
                 Id = id,
                 Name = name,

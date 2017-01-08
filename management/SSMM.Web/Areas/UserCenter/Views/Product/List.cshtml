@@ -3,7 +3,7 @@
     ViewBag.Title = "购买服务";
     Layout = "~/Areas/UserCenter/Views/Shared/_UserCenterLayout.cshtml";
 
-    var Products = ViewData["Products"] as List<PruductDto>;
+    var Products = ViewData["Products"] as List<ProductDto>;
 }
 <div class="row">
     <div class="col-lg-12">
@@ -39,7 +39,7 @@
                                                                 <div class="lead">
                                                                     ￥@(item.Price.ToString("0.00")) RMB
                                                                 </div>
-                                                                <a href="/UserCenter/Trade/Order" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span> 现在订购</a>
+                                                                <a href="/UserCenter/Trade/Order/@(item.Id)" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span> 现在订购</a>
                                                             </div>
                                                         </div>
                                                     </div>

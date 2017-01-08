@@ -37,8 +37,17 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
         }
 
 
-        public ActionResult Order()
+        /// <summary>
+        /// 订单详情
+        /// </summary>
+        public ActionResult Order(string id)
         {
+            if (string.IsNullOrEmpty(id))
+                return RedirectToAction("List", "Product");
+            var product = ProductService.Query(id);
+            if(product==null)
+                return RedirectToAction("List", "Product");
+            ViewData["Product"] = product;
             return View();
         }
 
