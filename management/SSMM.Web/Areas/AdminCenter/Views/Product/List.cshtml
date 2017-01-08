@@ -1,0 +1,249 @@
+﻿
+@{
+    ViewBag.Title = "产品列表";
+    Layout = "~/Areas/AdminCenter/Views/Shared/_AdminCenterLayout.cshtml";
+}
+
+<div>
+    <div class="btn-group toolbar">
+    </div>
+    <table id="productlist"></table>
+</div>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">修改</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <input type="hidden" id="modal-id">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">套餐名称：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="Name" id="modal-name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">套餐描述：</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" placeholder="Description" id="modal-des" rows="3"></textarea>
+                            <span class="help-block m-b-none">套餐描述，可以使用html标签。</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">套餐流量：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="Traffic" id="modal-traffic">
+                            <span class="help-block m-b-none">套餐流量，单位：G，只需填写数字。</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">到期时间：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="ExpirationDay" id="modal-expirationday">
+                            <span class="help-block m-b-none">套餐到期时间，单位：天，只需填写数字。如：180，则套餐180天后自动到期。针对月、季、半年套餐，设置30、90、180。</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">价格：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="Price" id="modal-price">
+                            <span class="help-block m-b-none">套餐价格，单位：元，只需填写数字。</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">是否重置：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="IsRest" id="modal-isrest">
+                            <span class="help-block m-b-none">是否重置流量。只需填写数字。如为1，则每过30天自动重置流量。</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">排序字段：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="SortNum" id="modal-sortnum">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger" id="update-btn">修改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+@section footscript{
+    <script>
+        $(function () {
+            $('#update-btn').click(function () {
+                var id = $('#modal-id').val();
+                var name = $('#modal-name').val();
+                var des = htmlEncode($('#modal-des').val());
+                var traffic = $('#modal-traffic').val();
+                var expirationday = $('#modal-expirationday').val();
+                var price = $('#modal-price').val();
+                var isrest = $('#modal-isrest').val();
+                var sortnum = $('#modal-sortnum').val();
+                $.ajax({
+                    url: '/AdminCenter/Product/UpdatePost',
+                    type: 'post',
+                    data: { id: id, name: name, des: des, traffic: traffic, expirationday: expirationday, price: price, isrest: isrest, sortnum: sortnum },
+                    success: function (res) {
+                        if (res.result) {
+                            //关闭模态窗
+                            $('#myModal').modal('hide');
+                            //刷新table
+                            $('#productlist').bootstrapTable('refresh');
+                        } else {
+                            $('#myModal').modal('hide');
+                        }
+                    },
+                    error: function (e, ex) {
+                        console.log(ex);
+                        $('#myModal').modal('hide');
+                    }
+                });
+            });
+
+            $('#productlist').bootstrapTable({
+                url: "/AdminCenter/Product/GetList",
+                toolbar: '.toolbar',
+                search: true,
+                searchOnEnterKey: true,
+                pagination: true,
+                singleSelect: false,
+                sidePagination: "server",
+                sortOrder: "desc",
+                pageSize: 10,
+                pageNumber: 1,
+                detailView: false,
+                showRefresh: true,
+                columns: [
+                      {
+                          title: '套餐名称',
+                          field: 'Name',
+                          align: 'center',
+                          width: 80
+                      },
+                        {
+                            title: '套餐描述',
+                            field: 'Description',
+                            align: 'center',
+                            formatter: function (value, row, index) {
+                                return htmlDecode(value);
+                            }
+                        },
+                        {
+                            title: '套餐流量',
+                            field: 'Traffic',
+                            align: 'center',
+                            width: 60,
+                            formatter: function (value, row, index) {
+                                return value + 'G';
+                            }
+                        },
+                            {
+                                title: '过期时间',
+                                field: 'ExpirationDay',
+                                align: 'center',
+                                width: 60,
+                                formatter: function (value, row, index) {
+                                    return value + '天';
+                                }
+                            },
+                          {
+                              title: '套餐价格',
+                              field: 'Price',
+                              align: 'center',
+                              width: 60,
+                              formatter: function (value, row, index) {
+                                  return value.toFixed(2) + '元';
+                              }
+                          },
+                           {
+                               title: '是否重置',
+                               field: 'IsRest',
+                               align: 'center',
+                               width: 50
+                           },
+                            {
+                                title: '排序字段',
+                                field: 'SortNum',
+                                align: 'center',
+                                width: 60
+                            },
+                          {
+                              title: '操作',
+                              align: 'center',
+                              width: 150,
+                              formatter: function (value, row, index) {
+                                  return [
+                     '<button type="button" class="btn btn-danger btn-sm updatebtn">修改</button>&nbsp;&nbsp;',
+                      '<button type="button" class="btn btn-warning btn-sm deletebtn">删除</button>&nbsp;&nbsp;'
+                                  ].join('');
+                              },
+                              events: "operateEvents"
+                          }
+                ]
+            });
+        });
+        window.operateEvents = {
+            'click .updatebtn': function (e, value, row, index) {
+                var id = row.Id;
+                var Name = row.Name;
+                var Description = htmlDecode(row.Description);
+                var Traffic = row.Traffic;
+                var ExpirationDay = row.ExpirationDay;
+                var Price = row.Price;
+                var IsRest = row.IsRest;
+                var SortNum = row.SortNum;
+                $('#modal-id').val(id);
+                $('#modal-name').val(Name);
+                $('#modal-des').val(Description);
+                $('#modal-traffic').val(Traffic);
+                $('#modal-expirationday').val(ExpirationDay);
+                $('#modal-price').val(Price);
+                $('#modal-isrest').val(IsRest);
+                $('#modal-sortnum').val(SortNum);
+                $('#myModal').modal('show')
+            },
+            'click .deletebtn': function (e, value, row, index) {
+                var id = row.Id;
+                if (confirm("确定要删除该产品吗？")) {
+                    $.ajax({
+                        url: "/AdminCenter/Product/DeletePost",
+                        type: "post",
+                        data: { id: id },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.result) {
+                                //刷新table
+                                $('#productlist').bootstrapTable('refresh');
+                            }
+                        }
+                    });
+                }
+            }
+        };
+
+        function htmlEncode(s) {
+            var div = document.createElement('div');
+            div.appendChild(document.createTextNode(s));
+            return div.innerHTML;
+        }
+        function htmlDecode(s) {
+            var div = document.createElement('div');
+            div.innerHTML = s;
+            return div.innerText || div.textContent;
+        }
+    </script>
+}
+
+
+
+

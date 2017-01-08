@@ -1,0 +1,215 @@
+﻿
+@{
+    ViewBag.Title = "服务器节点列表";
+    Layout = "~/Areas/AdminCenter/Views/Shared/_AdminCenterLayout.cshtml";
+}
+
+<div>
+    <div class="btn-group toolbar">
+    </div>
+    <table id="servernodelist"></table>
+</div>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">修改</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <input type="hidden" id="modal-id">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Name：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="Name" id="modal-name" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">IP：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="IP" id="modal-ip">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">CNAME：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="CNAME" id="modal-cname" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Description：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="Description" id="modal-des">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Status：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="Status" id="modal-status">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">SortNum：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="SortNum" id="modal-sortnum">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger" id="update-btn">修改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+@section footscript{
+    <script>
+        $(function () {
+            $('#update-btn').click(function () {
+                var id = $('#modal-id').val();
+                var name = $('#modal-name').val();
+                var ip = $('#modal-ip').val();
+                var cname = $('#modal-cname').val();
+                var des = $('#modal-des').val();
+                var status = $('#modal-status').val();
+                var sortnum = $('#modal-sortnum').val();
+                $.ajax({
+                    url: '/AdminCenter/ServerNode/UpdatePost',
+                    type: 'post',
+                    data: { id: id,name:name,ip:ip,cname:cname,des:des,status:status,sortnum:sortnum },
+                    success: function (res) {
+                        if (res.result) {
+                            //关闭模态窗
+                            $('#myModal').modal('hide');
+                            //刷新table
+                            $('#servernodelist').bootstrapTable('refresh');
+                        } else {
+                            $('#myModal').modal('hide');
+                        }
+                    },
+                    error: function (e, ex) {
+                        console.log(ex);
+                        $('#myModal').modal('hide');
+                    }
+                });
+            });
+
+            $('#servernodelist').bootstrapTable({
+                url: "/AdminCenter/ServerNode/GetList",
+                toolbar: '.toolbar',
+                search: true,
+                searchOnEnterKey: true,
+                pagination: true,
+                singleSelect: false,
+                sidePagination: "server",
+                sortOrder: "desc",
+                pageSize: 10,
+                pageNumber: 1,
+                detailView: false,
+                showRefresh: true,
+                columns: [
+                      {
+                          title: 'Name',
+                          field: 'Name',
+                          align: 'center',
+                          width: 100
+                      },
+                        {
+                            title: 'IP',
+                            field: 'IP',
+                            align: 'center',
+                            width: 150
+                        },
+                        {
+                            title: 'CNAME',
+                            field: 'CNAME',
+                            align: 'center',
+                            width: 200
+                        },
+                            {
+                                title: 'Description',
+                                field: 'Description',
+                                align: 'center'
+                            },
+                          {
+                              title: 'Status',
+                              field: 'Status',
+                              align: 'center',
+                              width: 60,
+                              formatter: function (value, row, index) {
+                                  if (row.Status == 1) {
+                                      return '<span class="label label-success">可用</span>';
+                                  } else {
+                                      return '<span class="label label-danger">不可用</span>';
+                                  }
+                              }
+                          },
+                            {
+                                title: 'SortNum',
+                                field: 'SortNum',
+                                align: 'center',
+                                width: 60
+                            },
+                          {
+                              title: '操作',
+                              align: 'center',
+                              width: 150,
+                              formatter: function (value, row, index) {
+                                  return [
+                     '<button type="button" class="btn btn-danger btn-sm updatebtn">修改</button>&nbsp;&nbsp;',
+                      '<button type="button" class="btn btn-warning btn-sm deletebtn">删除</button>&nbsp;&nbsp;'
+                                  ].join('');
+                              },
+                              events: "operateEvents"
+                          }
+                ]
+            });
+        });
+        window.operateEvents = {
+            'click .updatebtn': function (e, value, row, index) {
+                var id = row.Id;
+                var Name = row.Name;
+                var IP = row.IP;
+                var CNAME = row.CNAME;
+                var DES = row.Description;
+                var Status = row.Status;
+                var SortNum = row.SortNum;
+                $('#modal-id').val(id);
+                $('#modal-name').val(Name);
+                $('#modal-ip').val(IP);
+                $('#modal-cname').val(CNAME);
+                $('#modal-des').val(DES);
+                $('#modal-status').val(Status);
+                $('#modal-sortnum').val(SortNum);
+                $('#myModal').modal('show')
+            },
+            'click .deletebtn': function (e, value, row, index) {
+                var id = row.Id;
+                if (confirm("确定要删除该节点吗？")) {
+                    $.ajax({
+                        url: "/AdminCenter/ServerNode/DeletePost",
+                        type: "post",
+                        data: { id: id },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.result) {
+                                //刷新table
+                                $('#servernodelist').bootstrapTable('refresh');
+                            }
+                        }
+                    });
+                }
+            }
+        };
+
+
+    </script>
+}
+
+
+
+

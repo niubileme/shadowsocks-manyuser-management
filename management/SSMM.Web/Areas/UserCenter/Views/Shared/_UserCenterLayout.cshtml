@@ -1,0 +1,140 @@
+﻿@using SSMM.Helper;
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewBag.Title</title>
+
+    <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Morris -->
+    <link href="//cdn.bootcss.com/morris.js/0.5.1/morris.css" rel="stylesheet">
+    <!-- Gritter -->
+    <link href="~/Content/plugins/gritter/jquery.gritter.css" rel="stylesheet" />
+    <link href="//cdn.bootcss.com/toastr.js/2.1.3/toastr.min.css" rel="stylesheet">
+    <link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+
+    <link href="~/Content/css/usercenter.css" rel="stylesheet" />
+    @RenderSection("headscript", false)
+</head>
+
+<body>
+    <div id="wrapper">
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+
+                    <li class="landing_link">
+                        <a href="/UserCenter/Home/Index"><i class="fa fa-th-large"></i> <span class="nav-label">用户中心</span></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">我的账户</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="/UserCenter/Account/Index">账户信息</a></li>
+                            <li><a href="/UserCenter/Account/RestPassword">更改密码</a></li>
+                            <li><a href="graph_flot.html">我的账单</a></li>
+                            <li><a href="graph_morris.html">我的订单</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="/UserCenter/Product/List"><i class="fa fa-diamond"></i> <span class="nav-label">我的服务</span></a>
+                    </li>
+
+                    <li>
+                        <a href="/UserCenter/Product/List"><i class="fa fa-diamond"></i> <span class="nav-label">购买服务</span></a>
+                    </li>
+
+
+                    <li>
+                        <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">使用教程</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="#">客户端下载</a></li>
+                            <li><a href="#">Windows教程</a></li>
+                            <li><a href="#">Mac教程</a></li>
+                            <li><a href="#">Android教程</a></li>
+                            <li><a href="#">IOS教程</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="/UserCenter/Other/Notice"><i class="fa fa-diamond"></i> <span class="nav-label">公告信息</span></a>
+                    </li>
+
+                    <li>
+                        <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">推广计划</span></a>
+                    </li>
+
+                    <li>
+                        <a href="/UserCenter/Other/FAQ"><i class="fa fa-diamond"></i> <span class="nav-label">常见问题</span></a>
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom">
+
+                <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                        <form role="search" class="navbar-form-custom" action="/">
+                            <div class="form-group">
+                                <input type="text" placeholder="搜索..." class="form-control" name="top-search" id="top-search">
+                            </div>
+                        </form>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="m-r-sm text-muted welcome-message">@CookieHelper.UserName </span>
+                            @{
+                                if (CookieHelper.IsManager())
+                                {
+                                    <a href="/AdminCenter/Home/Index" style="display: inline-block;color: #1cc09f;">管理后台</a>
+                                }
+                            }
+                        </li>
+
+
+                        <!-- 退出登录 -->
+                        <li>
+                            <a href="/UserCenter/Account/LoginOut">
+                                <i class="fa fa-sign-out"></i> 退出
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </nav>
+            </div>
+
+            <div class="wrapper wrapper-content">
+                @RenderBody()
+            </div>
+
+
+            <div class="footer">
+                <div>
+                    @Html.Partial("Footer_Partial")
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/metisMenu/2.6.1/metisMenu.min.js"></script>
+    <script src="//cdn.bootcss.com/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
+    <script src="~/Content/js/inspinia.js"></script>
+    <!-- Pace -->
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    @RenderSection("footscript", false)
+</body>
+</html>

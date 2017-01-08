@@ -1,0 +1,184 @@
+﻿
+@{
+    ViewBag.Title = "公告列表";
+    Layout = "~/Areas/AdminCenter/Views/Shared/_AdminCenterLayout.cshtml";
+}
+
+<div>
+    <div class="btn-group toolbar">
+    </div>
+    <table id="noticelist"></table>
+</div>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">修改</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <input type="hidden" id="modal-id">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">标题：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="Titile" id="modal-title">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">内容：</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" placeholder="Contents" id="modal-contents" rows="5"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger" id="update-btn">修改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+@section footscript{
+    <script>
+        $(function () {
+            $('#update-btn').click(function () {
+                var id = $('#modal-id').val();
+                var title = $('#modal-title').val();
+                var contents = htmlEncode($('#modal-contents').val());
+                $.ajax({
+                    url: '/AdminCenter/Notice/UpdatePost',
+                    type: 'post',
+                    data: { id: id, title: title, contents: contents },
+                    success: function (res) {
+                        if (res.result) {
+                            //关闭模态窗
+                            $('#myModal').modal('hide');
+                            //刷新table
+                            $('#noticelist').bootstrapTable('refresh');
+                        } else {
+                            $('#myModal').modal('hide');
+                        }
+                    },
+                    error: function (e, ex) {
+                        console.log(ex);
+                        $('#myModal').modal('hide');
+                    }
+                });
+            });
+
+            $('#noticelist').bootstrapTable({
+                url: "/AdminCenter/Notice/GetList",
+                toolbar: '.toolbar',
+                search: true,
+                searchOnEnterKey: true,
+                pagination: true,
+                singleSelect: false,
+                sidePagination: "server",
+                sortOrder: "desc",
+                pageSize: 10,
+                pageNumber: 1,
+                detailView: true,
+                showRefresh: true,
+                detailFormatter: detailformatter,
+                columns: [
+                        {
+                            title: '标题',
+                            field: 'Title',
+                            align: 'left'
+                        },
+                        {
+                            title: '最后修改时间',
+                            field: 'CreateTime',
+                            align: 'center',
+                            width: 150,
+                            formatter: function (value, row, index) {
+                                return (eval(value.replace(/\/Date\((\d+)\)\//gi, "new Date($1)"))).Format("yyyy-MM-dd hh:mm:ss");
+                            }
+                        },
+                          {
+                              title: '操作',
+                              align: 'center',
+                              width: 200,
+                              formatter: function (value, row, index) {
+                                  return [
+                     '<button type="button" class="btn btn-danger btn-sm updatebtn">修改</button>&nbsp;&nbsp;',
+                      '<button type="button" class="btn btn-warning btn-sm deletebtn">删除</button>&nbsp;&nbsp;'
+                                  ].join('');
+                              },
+                              events: "operateEvents"
+                          }
+                ]
+            });
+        });
+        function detailformatter(index, row) {
+            var html = '<div>';
+            html += '<p class="list-group-item list-group-item-default">Id：' + row.Id + '</p>';
+            html += '<p class="list-group-item list-group-item-default">Title：' + row.Title + '</p>';
+            html += '<p class="list-group-item list-group-item-default">Contents：<br/>' + htmlDecode(row.Contents) + '</p>';
+            html += '</div>';
+            return html;
+        }
+
+        window.operateEvents = {
+            'click .updatebtn': function (e, value, row, index) {
+                var id = row.Id;
+                var title = row.Title;
+                var contents = htmlDecode(row.Contents);
+                $('#modal-id').val(id);
+                $('#modal-title').val(title);
+                $('#modal-contents').val(contents);
+                $('#myModal').modal('show')
+            },
+            'click .deletebtn': function (e, value, row, index) {
+                var id = row.Id;
+                if (confirm("确定要删除该公告吗？")) {
+                    $.ajax({
+                        url: "/AdminCenter/Notice/DeletePost",
+                        type: "post",
+                        data: { id: id },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.result) {
+                                //刷新table
+                                $('#noticelist').bootstrapTable('refresh');
+                            }
+                        }
+                    });
+                }
+            }
+        };
+        Date.prototype.Format = function (fmt) {
+            var o = {
+                "M+": this.getMonth() + 1, //月份
+                "d+": this.getDate(), //日
+                "h+": this.getHours(), //小时
+                "m+": this.getMinutes(), //分
+                "s+": this.getSeconds(), //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds() //毫秒
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+        function htmlEncode(s) {
+            var div = document.createElement('div');
+            div.appendChild(document.createTextNode(s));
+            return div.innerHTML;
+        }
+        function htmlDecode(s) {
+            var div = document.createElement('div');
+            div.innerHTML = s;
+            return div.innerText || div.textContent;
+        }
+    </script>
+}
+
+
+
+

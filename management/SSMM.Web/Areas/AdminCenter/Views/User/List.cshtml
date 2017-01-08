@@ -1,0 +1,190 @@
+﻿
+@{
+    ViewBag.Title = "用户列表管理";
+    Layout = "~/Areas/AdminCenter/Views/Shared/_AdminCenterLayout.cshtml";
+}
+
+<div>
+    <div class="btn-group toolbar">
+    </div>
+    <table id="userlist"></table>
+</div>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">修改状态</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <input type="hidden" id="sortnum-id">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Name：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="name" id="sortnum-name" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">状态：</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="状态" id="sortnum-status">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger" id="sortnum-btn">修改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+@section footscript{
+    <script>
+        $(function () {
+            $('#sortnum-btn').click(function () {
+                var id = $('#sortnum-id').val();
+                var status = $('#sortnum-status').val();
+                $.ajax({
+                    url: '/AdminCenter/User/UpdateStatus',
+                    type: 'post',
+                    data: { id: id, status: status },
+                    success: function (res) {
+                        if (res.result) {
+                            //关闭模态窗
+                            $('#myModal').modal('hide');
+                            //刷新table
+                            $('#userlist').bootstrapTable('refresh');
+                        } else {
+                            $('#myModal').modal('hide');
+                        }
+                    },
+                    error: function (e, ex) {
+                        console.log(ex);
+                        $('#myModal').modal('hide');
+                    }
+                });
+            });
+
+            $('#userlist').bootstrapTable({
+                url: "/AdminCenter/User/GetList",
+                toolbar: '.toolbar',
+                search: true,
+                searchOnEnterKey: true,
+                pagination: true,
+                singleSelect: false,
+                sidePagination: "server",
+                sortOrder: "desc",
+                pageSize: 10,
+                pageNumber: 1,
+                detailView: true,
+                showRefresh: true,
+                detailFormatter: detailformatter,
+                columns: [
+                      {
+                          title: 'Id',
+                          field: 'Id',
+                          align: 'center',
+                          width: 70
+                      },
+                        {
+                            title: '昵称',
+                            field: 'UserName',
+                            align: 'center',
+                            width: 120
+                        },
+                        {
+                            title: '邮件',
+                            field: 'Email',
+                            align: 'center',
+                            width: 250
+                        },
+                            {
+                                title: '余额',
+                                field: 'Balance',
+                                align: 'center',
+                                width: 100,
+                                formatter: function (value, row, index) {
+                                    return value.toFixed(2);
+                                }
+                            },
+                             {
+                                 title: '注册时间',
+                                 field: 'CreateTime',
+                                 align: 'center',
+                                 width: 150,
+                                 formatter: function (value, row, index) {
+                                     return (eval(value.replace(/\/Date\((\d+)\)\//gi, "new Date($1)"))).Format("yyyy-MM-dd hh:mm:ss");
+                                 }
+                             },
+                          {
+                              title: '状态',
+                              field: 'Status',
+                              align: 'center',
+                              width: 50,
+                              formatter: function (value, row, index) {
+                                  if (row.Status == 1) {
+                                      return '<span class="label label-success">正常</span>';
+                                  } else {
+                                      return '<span class="label label-danger">异常</span>';
+                                  }
+                              }
+                          },
+                          {
+                              title: '操作',
+                              align: 'center',
+                              formatter: function (value, row, index) {
+                                  return [
+                     '<button type="button" class="btn btn-danger btn-sm updatestatusbtn">修改</button>'
+                                  ].join('');
+                              },
+                              events: "operateEvents"
+                          }
+                ]
+            });
+        });
+        window.operateEvents = {
+            'click .updatestatusbtn': function (e, value, row, index) {
+                var id = row.Id;
+                var UserName = row.UserName;
+                var Status = row.Status;
+                $('#sortnum-id').val(id);
+                $('#sortnum-name').val(UserName);
+                $('#sortnum-status').val(Status);
+                $('#myModal').modal('show')
+            }
+        };
+        Date.prototype.Format = function (fmt) {
+            var o = {
+                "M+": this.getMonth() + 1, //月份
+                "d+": this.getDate(), //日
+                "h+": this.getHours(), //小时
+                "m+": this.getMinutes(), //分
+                "s+": this.getSeconds(), //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds() //毫秒
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+        function detailformatter(index, row) {
+            var html = '<div>';
+            html += '<p class="list-group-item list-group-item-default">Id：' + row.Id + '</p>';
+            html += '<p class="list-group-item list-group-item-default">UserName：' + row.UserName + '</p>';
+            html += '<p class="list-group-item list-group-item-default">Email：' + row.Email + '</p>';
+            html += '<p class="list-group-item list-group-item-default">QQ：' + row.QQ + '</p>';
+            html += '<p class="list-group-item list-group-item-default">Address：' + row.Address + '</p>';
+            html += '<p class="list-group-item list-group-item-default">Status：' + row.Status + '</p>';
+            html += '<p class="list-group-item list-group-item-default">Balance：' + row.Balance.toFixed(2) + '</p>';
+            html += '<p class="list-group-item list-group-item-default">IsManager：' + row.IsManager + '</p>';
+            html += '<p class="list-group-item list-group-item-default">AffCode：' + row.AffCode + '</p>';
+            html += '</div>';
+            return html;
+        }
+    </script>
+}

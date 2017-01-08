@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "基础设置";
+    Layout = "~/Areas/AdminCenter/Views/Shared/_AdminCenterLayout.cshtml";
+}
+
+<h4>基础设置</h4>
+<div class="row">
+    <div class="col-lg-12">
+        <form class="form-horizontal" id="form">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">支付宝账号</label>
+                <div class="col-sm-10">
+                    <input type="text" id="alipayaccount" class="form-control" placeholder="支付宝账号" value="@ViewBag.AlipayAccount">
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">支付宝查询接口</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="alipaysearchapi" placeholder="支付宝查询接口" >@ViewBag.AlipaySearchApi</textarea>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="alert alert-danger text-center hidden msg">修改失败！</div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-2">
+                    <a class="btn btn-white" id="btnreset">取消</a>
+                    <a class="btn btn-success" id="btnsubmit">保存</a>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+@section footscript{
+    <script>
+        $(function () {
+            $('#btnreset').click(function () {
+                $('#form')[0].reset();
+            });
+            $('#btnsubmit').click(function () {
+                $('.msg').addClass('hidden');
+                var alipayaccount = $('#alipayaccount').val();
+                var alipaysearchapi = $('#alipaysearchapi').val();
+                $.ajax({
+                    url: "/AdminCenter/Setting/BasicPost",
+                    dataType: "json",
+                    type: "post",
+                    data: { alipayaccount: alipayaccount, alipaysearchapi: alipaysearchapi},
+                    success: function (data) {
+                        if (data.result) {
+                            showmsg('修改成功！')
+                            setInterval(function () {
+                                window.location.href = '/AdminCenter/Setting/Basic?t=' + new Date().getTime();
+                            }, 1000)
+
+                        } else {
+                            showmsg(data.info);
+                        }
+                    },
+                    beforeSend: function () {
+                        $('#btnsubmit').attr('disabled', true);
+                    },
+                    complete: function () {
+                        $('#btnsubmit').attr('disabled', false);
+                    },
+                    error: function (e) {
+                        console.log(e.info);
+                    }
+                });
+            });
+        });
+
+        function showmsg(s) {
+            $('.msg').text(s).removeClass('hidden');
+        }
+        function htmlEncode(value) {
+            return $('<div/>').text(value).html();
+        }
+
+
+    </script>
+}

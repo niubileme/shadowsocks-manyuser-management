@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "添加节点";
+    Layout = "~/Areas/AdminCenter/Views/Shared/_AdminCenterLayout.cshtml";
+}
+
+<h4>添加节点</h4>
+<div class="row">
+    <div class="col-lg-12">
+        <form method="post" class="form-horizontal" action="/AdminCenter/ServerNode/AddPost">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">名称</label>
+                <div class="col-sm-10">
+                    <input type="text" name="servername" class="form-control" placeholder="美西线路1">
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">IP</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="serverip" placeholder="127.0.0.1">
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">CNAME</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="servercname" placeholder="m1.autumnss.com">
+                    <span class="help-block m-b-none">别名，通过域名CNAME记录，让用户更容易记住。</span>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">描述</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="serverdes">
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">状态</label>
+                <div class="col-lg-10">
+                    <input type="text" disabled="" placeholder="正常" class="form-control">
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">排序字段</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="serversortnum" value="0">
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-2">
+                    <button class="btn btn-white" type="reset">取消</button>
+                    <button class="btn btn-success" type="submit">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,125 @@
+﻿
+@{
+    Layout = null;
+    var urlpath = ViewData["urlpath"];
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册账号</title>
+    <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/plugins/iCheck/icheck.css" rel="stylesheet" />
+    <link href="//cdn.bootcss.com/bootstrap-sweetalert/1.0.1/sweetalert.min.css" rel="stylesheet">
+    <link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+    <link href="~/Content/css/usercenter.css" rel="stylesheet" />
+</head>
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen   animated fadeInDown">
+        <div>
+            <h2>注册</h2>
+            <p>在此创建一个账号</p>
+            <form class="m-t" role="form" >
+                <div class="form-group">
+                    <input type="text" class="form-control username" placeholder="请输入用户名">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control password" placeholder="请输入密码，最少6位">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control confirmpassword" placeholder="再次确认密码" >
+                </div>
+                <div class="form-group">
+                    <label>机器人验证</label>
+                    <label>
+                        <img src="/UserCenter/Account/GetValidateCode" alt="点击刷新" onclick="changeValidateCode(this)" id="valicode" style="height: 40px;  margin-left: 15px;">
+                    </label>
+                    <input type="text" class="form-control vcode" placeholder="验证码">
+                </div>
+
+                <a class="btn btn-primary block full-width m-b regbtn">注册</a>
+                <p class="text-muted text-center"><small>已经有账号?</small></p>
+                <a class="btn btn-sm btn-white btn-block" href="/UserCenter/Account/Login">登录</a>
+            </form>
+            <p class="m-t"> <small>@Html.Partial("Footer_Partial")</small> </p>
+        </div>
+    </div>
+    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.regbtn').click(function () {
+                var uname = $('.username').val();
+                var email = $('.email').val();
+                var upwd = $('.password').val();
+                var cpwd = $('.confirmpassword').val();
+                var vcode = $('.vcode').val();
+                if (uname.length <= 0) {
+                    showmsg("用户名不能为空！");
+                    return false;
+                }
+                if (uname.length < 4) {
+                    showmsg("用户名不能少于4个字符！");
+                    return false;
+                }
+                if ($.trim(email).length <= 0) {
+                    showmsg("Email不能为空！");
+                    return false;
+                }
+                if ($.trim(upwd).length <= 0) {
+                    showmsg("密码不能为空！");
+                    return false;
+                }
+                if ($.trim(upwd).length < 6) {
+                    showmsg("密码不能少于6位！");
+                    return false;
+                }
+                if (upwd != cpwd) {
+                    showmsg("两次输入的密码不一样！");
+                    return false;
+                }
+                if ($.trim(vcode).length <= 0) {
+                    showmsg("验证码不能为空！");
+                    return false;
+                }
+                $.ajax({
+                    url: "/UserCenter/Account/RegisterPost",
+                    dataType: "json",
+                    type: "post",
+                    cache: false,
+                    data: { uname: uname, email: email, pwd: upwd, vcode: vcode },
+                    success: function (data) {
+                        if (data.result) {
+                            alert("注册成功！");
+                            window.location.href = '/UserCenter/Account/Login?returnurl=@urlpath';
+                        } else {
+                            showmsg(data.info);
+                            $("#valicode").attr("src", "/UserCenter/Account/GetValidateCode?" + (new Date()).getTime());
+                        }
+
+                    },
+                    error: function (e) {
+                        console.log(e);
+                        $("#valicode").attr("src", "/UserCenter/Account/GetValidateCode?" + (new Date()).getTime());
+                    }
+                });
+            });
+        });
+        function changeValidateCode(obj) {
+            obj.src = "/UserCenter/Account/GetValidateCode?" + (new Date()).getTime();
+        };
+        function showmsg(s) {
+            swal(s);
+        }
+    </script>
+</body>
+
+</html>

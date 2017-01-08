@@ -1,0 +1,53 @@
+﻿@using SSMM.Model;
+@using SSMM.Helper;
+@{
+
+    var Notice = ViewData["Notice"] as NoticeDto;
+
+    ViewBag.Title = Notice.Title+" — 公告信息";
+    Layout = "~/Areas/UserCenter/Views/Shared/_UserCenterLayout.cshtml";
+
+}
+
+<div class="wrapper wrapper-content  animated fadeInRight article">
+    <div class="row">
+        <div class="col-lg-10 col-lg-offset-1">
+            <div class="ibox">
+                <div class="ibox-content">
+
+                    <div class="text-center article-title">
+
+                        <h1>
+                            @(Notice.Title)
+                        </h1>
+                        <span class="text-muted"><i class="fa fa-clock-o"></i>@(Notice.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"))</span>
+                    </div>
+                    <div>
+                        @Html.Raw(FormatHelper.HtmlDecode(Notice.Contents))
+                    </div>
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>标签:</h5>
+                            <button class="btn btn-danger btn-xs" type="button">紧急</button>
+                            <button class="btn btn-primary btn-xs" type="button">重要</button>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="small text-right">
+                                <div> <br /><span>By：</span><h5>秋名山ss</h5> </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+

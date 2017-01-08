@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "在线充值";
+    Layout = "~/Areas/UserCenter/Views/Shared/_UserCenterLayout.cshtml";
+
+    var AlipayAccount=ViewBag.AlipayAccount;
+}
+
+
+<div class="consume-create">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">支付宝转账充值</h3>
+        </div>
+        <div class="panel-body">
+            <div class="alert alert-success" role="alert">
+                <p>1、支付宝账号：<b>@(AlipayAccount)</b></p>
+                <p>2、通过支付宝进行转账，请核对收款与姓名是否与上面一致。</p>
+                <p>3、转账完成后，点击付款页面的“查看详情”，记录下交易号。</p>
+                <p>4、输入交易号，进行验证即可自动入账，如果遇到较长延迟，请联系我们。</p>
+            </div>
+            <div class="alipay-trade-form">
+                <div class="form-group">
+                    <label class="control-label">交易号</label>
+                    <input type="text" class="form-control tradeno" maxlength="32">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-danger submitbtn">验证交易号</button>
+                </div>
+                <div class="msg alert alert-warning hidden"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@section footscript{
+    <script>
+        $(function () {
+            $('.submitbtn').click(function () {
+                $('.msg').addClass('hidden');
+                var tradeno = $('.tradeno').val();
+                if ($.trim(tradeno).length <= 0 || tradeno.length > 32) {
+                    showmsg('请输入正确的交易号')
+                    return;
+                }
+                $.ajax({
+                    url: "/UserCenter/Trade/CheckTradeNo",
+                    dataType: "json",
+                    type: "post",
+                    data: { tradeno: tradeno },
+                    success: function (data) {
+                        showmsg(data.info);
+                    },
+                    error: function (e) {
+                        showmsg('没有找到相关充值记录！请确定交易号是否正确！或系统有延迟，稍后再试。');
+                    }
+                });
+            });
+        });
+
+        function showmsg(s) {
+            $('.msg').text(s).removeClass('hidden');
+        }
+    </script>
+
+}
+

@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = "添加产品";
+    Layout = "~/Areas/AdminCenter/Views/Shared/_AdminCenterLayout.cshtml";
+}
+
+<h4>添加新产品</h4>
+<div class="row">
+    <div class="col-lg-12">
+        <p class="alert alert-danger">
+            Tips:
+            <br />
+            按流量计费套餐：
+            <br />
+            体验套餐：[流量3，到期时间30，是否重置0]，表示流量3G,不会重置流量，有效时间为30天。
+            <br /><br />
+            按时间计费套餐：
+            <br />
+            包月套餐：[流量20，到期时间30，是否重置1]，表示一个月20G流量，有效时间为30天。
+            <br />
+            半年套餐：[流量20，到期时间180，是否重置1]，表示每个月20G流量，30天自动重置，有效时间为半年。
+        </p>
+    </div>
+    <div class="col-lg-12">
+        <form class="form-horizontal" id="form">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">名称</label>
+                <div class="col-sm-10">
+                    <input type="text" id="name" class="form-control" placeholder="体验套餐1">
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">描述</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="des" placeholder="1元体验，3G流量。" rows="3"></textarea>
+                    <span class="help-block m-b-none">套餐描述，可以使用html标签。</span>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">流量</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="traffic" placeholder="10">
+                    <span class="help-block m-b-none">套餐流量，单位：G，只需填写数字。</span>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">到期时间</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="expirationday" placeholder="180">
+                    <span class="help-block m-b-none">套餐到期时间，单位：天，只需填写数字。如：180，则套餐180天后自动到期。针对月、季、半年套餐，设置30、90、180。</span>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">价格</label>
+                <div class="col-lg-10">
+                    <input type="text" id="price" placeholder="20" class="form-control">
+                    <span class="help-block m-b-none">套餐价格，单位：元，只需填写数字。</span>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">是否重置</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="isrest" value="0">
+                    <span class="help-block m-b-none">是否重置流量。只需填写数字。如为1，则每过30天自动重置流量。</span>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">排序字段</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="sortnum" value="0">
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="alert alert-danger text-center hidden msg">添加失败！</div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-2">
+                    <a class="btn btn-white" id="btnreset">取消</a>
+                    <a class="btn btn-success" id="btnsubmit">保存</a>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+
+@section footscript{
+    <script>
+        $(function () {
+            $('#btnreset').click(function () {
+                $('#form')[0].reset();
+            });
+            $('#btnsubmit').click(function () {
+                $('.msg').addClass('hidden');
+                var name = $('#name').val();
+                var des = htmlEncode($('#des').val());
+                var traffic = $('#traffic').val();
+                var expirationday = $('#expirationday').val();
+                var price = $('#price').val();
+                var isrest = $('#isrest').val();
+                var sortnum = $('#sortnum').val();
+                $.ajax({
+                    url: "/AdminCenter/Product/AddPost",
+                    dataType: "json",
+                    type: "post",
+                    data: { name: name, des: des, traffic: traffic, expirationday: expirationday, price: price, isrest: isrest, sortnum: sortnum },
+                    success: function (data) {
+                        if (data.result) {
+                            showmsg('添加成功！')
+                            setInterval(function () {
+                                window.location.href = '/AdminCenter/Product/List?t=' + new Date().getTime();
+                            }, 1000)
+
+                        } else {
+                            showmsg(data.info);
+                        }
+                    },
+                    beforeSend: function () {
+                        $('#btnsubmit').attr('disabled', true);
+                    },
+                    complete: function () {
+                        $('#btnsubmit').attr('disabled', false);
+                    },
+                    error: function (e) {
+                        console.log(e.info);
+                    }
+                });
+            });
+        });
+
+        function showmsg(s) {
+            $('.msg').text(s).removeClass('hidden');
+        }
+        function htmlEncode(value) {
+            return $('<div/>').text(value).html();
+        }
+
+
+    </script>
+}
