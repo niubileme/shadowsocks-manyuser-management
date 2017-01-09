@@ -194,6 +194,7 @@
     <Content Include="Areas\AdminCenter\Views\Setting\Basic.cshtml" />
     <Content Include="Areas\UserCenter\Views\Trade\Recharge.cshtml" />
     <Content Include="Areas\UserCenter\Views\Trade\Order.cshtml" />
+    <Content Include="Areas\UserCenter\Views\Trade\PayMent.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

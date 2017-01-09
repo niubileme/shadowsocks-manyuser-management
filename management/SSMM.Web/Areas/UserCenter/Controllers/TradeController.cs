@@ -45,11 +45,43 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
             if (string.IsNullOrEmpty(id))
                 return RedirectToAction("List", "Product");
             var product = ProductService.Query(id);
-            if(product==null)
+            if (product == null)
                 return RedirectToAction("List", "Product");
             ViewData["Product"] = product;
             return View();
         }
+
+        /// <summary>
+        /// 优惠码
+        /// </summary>
+        [HttpPost]
+        public JsonResult CheckPCode()
+        {
+            var pcode = RequestHelper.GetValue("pcode");
+            if (string.IsNullOrEmpty(pcode))
+                return Json(new { result = false, info = "优惠码不能为空！" }, JsonRequestBehavior.DenyGet);
+            var info = "";
+            var amount = 0;
+            var result = true;
+            return Json(new { result = result, info = info, amount = amount }, JsonRequestBehavior.DenyGet);
+        }
+
+        /// <summary>
+        /// 支付方式
+        /// </summary>
+        public ActionResult PayMent()
+        {
+            var pid = RequestHelper.GetValue("pid");
+            var pwd = RequestHelper.GetValue("pwd");
+            var pcode = RequestHelper.GetValue("pcode");
+            if (string.IsNullOrEmpty(pid)||string.IsNullOrEmpty(pwd))
+                return RedirectToAction("List", "Product");
+            ViewData["Pid"] = pid;
+            ViewData["Pwd"] = pwd;
+            ViewData["Pcode"] = pcode;
+            return View();
+        }
+
 
     }
 }
