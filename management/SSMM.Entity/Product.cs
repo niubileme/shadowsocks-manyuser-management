@@ -12,7 +12,7 @@ namespace SSMM.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class Pruduct
+    public partial class Product
     {
         public string Id { get; set; }
         public string Name { get; set; }

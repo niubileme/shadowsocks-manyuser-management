@@ -12,7 +12,7 @@ namespace SSMM.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class Bills
+    public partial class Bill
     {
         public int Id { get; set; }
         public decimal Amount { get; set; }

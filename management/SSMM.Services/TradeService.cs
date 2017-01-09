@@ -209,7 +209,7 @@ namespace SSMM.Services
             var models = new List<BillDto>();
             using (var DB = new SSMMEntities())
             {
-                var list = DB.Bills.Where(x => true);
+                var list = DB.Bill.Where(x => true);
                 if (!string.IsNullOrEmpty(key))
                     list = list.Where(x => x.TransferAccount.Contains(key));
                 totalcount = list.Count();

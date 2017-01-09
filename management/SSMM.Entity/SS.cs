@@ -14,6 +14,7 @@ namespace SSMM.Entity
     
     public partial class SS
     {
+        public string id { get; set; }
         public int t { get; set; }
         public long u { get; set; }
         public long d { get; set; }

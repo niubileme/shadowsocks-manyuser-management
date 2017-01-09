@@ -14,7 +14,7 @@ namespace SSMM.Services
         {
             using (var DB = new SSMMEntities())
             {
-                var product = DB.Pruduct.Find(id);
+                var product = DB.Product.Find(id);
                 if (product == null)
                     return null;
                 return new ProductDto()
@@ -36,7 +36,7 @@ namespace SSMM.Services
             var models = new List<ProductDto>();
             using (var DB = new SSMMEntities())
             {
-                var result = DB.Pruduct.OrderByDescending(x => x.SortNum)
+                var result = DB.Product.OrderByDescending(x => x.SortNum)
                                   .ToList();
                 result.ForEach(x =>
                 {
@@ -70,7 +70,7 @@ namespace SSMM.Services
             var models = new List<ProductDto>();
             using (var DB = new SSMMEntities())
             {
-                var list = DB.Pruduct.Where(x => true);
+                var list = DB.Product.Where(x => true);
                 if (!string.IsNullOrEmpty(key))
                     list = list.Where(x => x.Name.Contains(key));
                 totalcount = list.Count();
@@ -105,7 +105,7 @@ namespace SSMM.Services
         {
             using (var DB = new SSMMEntities())
             {
-                DB.Pruduct.Add(new Pruduct()
+                DB.Product.Add(new Product()
                 {
                     Id = dto.Id,
                     Name = dto.Name,
@@ -129,7 +129,7 @@ namespace SSMM.Services
         {
             using (var DB = new SSMMEntities())
             {
-                var model = DB.Pruduct.Find(dto.Id);
+                var model = DB.Product.Find(dto.Id);
                 if (model != null)
                 {
                     model.Name = dto.Name;
@@ -153,10 +153,10 @@ namespace SSMM.Services
         {
             using (var DB = new SSMMEntities())
             {
-                var model = DB.Pruduct.Find(id);
+                var model = DB.Product.Find(id);
                 if (model != null)
                 {
-                    DB.Pruduct.Remove(model);
+                    DB.Product.Remove(model);
                 }
                 return DB.SaveChanges() > 0;
             }

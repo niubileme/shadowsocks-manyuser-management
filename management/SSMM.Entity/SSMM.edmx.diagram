@@ -4,15 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6e9494f2dc59460b8a53ac8ae40f7163" Name="Diagram1">
-        <EntityTypeShape EntityType="SSMMModel.Bills" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="66f4383a0b5f42dfbf228e0d312be772" Name="Diagram1">
+        <EntityTypeShape EntityType="SSMMModel.Bill" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SSMMModel.Notice" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SSMMModel.Order" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SSMMModel.Pruduct" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SSMMModel.ServerNode" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SSMMModel.Setting" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SSMMModel.User" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SSMMModel.SS" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SSMMModel.Product" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SSMMModel.Recharge" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SSMMModel.ServerNode" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SSMMModel.Setting" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SSMMModel.SS" Width="1.5" PointX="0.625" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SSMMModel.User" Width="1.5" PointX="2.75" PointY="7.125" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

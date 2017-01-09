@@ -25,13 +25,14 @@ namespace SSMM.Entity
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Bills> Bills { get; set; }
+        public virtual DbSet<Bill> Bill { get; set; }
         public virtual DbSet<Notice> Notice { get; set; }
         public virtual DbSet<Order> Order { get; set; }
-        public virtual DbSet<Pruduct> Pruduct { get; set; }
+        public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<Recharge> Recharge { get; set; }
         public virtual DbSet<ServerNode> ServerNode { get; set; }
         public virtual DbSet<Setting> Setting { get; set; }
-        public virtual DbSet<User> User { get; set; }
         public virtual DbSet<SS> SS { get; set; }
+        public virtual DbSet<User> User { get; set; }
     }
 }
