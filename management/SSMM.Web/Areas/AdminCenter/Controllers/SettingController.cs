@@ -43,7 +43,7 @@ namespace SSMM.Web.Areas.AdminCenter.Controllers
         public ActionResult Basic()
         {
             ViewBag.AlipayAccount = SettingCache.Cache.Get(SettingFlag.AlipayAccount);
-            ViewBag.AlipaySearchApi = SettingCache.Cache.Get(SettingFlag.AlipaySearchApi);
+            ViewBag.AlipaySearchApi = SettingCache.Cache.Get(SettingFlag.AlipayTradeNoSearchApi);
             return View();
         }
 

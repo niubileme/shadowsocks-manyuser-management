@@ -62,6 +62,9 @@
     <Compile Include="Bill.cs">
       <DependentUpon>SSMM.tt</DependentUpon>
     </Compile>
+    <Compile Include="CouponCode.cs">
+      <DependentUpon>SSMM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Notice.cs">
       <DependentUpon>SSMM.tt</DependentUpon>
     </Compile>

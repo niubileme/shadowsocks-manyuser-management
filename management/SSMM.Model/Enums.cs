@@ -31,19 +31,33 @@ namespace SSMM.Model
         /// </summary>
         AlipayAccount,
         /// <summary>
-        /// 支付宝查询接口
+        /// 支付宝查询接口[交易号]
         /// </summary>
-        AlipaySearchApi,
+        AlipayTradeNoSearchApi,
+        /// <summary>
+        /// 支付宝查询接口[备注]
+        /// </summary>
+        AlipayRemarkSearchApi,
 
+        /// <summary>
+        /// 支付过期时间 分钟
+        /// </summary>
+        PayExpiredMinutes,
+
+        /// <summary>
+        /// SS连接的端口范围 分隔符 &
+        /// </summary>
+        SSPortRange,
     };
 
 
     public enum PaymentType
     {
-       支付宝转账,
-       微信转账,
-       支付宝支付,
-       微信支付,
+        账户余额,
+        支付宝转账,
+        微信转账,
+        支付宝支付,
+        微信支付,
     };
 
 

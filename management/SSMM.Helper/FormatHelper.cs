@@ -101,7 +101,7 @@ namespace SSMM.Helper
         /// </summary>
         /// <param name="timeStamp"></param>
         /// <returns></returns>
-        public static DateTime GetTime(string timeStamp)
+        public static DateTime GetTime(int timeStamp)
         {
             DateTime dtStart = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
             long lTime = long.Parse(timeStamp + "0000000");
@@ -227,10 +227,56 @@ namespace SSMM.Helper
         }
         #endregion
 
+
+        #region 流量转化
+
+        public static long GB2B(int gb)
+        {
+            return (long)gb * 1024 * 1024 * 1024;
+        }
+
+        public static decimal B2GB(long b)
+        {
+            return decimal.Round((decimal)b / 1024 / 1024 / 1024, 2);
+        }
+        #endregion
+
+        /// <summary>
+        /// 生成唯一订单号
+        /// </summary>
+        public static string GenerateOutTradeNo()
+        {
+            var ran = new Random();
+            return string.Format("{0}{1}{2}", DateTime.Now.ToString("yyyyMMddHHmmssfff"), ran.Next(1000, 9999), ran.Next(1000, 9999));
+        }
+
         public static string GetGuid()
         {
             return Guid.NewGuid().ToString("n");
         }
 
+        public static string RandomString(int length)
+        {
+            string chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            Random random = new Random((int)DateTime.Now.Ticks);
+            string code = "";
+            for (int i = 0; i < length; i++)
+            {
+                code += chars[random.Next(chars.Length)];
+            }
+            return code;
+        }
+
+        public static string RandomNum(int length)
+        {
+            string chars = "0123456789";
+            Random random = new Random((int)DateTime.Now.Ticks);
+            string code = "";
+            for (int i = 0; i < length; i++)
+            {
+                code += chars[random.Next(chars.Length)];
+            }
+            return code;
+        }
     }
 }

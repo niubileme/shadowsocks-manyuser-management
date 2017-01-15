@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace SSMM.Services.Core
 {
@@ -17,7 +18,8 @@ namespace SSMM.Services.Core
                 //BackgroundThread thread = new BackgroundThread();
                 //thread.Start();
 
-
+                //Session过期时间
+                HttpContext.Current.Session.Timeout = 60;
             }
             catch (Exception ex)
             {

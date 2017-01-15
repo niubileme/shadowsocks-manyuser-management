@@ -1,0 +1,16 @@
+﻿@model SSMM.Model.ResponseResult
+@{
+    ViewBag.Title = "PayMentResultNotice";
+    Layout = "~/Areas/UserCenter/Views/Shared/_UserCenterLayout.cshtml";
+}
+
+<div class="middle-box text-center white-bg animated swing">
+    <div class="p-xl">
+        <h3 class="font-bold">@Model.Result.ToString().ToUpper()</h3>
+        <div class="error-desc">
+            @Model.Info
+            <br><a href="/UserCenter/Product/List" class="btn btn-primary m-t">返回</a>
+        </div>
+    </div>
+</div>
+

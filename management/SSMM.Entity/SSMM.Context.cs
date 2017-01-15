@@ -34,5 +34,6 @@ namespace SSMM.Entity
         public virtual DbSet<Setting> Setting { get; set; }
         public virtual DbSet<SS> SS { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<CouponCode> CouponCode { get; set; }
     }
 }

@@ -42,13 +42,16 @@
   <ItemGroup>
     <Compile Include="AlipayTradeResult.cs" />
     <Compile Include="BillDto.cs" />
+    <Compile Include="CouponCodeDto.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="NoticeDto.cs" />
     <Compile Include="OrderDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProductDto.cs" />
+    <Compile Include="ResponseResult.cs" />
     <Compile Include="ServerNodeDto.cs" />
     <Compile Include="SettingDto.cs" />
+    <Compile Include="SSDto.cs" />
     <Compile Include="UserDto.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

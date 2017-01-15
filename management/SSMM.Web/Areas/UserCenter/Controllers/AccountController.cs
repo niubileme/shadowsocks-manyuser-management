@@ -13,6 +13,10 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
 {
     public class AccountController : Controller
     {
+        /// <summary>
+        /// 基本信息
+        /// </summary>
+        /// <returns></returns>
         [LoginAuthorize]
         public ActionResult Index()
         {

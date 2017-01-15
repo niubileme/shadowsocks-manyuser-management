@@ -117,7 +117,11 @@
     <Content Include="Content\css\icomoon.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\usercenter.css" />
+    <Content Include="Content\img\a1.jpg" />
+    <Content Include="Content\img\alipay_qr.png" />
+    <Content Include="Content\img\alipay_qr2.png" />
     <Content Include="Content\img\bg_4.jpg" />
+    <Content Include="Content\img\pcalipayremark.png" />
     <Content Include="Content\js\inspinia.js" />
     <Content Include="Content\js\main.js" />
     <Content Include="Content\plugins\gritter\images\gritter-light.png" />
@@ -195,6 +199,9 @@
     <Content Include="Areas\UserCenter\Views\Trade\Recharge.cshtml" />
     <Content Include="Areas\UserCenter\Views\Trade\Order.cshtml" />
     <Content Include="Areas\UserCenter\Views\Trade\PayMent.cshtml" />
+    <Content Include="Areas\UserCenter\Views\Trade\PayMentResultNotice.cshtml" />
+    <Content Include="Areas\UserCenter\Views\Trade\AlipayTransferPayMent.cshtml" />
+    <Content Include="Areas\UserCenter\Views\Product\My.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -9,25 +9,6 @@ namespace SSMM.Helper
 {
     public class SessionHelper
     {
-        public static bool IsLogin()
-        {
-            //var account = GetValue("User") as AccountModel;
-            //if (account == null)
-            //{
-            //    return false;
-            //}
-            return true;
-        }
-
-        public static bool CurrentUser()
-        {
-            //var user = GetValue("CurrentUser") as AccountModel;
-            //if (account == null)
-            //{
-            //    return false;
-            //}
-            return true;
-        }
 
         public static object GetValue(string keyName)
         {

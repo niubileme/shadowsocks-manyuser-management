@@ -1,0 +1,231 @@
+﻿@using SSMM.Cache;
+@using SSMM.Model;
+@{
+    ViewBag.Title = "支付宝转账支付";
+    Layout = "~/Areas/UserCenter/Views/Shared/_UserCenterLayout.cshtml";
+
+    var AlipayAccount = SettingCache.Cache.Get(SettingFlag.AlipayAccount);
+
+    var Uid = ViewData["Uid"];
+    var Pid = ViewData["Pid"];
+    var Pwd = ViewData["Pwd"];
+    var Pcode = ViewData["Pcode"];
+    var TimeStamp = ViewData["TimeStamp"];
+    var Sign = ViewData["Sign"];
+    var Amount = ViewData["Amount"];
+    var PayCode = ViewData["PayCode"];
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox">
+            <div class="ibox-content">
+                <h3 class="text-navy"><i class="fa fa-play fa-rotate-90"></i>&nbsp;&nbsp;转账信息</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-4">
+        <div class="ibox">
+            <div class="ibox-content">
+                <h5 class="m-b-md">收款人</h5>
+                <h1 class="text-navy">@(AlipayAccount)</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="ibox">
+            <div class="ibox-content">
+                <h5 class="m-b-md">付款金额</h5>
+                <h1 class="text-navy">@(Amount)元</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="ibox">
+            <div class="ibox-content">
+                <h5 class="m-b-md">付款说明</h5>
+                <h1 class="text-danger">@(PayCode)</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="tabs-container">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#tab-1" class="text-navy"> 扫码支付</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-2" class="text-navy"> 网页支付</a></li>
+            </ul>
+            <div class="tab-content">
+
+                <div id="tab-1" class="tab-pane active">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <ul class="list-group clear-list">
+                                    <li class="list-group-item text-danger">
+                                        转账流程：
+                                    </li>
+                                    <li class="list-group-item ">
+                                        1.手机打开支付宝
+                                    </li>
+                                    <li class="list-group-item">
+                                        2.扫描右侧二维码
+                                    </li>
+                                    <li class="list-group-item">
+                                        3.填写付款金额：<span class="text-danger">@(Amount)</span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        4.填写备注：<span class="text-danger">@(PayCode)</span>
+                                    </li>
+                                    <li class="list-group-item text-danger">
+                                        注意事项：
+                                    </li>
+                                    <li class="list-group-item text-danger">
+                                        请勿修改付款金额、付款说明！
+                                    </li>
+                                    <li class="list-group-item text-danger">
+                                        请正确填写备注，否则无法自动到账！
+                                    </li>
+                                </ul>
+                                <div class="row">
+                                    <div class="col-lg-6"><a class="btn btn-primary" id="btncheck1">已完成支付？</a></div>
+                                    <div class="col-lg-6"><a class="btn btn-outline btn-default" href="/UserCenter/Product/List">放弃支付</a></div>
+                                </div>
+                                <div class="alert alert-info hidden m-t" id="show1"></div>
+                            </div>
+                            <div class="col-lg-6">
+                                <img src="~/Content/img/alipay_qr2.png" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-2" class="tab-pane">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <ul class="list-group clear-list">
+                                    <li class="list-group-item text-danger">
+                                        转账流程：
+                                    </li>
+                                    <li class="list-group-item ">
+                                        1.<a href="https://auth.alipay.com/login/index.htm?goto=https://shenghuo.alipay.com/send/payment/fill.htm?title=@(PayCode)" target="_blank" class="text-navy">登录网页支付宝</a>，转账
+                                    </li>
+                                    <li class="list-group-item">
+                                        2.填写收款人：<span class="text-danger">@(AlipayAccount)</span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        3.填写付款金额：<span class="text-danger">@(Amount)</span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        4.填写付款说明：<span class="text-danger">@(PayCode)</span>
+                                    </li>
+                                    <li class="list-group-item text-danger">
+                                        注意事项：
+                                    </li>
+                                    <li class="list-group-item text-danger">
+                                        请勿修改付款金额、付款说明！
+                                    </li>
+                                    <li class="list-group-item text-danger">
+                                        请正确填写备注，否则无法自动到账！
+                                    </li>
+                                </ul>
+                                <div class="row">
+                                    <div class="col-lg-6"><a class="btn btn-primary" id="btncheck2">已完成支付？</a></div>
+                                    <div class="col-lg-6"><a class="btn btn-outline btn-default" href="/UserCenter/Product/List">放弃支付</a></div>
+                                </div>
+                                <div class="alert alert-info hidden m-t" id="show2"></div>
+                            </div>
+                            <div class="col-lg-6">
+                                <img src="~/Content/img/pcalipayremark.png" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+@section footscript{
+    <script>
+        var uid = '@Uid';
+        var pid = '@Pid';
+        var pwd = '@Pwd';
+        var pcode = '@Pcode';
+        var timestamp = '@TimeStamp';
+        var sign = '@Sign';
+        var paycode = '@PayCode';
+        var amount = '@Amount';
+        $(document).ready(function () {
+            $('#btncheck1').click(function () {
+                $('#show1').addClass('hidden');
+                $.ajax({
+                    url: '/UserCenter/Trade/CheckAlipayTransfer',
+                    type: 'post',
+                    data: { uid: uid, pid: pid, pwd: pwd, pcode: pcode, timestamp: timestamp, sign: sign, paycode: paycode, amount: amount },
+                    success: function (res) {
+                        show1(res.info);
+                        if (res.result) {
+                            show1(res.info + ' 3秒后，将跳转到我的服务...');
+                            setTimeout(function () {
+                                window.location.href = '/UserCenter/Product/My';
+                            }, 3000);
+                        }
+                    },
+                    beforeSend: function () {
+                        $('#btncheck1').attr("disabled", "disabled");
+                    },
+                    complete: function () {
+                        $('#btncheck1').removeAttr("disabled");
+                    }
+                });
+            });
+            $('#btncheck2').click(function () {
+                $('#show2').addClass('hidden');
+                $.ajax({
+                    url: '/UserCenter/Trade/CheckAlipayTransfer',
+                    type: 'post',
+                    data: { uid: uid, pid: pid, pwd: pwd, pcode: pcode, timestamp: timestamp, sign: sign, paycode: paycode, amount: amount },
+                    success: function (res) {
+                        show2(res.info);
+                        if (res.result) {
+                            show2(res.info + ' 3秒后，将跳转到我的服务...');
+                            setTimeout(function () {
+                                window.location.href = '/UserCenter/Product/My';
+                            }, 3000);
+                        }
+                    },
+                    beforeSend: function () {
+                        $('#btncheck2').attr("disabled", "disabled");
+                    },
+                    complete: function () {
+                        $('#btncheck2').removeAttr("disabled");
+                    }
+                });
+            });
+        });
+        function show1(s) {
+            $('#show1').text(s);
+            $('#show1').removeClass('hidden');
+        }
+        function show2(s) {
+            $('#show2').text(s);
+            $('#show2').removeClass('hidden');
+        }
+
+    </script>
+
+}
+
+
+
+

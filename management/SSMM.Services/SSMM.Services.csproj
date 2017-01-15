@@ -38,6 +38,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,10 +50,13 @@
     <Compile Include="Core\BackgroundThread.cs" />
     <Compile Include="Core\BusinessManager.cs" />
     <Compile Include="Core\Config.cs" />
+    <Compile Include="CouponCodeService.cs" />
     <Compile Include="LogService.cs" />
     <Compile Include="Core\UseAutoMapper.cs" />
     <Compile Include="NoticeService.cs" />
+    <Compile Include="OrderService.cs" />
     <Compile Include="SettingService.cs" />
+    <Compile Include="SSService.cs" />
     <Compile Include="TradeService.cs" />
     <Compile Include="ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
