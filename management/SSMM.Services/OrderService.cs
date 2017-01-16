@@ -84,7 +84,9 @@ namespace SSMM.Services
                         CreateTime = x.CreateTime,
                         Status = x.Status,
                         Type = x.Type,
-                        UserId = x.UserId
+                        UserId = x.UserId,
+                        UserName = x.UserName,
+                        Email = x.Email
                     });
                 });
             }

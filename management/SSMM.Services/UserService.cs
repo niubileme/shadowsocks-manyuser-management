@@ -233,5 +233,37 @@ namespace SSMM.Services
             }
         }
 
+
+        public static bool RestPassword(string email,string oldpwd, string newpwd, out string info)
+        {
+            info = "";
+            using (var DB=new SSMMEntities())
+            {
+                var user = DB.User.SingleOrDefault(x=>x.Email==email);
+                if (user==null)
+                {
+                    info = "该用户不存在！";
+                    return false;
+                }
+                oldpwd = FormatHelper.GetMD5ByString(oldpwd);
+                if (oldpwd!=user.Password)
+                {
+                    info = "原始密码不正确！";
+                    return false;
+                }
+                user.Password = FormatHelper.GetMD5ByString(newpwd);
+                if (DB.SaveChanges()>0)
+                {
+                    info = "修改密码成功！";
+                    return true;
+                }
+                else
+                {
+                    info = "修改密码失败！";
+                    return false;
+                }
+            }
+        }
+
     }
 }

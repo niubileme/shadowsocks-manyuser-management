@@ -35,9 +35,16 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
         [HttpPost]
         public JsonResult PostRestPassword()
         {
+            var email = CookieHelper.Email;
             var oldpwd = RequestHelper.GetValue("oldpwd");
             var newpwd = RequestHelper.GetValue("newpwd");
-            return Json(new { result = false, info = "修改失败！" }, JsonRequestBehavior.DenyGet);
+            if (string.IsNullOrEmpty(oldpwd) || string.IsNullOrEmpty(newpwd))
+                return Json(new { result = false, info = "密码不能为空！" }, JsonRequestBehavior.DenyGet);
+            if (newpwd.Length < 6)
+                return Json(new { result = false, info = "新密码不能少于6位！" }, JsonRequestBehavior.DenyGet);
+            var info = "";
+            var result = UserService.RestPassword(email, oldpwd, newpwd, out info);
+            return Json(new { result = result, info = info }, JsonRequestBehavior.DenyGet);
         }
 
         /// <summary>

@@ -1,154 +1,154 @@
 ﻿@using SSMM.Model;
 @using SSMM.Helper;
-    @{
-        ViewBag.Title = "订单详情";
-        Layout = "~/Areas/UserCenter/Views/Shared/_UserCenterLayout.cshtml";
+@{
+    ViewBag.Title = "订单详情";
+    Layout = "~/Areas/UserCenter/Views/Shared/_UserCenterLayout.cshtml";
 
-        var Product = ViewData["Product"] as ProductDto;
-        var UserEmail = CookieHelper.Email;
-    }
+    var Product = ViewData["Product"] as ProductDto;
+    var UserEmail = CookieHelper.Email;
+}
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="wrapper wrapper-content ">
-                <div class="ibox-content p-xl">
-                    <form id="form" method="post" action="/UserCenter/Trade/PayMent">
-                        <input type="hidden" id="uid" name="uid" value="@(UserEmail)" />
-                        <input type="hidden" id="pid" name="pid" value="@(Product.Id)" />
-                        <div class="table-responsive m-t">
-                            <table class="table invoice-table">
-                                <thead>
-                                    <tr>
-                                        <th>产品名称</th>
-                                        <th>使用流量</th>
-                                        <th>有效时间</th>
-                                        <th>产品价格</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <div><strong>@(Product.Name)</strong></div>
-                                        </td>
-                                        <td>@(Product.Traffic)G</td>
-                                        <td>@(Product.ExpirationDay)天</td>
-                                        <td>@(Product.Price.ToString("0.00"))元</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-6 text-left">
-                                @(Html.Raw(Product.Description))
-                            </div>
-                        </div>
-
-                        <div class="row m-t-xl">
-                            <div class="col-sm-12">
-                                <h5>设置连接密码</h5>
-                                <hr style="margin:0;" />
-                                <div class="form-group m-t col-sm-3">
-                                    <input type="password" name="pwd" id="pwd" placeholder="必须，使用ss需要的密码。" class="form-control" style="font-size:12px;" required="required" autocomplete="off">
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="row m-t-lg">
-                            <div class="col-sm-12">
-                                <h5>优惠码</h5>
-                                <hr style="margin:0;" />
-                                <div class="form-group m-t col-sm-3">
-                                    <input type="text" name="pcode" id="pcode" class="form-control" style="font-size:12px;" placeholder="可选，如果您有一个优惠码。">
-                                </div>
-                                <div class="form-group m-t col-sm-1">
-                                    <a class="btn btn-warning" id="promocodebtn">验证</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <table class="table invoice-total">
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content ">
+            <div class="ibox-content p-xl">
+                <form id="form" method="post" action="/UserCenter/Trade/PayMent">
+                    <input type="hidden" id="uid" name="uid" value="@(UserEmail)" />
+                    <input type="hidden" id="pid" name="pid" value="@(Product.Id)" />
+                    <div class="table-responsive m-t">
+                        <table class="table invoice-table">
+                            <thead>
+                                <tr>
+                                    <th>产品名称</th>
+                                    <th>使用流量</th>
+                                    <th>有效时间</th>
+                                    <th>产品价格</th>
+                                </tr>
+                            </thead>
                             <tbody>
                                 <tr>
-                                    <td><strong>产品价格 :</strong></td>
-                                    <td id="m1">@(Product.Price.ToString("0.00"))元</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>优惠 :</strong></td>
-                                    <td id="m2">0.00元</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>总数 :</strong></td>
-                                    <td id="m3">@(Product.Price.ToString("0.00"))元</td>
+                                    <td>
+                                        <div><strong>@(Product.Name)</strong></div>
+                                    </td>
+                                    <td>@(Product.Traffic)G</td>
+                                    <td>@(Product.ExpirationDay)天</td>
+                                    <td>@(Product.Price.ToString("0.00"))元</td>
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
 
-                        <div class="alert alert-info hidden" id="show"></div>
+                    <div class="row">
+                        <div class="col-sm-6 text-left">
+                            @(Html.Raw(FormatHelper.HtmlDecode(Product.Description)))
+                        </div>
+                    </div>
 
-                        <div class="clearfix m-t-lg">
-                            <div class="pull-left">
-                                <a class="btn btn-default" href="/UserCenter/Product/List">返回</a>
-                            </div>
-                            <div class="pull-right">
-                                <a class="btn btn-primary" id="paybtn">继续</a>
+                    <div class="row m-t-xl">
+                        <div class="col-sm-12">
+                            <h5>设置连接密码</h5>
+                            <hr style="margin:0;" />
+                            <div class="form-group m-t col-sm-3">
+                                <input type="password" name="pwd" id="pwd" placeholder="必须，使用ss需要的密码。" class="form-control" style="font-size:12px;" required="required" autocomplete="off">
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
 
 
+                    <div class="row m-t-lg">
+                        <div class="col-sm-12">
+                            <h5>优惠码</h5>
+                            <hr style="margin:0;" />
+                            <div class="form-group m-t col-sm-3">
+                                <input type="text" name="pcode" id="pcode" class="form-control" style="font-size:12px;" placeholder="可选，如果您有一个优惠码。">
+                            </div>
+                            <div class="form-group m-t col-sm-1">
+                                <a class="btn btn-warning" id="promocodebtn">验证</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="table invoice-total">
+                        <tbody>
+                            <tr>
+                                <td><strong>产品价格 :</strong></td>
+                                <td id="m1">@(Product.Price.ToString("0.00"))元</td>
+                            </tr>
+                            <tr>
+                                <td><strong>优惠 :</strong></td>
+                                <td id="m2">0.00元</td>
+                            </tr>
+                            <tr>
+                                <td><strong>总数 :</strong></td>
+                                <td id="m3">@(Product.Price.ToString("0.00"))元</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="alert alert-info hidden" id="show"></div>
+
+                    <div class="clearfix m-t-lg">
+                        <div class="pull-left">
+                            <a class="btn btn-default" href="/UserCenter/Product/List">返回</a>
+                        </div>
+                        <div class="pull-right">
+                            <a class="btn btn-primary" id="paybtn">继续</a>
+                        </div>
+                    </div>
+                </form>
             </div>
+
+
         </div>
     </div>
+</div>
 
 
 
-    @section footscript{
-        <script>
-            $(document).ready(function () {
-                $('#promocodebtn').click(function () {
-                    $('#show').addClass('hidden');
-                    var pcode = $.trim($('#pcode').val());
-                    if (pcode.length <= 0) {
-                        show('优惠码不能为空！');
-                        return false;
+@section footscript{
+    <script>
+        $(document).ready(function () {
+            $('#promocodebtn').click(function () {
+                $('#show').addClass('hidden');
+                var pcode = $.trim($('#pcode').val());
+                if (pcode.length <= 0) {
+                    show('优惠码不能为空！');
+                    return false;
+                }
+                $.ajax({
+                    url: '/UserCenter/Trade/CheckPCode',
+                    type: 'post',
+                    data: { pcode: pcode },
+                    success: function (res) {
+                        if (res.result)
+                            calc(res.amount);
+                        show(res.info);
                     }
-                    $.ajax({
-                        url: '/UserCenter/Trade/CheckPCode',
-                        type: 'post',
-                        data: { pcode: pcode },
-                        success: function (res) {
-                            if (res.result)
-                                calc(res.amount);
-                            show(res.info);
-                        }
-                    });
-                });
-                $('#paybtn').click(function () {
-                    $('#show').addClass('hidden');
-                    var pwd = $.trim($('#pwd').val());
-                    if (pwd.length < 6) {
-                        show('ss连接密码不能少于6位！');
-                        return false;
-                    }
-                    $('#form').submit();
                 });
             });
-            function show(s) {
-                $('#show').text(s);
-                $('#show').removeClass('hidden');
-            }
-            function calc(m) {
-                var m1 = parseFloat($('#m1').text());
-                var m2 = m;
-                var m3 = m1 - m2;
-                m3 = m3 < 0 ? 0 : m3;
-                $('#m1').text(m1.toFixed(2) + '元');
-                $('#m2').text(m2.toFixed(2) + '元');
-                $('#m3').text(m3.toFixed(2) + '元');
-            }
-        </script>
+            $('#paybtn').click(function () {
+                $('#show').addClass('hidden');
+                var pwd = $.trim($('#pwd').val());
+                if (pwd.length < 6) {
+                    show('ss连接密码不能少于6位！');
+                    return false;
+                }
+                $('#form').submit();
+            });
+        });
+        function show(s) {
+            $('#show').text(s);
+            $('#show').removeClass('hidden');
+        }
+        function calc(m) {
+            var m1 = parseFloat($('#m1').text());
+            var m2 = m;
+            var m3 = m1 - m2;
+            m3 = m3 < 0 ? 0 : m3;
+            $('#m1').text(m1.toFixed(2) + '元');
+            $('#m2').text(m2.toFixed(2) + '元');
+            $('#m3').text(m3.toFixed(2) + '元');
+        }
+    </script>
 
-    }
+}

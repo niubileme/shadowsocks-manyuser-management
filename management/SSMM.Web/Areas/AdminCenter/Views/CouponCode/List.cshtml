@@ -103,13 +103,13 @@
                                   title: '过期时间',
                                   field: 'ExpirationTime',
                                   align: 'center',
-                                  width: 150,
+                                  width: 160,
                                   formatter: function (value, row, index) {
                                       return (eval(value.replace(/\/Date\((\d+)\)\//gi, "new Date($1)"))).Format("yyyy-MM-dd hh:mm:ss");
                                   }
                               },
                           {
-                              title: '可用状态',
+                              title: '状态',
                               field: 'Status',
                               align: 'center',
                               width: 60,

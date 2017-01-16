@@ -15,6 +15,9 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
             var email = CookieHelper.Email;
             var user = UserService.Query(email);
             ViewData["User"] = user;
+            //SS
+            var ss = SSService.Query(user.Id);
+            ViewData["SS"] = ss;
             //公告信息
             var notices = NoticeService.GetList(6);
             ViewData["Notices"] = notices;
