@@ -250,6 +250,17 @@ namespace SSMM.Helper
             return string.Format("{0}{1}{2}", DateTime.Now.ToString("yyyyMMddHHmmssfff"), ran.Next(1000, 9999), ran.Next(1000, 9999));
         }
 
+        /// <summary>
+        /// 生成优惠码
+        /// </summary>
+        public static string GetCouponCode()
+        {
+            var code = GetGuid();
+            code = GetMD5ByString(code);
+            code = EncodeBase64ByUTF8(code).Replace("=", "");
+            return code;
+        }
+
         public static string GetGuid()
         {
             return Guid.NewGuid().ToString("n");

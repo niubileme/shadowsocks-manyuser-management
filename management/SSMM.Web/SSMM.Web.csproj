@@ -140,6 +140,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\AdminCenter\AdminCenterAreaRegistration.cs" />
     <Compile Include="Areas\AdminCenter\Controllers\BaseController.cs" />
+    <Compile Include="Areas\AdminCenter\Controllers\CouponCodeController.cs" />
     <Compile Include="Areas\AdminCenter\Controllers\HomeController.cs" />
     <Compile Include="Areas\AdminCenter\Controllers\NoticeController.cs" />
     <Compile Include="Areas\AdminCenter\Controllers\SettingController.cs" />
@@ -202,6 +203,8 @@
     <Content Include="Areas\UserCenter\Views\Trade\PayMentResultNotice.cshtml" />
     <Content Include="Areas\UserCenter\Views\Trade\AlipayTransferPayMent.cshtml" />
     <Content Include="Areas\UserCenter\Views\Product\My.cshtml" />
+    <Content Include="Areas\AdminCenter\Views\CouponCode\List.cshtml" />
+    <Content Include="Areas\AdminCenter\Views\CouponCode\Add.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -13,6 +13,25 @@ namespace SSMM.Services
     public class SSService
     {
         public static object obj = new object();
+
+
+        /// <summary>
+        /// 判断用户服务是否正在运行
+        /// </summary>
+        public static bool IsRunning(int userid)
+        {
+            using (var DB = new SSMMEntities())
+            {
+                var ss = DB.SS.SingleOrDefault(x => x.userid == userid);
+                if (ss == null)
+                    return false;
+                var now = FormatHelper.ConvertDateTimeInt(DateTime.Now);
+                var status = (ss.u + ss.d) < ss.transfer_enable && ss.@switch == 1 && ss.enable == 1 && ss.expiration_time > now;
+                return status;
+            }
+        }
+
+
         /// <summary>
         /// 获取ss端口
         /// </summary>

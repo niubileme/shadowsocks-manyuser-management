@@ -88,6 +88,13 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
             var pcode = RequestHelper.GetValue("pcode");
             if (string.IsNullOrEmpty(uid) || string.IsNullOrEmpty(pid) || string.IsNullOrEmpty(pwd))
                 return RedirectToAction("List", "Product");
+            //判断服务是否已在运行
+            var user = UserCache.Cache.GetValue(uid);
+            var IsRunning = SSService.IsRunning(user.Id);
+            if (IsRunning)
+            {
+                return View("PayMentResultNotice", new ResponseResult() { Result = false, Info = "购买失败！请再当前服务过期后，再进行购买！" });
+            }
             var timestamp = FormatHelper.ConvertDateTimeInt(DateTime.Now);//时间戳
             var sign = TradeService.ParameterSign(uid, pid, pwd, pcode, timestamp);//参数签名
             var alipaycode = TradeService.GetAlipayTransferCode(uid); //支付宝唯一支付码
@@ -155,6 +162,13 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
             var sign = RequestHelper.GetValue("sign");
             if (string.IsNullOrEmpty(uid) || string.IsNullOrEmpty(pid) || string.IsNullOrEmpty(pwd) || string.IsNullOrEmpty(sign) || timestamp == 0)
                 return RedirectToAction("List", "Product");
+            //判断服务是否已在运行
+            var user = UserCache.Cache.GetValue(uid);
+            var IsRunning = SSService.IsRunning(user.Id);
+            if (IsRunning)
+            {
+                return View("PayMentResultNotice", new ResponseResult() { Result = false, Info = "购买失败！请再当前服务过期后，再进行购买！" });
+            }
             var info = "";
             var result = TradeService.PayMentForAccountBalance(uid, pid, pwd, pcode, timestamp, sign, out info);
             return View("PayMentResultNotice", new ResponseResult() { Result = result, Info = info });
@@ -173,6 +187,13 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
             var sign = RequestHelper.GetValue("sign");
             if (string.IsNullOrEmpty(uid) || string.IsNullOrEmpty(pid) || string.IsNullOrEmpty(pwd) || string.IsNullOrEmpty(sign) || timestamp == 0)
                 return RedirectToAction("List", "Product");
+            //判断服务是否已在运行
+            var user = UserCache.Cache.GetValue(uid);
+            var IsRunning = SSService.IsRunning(user.Id);
+            if (IsRunning)
+            {
+                return View("PayMentResultNotice", new ResponseResult() { Result = false, Info = "购买失败！请再当前服务过期后，再进行购买！" });
+            }
             ViewData["Uid"] = uid;
             ViewData["Pid"] = pid;
             ViewData["Pwd"] = pwd;

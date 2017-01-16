@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "添加优惠码";
+    Layout = "~/Areas/AdminCenter/Views/Shared/_AdminCenterLayout.cshtml";
+}
+
+<h4>新增优惠码</h4>
+<div class="row">
+    <div class="col-lg-12">
+        <form method="post" class="form-horizontal" action="/AdminCenter/CouponCode/AddPost">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">描述</label>
+                <div class="col-sm-10">
+                    <input type="text" name="des" class="form-control" placeholder="十一国庆特价">
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">优惠金额</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="amount" placeholder="5">
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">过期时间</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="expirationtime" placeholder="7">
+                    <span class="help-block m-b-none">过期时间，单位：天。填写数字即可。</span>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-2">
+                    <button class="btn btn-white" type="reset">取消</button>
+                    <button class="btn btn-success" type="submit">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

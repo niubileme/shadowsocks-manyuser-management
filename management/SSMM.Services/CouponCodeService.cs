@@ -81,7 +81,6 @@ namespace SSMM.Services
             {
                 DB.CouponCode.Add(new CouponCode()
                 {
-                    Id = dto.Id,
                     Code = dto.Code,
                     Des = dto.Des,
                     Amount = dto.Amount,

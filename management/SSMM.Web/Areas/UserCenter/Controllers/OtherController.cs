@@ -22,7 +22,8 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
         /// </summary>
         public ActionResult Notice()
         {
-
+            var list = NoticeService.GetList(20);
+            ViewData["List"] = list;
             return View();
         }
 

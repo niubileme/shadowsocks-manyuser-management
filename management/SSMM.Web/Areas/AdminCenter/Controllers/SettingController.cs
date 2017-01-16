@@ -43,7 +43,10 @@ namespace SSMM.Web.Areas.AdminCenter.Controllers
         public ActionResult Basic()
         {
             ViewBag.AlipayAccount = SettingCache.Cache.Get(SettingFlag.AlipayAccount);
-            ViewBag.AlipaySearchApi = SettingCache.Cache.Get(SettingFlag.AlipayTradeNoSearchApi);
+            ViewBag.AlipayRemarkSearchApi = SettingCache.Cache.Get(SettingFlag.AlipayRemarkSearchApi);
+            var portrange = SettingCache.Cache.Get(SettingFlag.SSPortRange).Split('&');
+            ViewBag.SSPortMin = portrange[0];
+            ViewBag.SSPortMax = portrange[1];
             return View();
         }
 
@@ -51,13 +54,16 @@ namespace SSMM.Web.Areas.AdminCenter.Controllers
         public JsonResult BasicPost()
         {
             var alipayaccount = RequestHelper.GetValue("alipayaccount");
-            var alipaysearchapi = RequestHelper.GetValue("alipaysearchapi");
-            if (string.IsNullOrEmpty(alipayaccount) || string.IsNullOrEmpty(alipaysearchapi))
+            var alipayremarksearchapi = RequestHelper.GetValue("alipayremarksearchapi");
+            var portmin = RequestHelper.GetInt("portmin");
+            var portmax = RequestHelper.GetInt("portmax");
+            if (string.IsNullOrEmpty(alipayaccount) || string.IsNullOrEmpty(alipayremarksearchapi) || portmin <= 0 || portmax <= 0 || portmax > 65535)
             {
                 return Json(new { result = false, info = "该参数不能为空！" }, JsonRequestBehavior.DenyGet);
             }
-            var result = SettingService.Basic(alipayaccount, alipaysearchapi);
-            LogService.Info($"修改Basic >>> {result} --- {alipayaccount}:{alipaysearchapi}");
+            var range = $"{portmin}&{portmax}";
+            var result = SettingService.Basic(alipayaccount, alipayremarksearchapi, range);
+            LogService.Info($"修改Basic >>> {result} --- {alipayaccount}:{alipayremarksearchapi}");
             return Json(new { result = result }, JsonRequestBehavior.DenyGet);
         }
 

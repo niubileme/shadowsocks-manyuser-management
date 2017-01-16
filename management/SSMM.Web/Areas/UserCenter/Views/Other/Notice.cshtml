@@ -1,56 +1,32 @@
-﻿
+﻿@using SSMM.Model;
 @{
     ViewBag.Title = "公告通知";
     Layout = "~/Areas/UserCenter/Views/Shared/_UserCenterLayout.cshtml";
-}
 
+    var List = ViewData["List"] as List<NoticeDto>;
+}
 <div class="row">
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>公告通知</h5>
+                <h5>Top20 公告通知</h5>
             </div>
             <div class="ibox-content">
-                <div class="feed-element">
-                    <div class="media-body ">
-                        <small class="pull-right">2016-12-16</small>
-                        <a href="/UserCenter/Other/NoticeInfo" class="text-navy"><strong>香港tvb线路整合升级加速通知</strong></a>
-                    </div>
-                </div>
-                <div class="feed-element">
-                    <div class="media-body ">
-                        <small class="pull-right">2016-12-16</small>
-                        <a href="/UserCenter/Other/NoticeInfo" class="text-navy"><strong>绝无仅有的美国独享宽带线路已上线，欢迎测试</strong></a>
-                    </div>
-                </div>
-                <div class="feed-element">
-                    <div class="media-body ">
-                        <small class="pull-right">2016-12-16</small>
-                        <a href="/UserCenter/Other/NoticeInfo" class="text-navy"><strong>香港tvb线路整合升级加速通知</strong></a>
-                    </div>
-                </div>
-                <div class="feed-element">
-                    <div class="media-body ">
-                        <small class="pull-right">2016-12-16</small>
-                        <a href="/UserCenter/Other/NoticeInfo" class="text-navy"><strong>绝无仅有的美国独享宽带线路已上线，欢迎测试</strong></a>
-                    </div>
-                </div>
-                <div class="feed-element">
-                    <div class="media-body ">
-                        <small class="pull-right">2016-12-16</small>
-                        <a href="/UserCenter/Other/NoticeInfo" class="text-navy"><strong>香港tvb线路整合升级加速通知</strong></a>
-                    </div>
-                </div>
-                <div class="feed-element">
-                    <div class="media-body ">
-                        <small class="pull-right">2016-12-16</small>
-                        <a href="/UserCenter/Other/NoticeInfo" class="text-navy"><strong>绝无仅有的美国独享宽带线路已上线，欢迎测试</strong></a>
-                    </div>
-                </div>
+                @{
+                    if (List != null && List.Count > 0)
+                    {
+                        foreach (var item in List)
+                        {
+                            <div class="feed-element">
+                                <div class="media-body ">
+                                    <small class="pull-right">@(item.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"))</small>
+                                    <a href="/UserCenter/Other/NoticeInfo/@(item.Id)" class="text-navy"><strong>@Html.Raw(item.Title)</strong></a>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
             </div>
-
         </div>
     </div>
-
 </div>
-
