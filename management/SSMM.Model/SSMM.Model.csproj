@@ -44,6 +44,7 @@
     <Compile Include="BillDto.cs" />
     <Compile Include="CouponCodeDto.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="MyProductDto.cs" />
     <Compile Include="NoticeDto.cs" />
     <Compile Include="OrderDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

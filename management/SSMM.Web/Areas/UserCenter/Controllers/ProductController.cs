@@ -1,4 +1,7 @@
-﻿using SSMM.Services;
+﻿using SSMM.Cache;
+using SSMM.Helper;
+using SSMM.Model;
+using SSMM.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +27,14 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
         /// </summary>
         public ActionResult My()
         {
-          
+            var email = CookieHelper.Email;
+            var user = UserCache.Cache.GetValue(email);
+            var my = ProductService.MyInfo(user.Id);
+            if (my == null)
+                my = new MyProductDto();
+            var nodes = ServerNodeService.GetAll();
+            ViewData["My"] = my;
+            ViewData["Nodes"] = nodes;
             return View();
         }
     }

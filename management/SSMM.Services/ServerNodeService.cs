@@ -10,14 +10,36 @@ namespace SSMM.Services
 {
     public class ServerNodeService
     {
+
+        public static List<ServerNodeDto> GetAll()
+        {
+            var nodes = new List<ServerNodeDto>();
+            using (var DB = new SSMMEntities())
+            {
+                var result = DB.ServerNode.OrderByDescending(x => x.SortNum).ToList();
+                result.ForEach(x =>
+                {
+                    nodes.Add(new ServerNodeDto()
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        IP = x.IP,
+                        CNAME = x.CNAME,
+                        Description = x.Description,
+                        Status = x.Status,
+                        SortNum = x.SortNum
+                    });
+                });
+            }
+            return nodes;
+
+        }
+
+
+
         /// <summary>
         /// 节点列表
         /// </summary>
-        /// <param name="offset"></param>
-        /// <param name="limit"></param>
-        /// <param name="totalcount"></param>
-        /// <param name="key"></param>
-        /// <returns></returns>
         public static List<ServerNodeDto> GetList(int offset, int limit, out int totalcount, string key = null)
         {
             var nodes = new List<ServerNodeDto>();

@@ -21,7 +21,7 @@ namespace SSMM.Web.Areas.AdminCenter.Controllers
             var limit = RequestHelper.GetInt("limit");
             var key = RequestHelper.GetValue("search");
             int total;
-            var list = TradeService.GetOrderList(offset, limit, out total, key);
+            var list = OrderService.GetOrderList(offset, limit, out total, key);
             return Json(new { rows = list, total = total }, JsonRequestBehavior.AllowGet);
         }
 

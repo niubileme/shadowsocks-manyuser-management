@@ -1,4 +1,5 @@
 ﻿using SSMM.Entity;
+using SSMM.Helper;
 using SSMM.Model;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,43 @@ namespace SSMM.Services
 {
     public class ProductService
     {
+        public static MyProductDto MyInfo(int userid)
+        {
+            using (var DB = new SSMMEntities())
+            {
+                var now = FormatHelper.ConvertDateTimeInt(DateTime.Now);
+                var my = (from ss in DB.SS
+                          join order in DB.Order
+                          on ss.userid equals order.UserId
+                          join product in DB.Product
+                          on order.ProductId equals product.Id
+                          where ss.userid == userid
+                          select new MyProductDto
+                          {
+                              ProductId = product.Id,
+                              ProductName = product.Name,
+                              ProductDes = product.Description,
+                              ProductTraffic = product.Traffic,
+                              ProductExpirationDay = product.ExpirationDay,
+                              ProductPrice = product.Price,
+                              ProductIsRest = product.IsRest,
+                              d = ss.d,
+                              transfer_enable = ss.transfer_enable,
+                              port = ss.port,
+                              password = ss.password,
+                              status = (ss.u + ss.d) < ss.transfer_enable && ss.@switch == 1 && ss.enable == 1 && ss.expiration_time > now,
+                              isrest = ss.isrest,
+                              last_rest_time = ss.last_rest_time,
+                              expiration_time = ss.expiration_time,
+                              create_time = ss.create_time,
+                              userid = ss.userid
+                          }).SingleOrDefault();
+                if (my == null)
+                    return null;
+                return my;
+            }
+        }
+
         public static ProductDto Query(string id)
         {
             using (var DB = new SSMMEntities())

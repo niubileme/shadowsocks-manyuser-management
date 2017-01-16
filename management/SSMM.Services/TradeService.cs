@@ -293,24 +293,43 @@ namespace SSMM.Services
                     Type = PaymentType.账户余额.ToString(),
                     UserId = user.Id
                 });
-                //生成ss信息
-                DB.SS.Add(new SS()
+                //ss信息
+                var ss = DB.SS.SingleOrDefault(x => x.userid == user.Id);
+                if (ss == null)
                 {
-                    id = tradeno,
-                    t = FormatHelper.ConvertDateTimeInt(DateTime.Now),//ss服务端更新时间
-                    u = 0,//上传流量
-                    d = 0,//下载流量
-                    transfer_enable = FormatHelper.GB2B(product.Traffic),//long 总套餐流量
-                    port = SSService.GetNextPort(),//端口
-                    password = pwd,//密码
-                    @switch = 1,
-                    enable = 1,
-                    isrest = product.IsRest,//是否重置流量
-                    last_rest_time = FormatHelper.ConvertDateTimeInt(DateTime.Now),//重置流量时间
-                    expiration_time = FormatHelper.ConvertDateTimeInt(DateTime.Now.AddDays(product.ExpirationDay)),//过期时间
-                    create_time = FormatHelper.ConvertDateTimeInt(DateTime.Now),
-                    userid = user.Id
-                });
+                    DB.SS.Add(new SS()
+                    {
+                        id = tradeno,
+                        t = FormatHelper.ConvertDateTimeInt(DateTime.Now),//ss服务端更新时间
+                        u = 0,//上传流量
+                        d = 0,//下载流量
+                        transfer_enable = FormatHelper.GB2B(product.Traffic),//long 总套餐流量
+                        port = SSService.GetNextPort(),//端口
+                        password = pwd,//密码
+                        @switch = 1,
+                        enable = 1,
+                        isrest = product.IsRest,//是否重置流量
+                        last_rest_time = FormatHelper.ConvertDateTimeInt(DateTime.Now),//重置流量时间
+                        expiration_time = FormatHelper.ConvertDateTimeInt(DateTime.Now.AddDays(product.ExpirationDay)),//过期时间
+                        create_time = FormatHelper.ConvertDateTimeInt(DateTime.Now),
+                        userid = user.Id
+                    });
+                }
+                else
+                {
+                    ss.id = tradeno;
+                    ss.t = FormatHelper.ConvertDateTimeInt(DateTime.Now);//ss服务端更新时间
+                    ss.u = 0;//上传流量
+                    ss.d = 0;//下载流量
+                    ss.transfer_enable = FormatHelper.GB2B(product.Traffic);//long 总套餐流量
+                    ss.password = pwd;//密码
+                    ss.@switch = 1;
+                    ss.enable = 1;
+                    ss.isrest = product.IsRest;//是否重置流量
+                    ss.last_rest_time = FormatHelper.ConvertDateTimeInt(DateTime.Now);//重置流量时间
+                    ss.expiration_time = FormatHelper.ConvertDateTimeInt(DateTime.Now.AddDays(product.ExpirationDay));//过期时间
+                    ss.create_time = FormatHelper.ConvertDateTimeInt(DateTime.Now);
+                }
                 if (DB.SaveChanges() > 0)
                 {
                     info = "支付成功！";
@@ -334,7 +353,7 @@ namespace SSMM.Services
         /// <summary>
         /// 支付宝转账支付
         /// </summary>
-        public static bool PayMentForAlipayTransfer(string uid, string pid, string pwd,string pcode, out string info)
+        public static bool PayMentForAlipayTransfer(string uid, string pid, string pwd, string pcode, out string info)
         {
             info = "";
             decimal amount = 0;
@@ -376,24 +395,43 @@ namespace SSMM.Services
                     Type = PaymentType.支付宝转账.ToString(),
                     UserId = user.Id
                 });
-                //生成ss信息
-                DB.SS.Add(new SS()
+                //ss信息
+                var ss = DB.SS.SingleOrDefault(x => x.userid == user.Id);
+                if (ss == null)
                 {
-                    id = tradeno,
-                    t = FormatHelper.ConvertDateTimeInt(DateTime.Now),//ss服务端更新时间
-                    u = 0,//上传流量
-                    d = 0,//下载流量
-                    transfer_enable = FormatHelper.GB2B(product.Traffic),//long 总套餐流量
-                    port = SSService.GetNextPort(),//端口
-                    password = pwd,//密码
-                    @switch = 1,
-                    enable = 1,
-                    isrest = product.IsRest,//是否重置流量
-                    last_rest_time = FormatHelper.ConvertDateTimeInt(DateTime.Now),//重置流量时间
-                    expiration_time = FormatHelper.ConvertDateTimeInt(DateTime.Now.AddDays(product.ExpirationDay)),//过期时间
-                    create_time = FormatHelper.ConvertDateTimeInt(DateTime.Now),
-                    userid = user.Id
-                });
+                    DB.SS.Add(new SS()
+                    {
+                        id = tradeno,
+                        t = FormatHelper.ConvertDateTimeInt(DateTime.Now),//ss服务端更新时间
+                        u = 0,//上传流量
+                        d = 0,//下载流量
+                        transfer_enable = FormatHelper.GB2B(product.Traffic),//long 总套餐流量
+                        port = SSService.GetNextPort(),//端口
+                        password = pwd,//密码
+                        @switch = 1,
+                        enable = 1,
+                        isrest = product.IsRest,//是否重置流量
+                        last_rest_time = FormatHelper.ConvertDateTimeInt(DateTime.Now),//重置流量时间
+                        expiration_time = FormatHelper.ConvertDateTimeInt(DateTime.Now.AddDays(product.ExpirationDay)),//过期时间
+                        create_time = FormatHelper.ConvertDateTimeInt(DateTime.Now),
+                        userid = user.Id
+                    });
+                }
+                else
+                {
+                    ss.id = tradeno;
+                    ss.t = FormatHelper.ConvertDateTimeInt(DateTime.Now);//ss服务端更新时间
+                    ss.u = 0;//上传流量
+                    ss.d = 0;//下载流量
+                    ss.transfer_enable = FormatHelper.GB2B(product.Traffic);//long 总套餐流量
+                    ss.password = pwd;//密码
+                    ss.@switch = 1;
+                    ss.enable = 1;
+                    ss.isrest = product.IsRest;//是否重置流量
+                    ss.last_rest_time = FormatHelper.ConvertDateTimeInt(DateTime.Now);//重置流量时间
+                    ss.expiration_time = FormatHelper.ConvertDateTimeInt(DateTime.Now.AddDays(product.ExpirationDay));//过期时间
+                    ss.create_time = FormatHelper.ConvertDateTimeInt(DateTime.Now);
+                }
                 if (DB.SaveChanges() > 0)
                 {
                     info = "支付成功！";
@@ -411,64 +449,7 @@ namespace SSMM.Services
         #endregion
 
 
-        /// <summary>
-        /// 订单列表
-        /// </summary>
-        /// <param name="offset"></param>
-        /// <param name="limit"></param>
-        /// <param name="totalcount"></param>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public static List<OrderDto> GetOrderList(int offset, int limit, out int totalcount, string key = null)
-        {
-            var models = new List<OrderDto>();
-            using (var DB = new SSMMEntities())
-            {
-                totalcount = DB.Order.Count();
 
-                var list = (from T1 in DB.Order
-                            join T2 in DB.User
-                            on T1.UserId equals T2.Id
-                            select new OrderDto
-                            {
-                                Id = T1.Id,
-                                TradeNumber = T1.TradeNumber,
-                                ProductId = T1.ProductId,
-                                ProductName = T1.ProductName,
-                                Amount = T1.Amount,
-                                CreateTime = T1.CreateTime,
-                                Status = T1.Status,
-                                Type = T1.Type,
-                                UserId = T1.UserId,
-                                UserName = T2.UserName,
-                                Email = T2.Email
-                            }
-                            );
-                if (!string.IsNullOrEmpty(key))
-                    list = list.Where(x => x.TradeNumber.Contains(key) || x.ProductName.Contains(key));
-
-                var result = list.OrderByDescending(x => x.CreateTime)
-                                  .Skip(offset)
-                                  .Take(limit)
-                                  .ToList();
-                result.ForEach(x =>
-                {
-                    models.Add(new OrderDto()
-                    {
-                        Id = x.Id,
-                        TradeNumber = x.TradeNumber,
-                        ProductId = x.ProductId,
-                        ProductName = x.ProductName,
-                        Amount = x.Amount,
-                        CreateTime = x.CreateTime,
-                        Status = x.Status,
-                        Type = x.Type,
-                        UserId = x.UserId
-                    });
-                });
-            }
-            return models;
-        }
 
         /// <summary>
         /// 提现列表
