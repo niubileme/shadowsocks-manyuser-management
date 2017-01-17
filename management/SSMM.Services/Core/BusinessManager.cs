@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SSMM.Cache;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,8 @@ namespace SSMM.Services.Core
                 //thread.Start();
 
                 //Session过期时间
-                HttpContext.Current.Session.Timeout = 60;
+                UserCache.Cache.Load();
+                SettingCache.Cache.Load();
             }
             catch (Exception ex)
             {

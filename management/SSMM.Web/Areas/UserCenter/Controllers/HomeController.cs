@@ -17,6 +17,8 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
             ViewData["User"] = user;
             //SS
             var ss = SSService.Query(user.Id);
+            if (ss == null)
+                ss = new Model.SSDto();
             ViewData["SS"] = ss;
             //公告信息
             var notices = NoticeService.GetList(6);

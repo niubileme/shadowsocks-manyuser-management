@@ -205,6 +205,7 @@
     <Content Include="Areas\UserCenter\Views\Product\My.cshtml" />
     <Content Include="Areas\AdminCenter\Views\CouponCode\List.cshtml" />
     <Content Include="Areas\AdminCenter\Views\CouponCode\Add.cshtml" />
+    <None Include="Properties\PublishProfiles\SSMM.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

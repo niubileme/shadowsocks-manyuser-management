@@ -309,7 +309,7 @@ namespace SSMM.Services
                         @switch = 1,
                         enable = 1,
                         isrest = product.IsRest,//是否重置流量
-                        last_rest_time = FormatHelper.ConvertDateTimeInt(DateTime.Now),//重置流量时间
+                        last_rest_time = FormatHelper.ConvertDateTimeInt(DateTime.Now.AddDays(30)),//重置流量时间
                         expiration_time = FormatHelper.ConvertDateTimeInt(DateTime.Now.AddDays(product.ExpirationDay)),//过期时间
                         create_time = FormatHelper.ConvertDateTimeInt(DateTime.Now),
                         userid = user.Id
@@ -326,7 +326,7 @@ namespace SSMM.Services
                     ss.@switch = 1;
                     ss.enable = 1;
                     ss.isrest = product.IsRest;//是否重置流量
-                    ss.last_rest_time = FormatHelper.ConvertDateTimeInt(DateTime.Now);//重置流量时间
+                    ss.last_rest_time = FormatHelper.ConvertDateTimeInt(DateTime.Now.AddDays(30));//重置流量时间
                     ss.expiration_time = FormatHelper.ConvertDateTimeInt(DateTime.Now.AddDays(product.ExpirationDay));//过期时间
                     ss.create_time = FormatHelper.ConvertDateTimeInt(DateTime.Now);
                 }
@@ -411,7 +411,7 @@ namespace SSMM.Services
                         @switch = 1,
                         enable = 1,
                         isrest = product.IsRest,//是否重置流量
-                        last_rest_time = FormatHelper.ConvertDateTimeInt(DateTime.Now),//重置流量时间
+                        last_rest_time = FormatHelper.ConvertDateTimeInt(DateTime.Now.AddDays(30)),//重置流量时间
                         expiration_time = FormatHelper.ConvertDateTimeInt(DateTime.Now.AddDays(product.ExpirationDay)),//过期时间
                         create_time = FormatHelper.ConvertDateTimeInt(DateTime.Now),
                         userid = user.Id
@@ -428,7 +428,7 @@ namespace SSMM.Services
                     ss.@switch = 1;
                     ss.enable = 1;
                     ss.isrest = product.IsRest;//是否重置流量
-                    ss.last_rest_time = FormatHelper.ConvertDateTimeInt(DateTime.Now);//重置流量时间
+                    ss.last_rest_time = FormatHelper.ConvertDateTimeInt(DateTime.Now.AddDays(30));//重置流量时间
                     ss.expiration_time = FormatHelper.ConvertDateTimeInt(DateTime.Now.AddDays(product.ExpirationDay));//过期时间
                     ss.create_time = FormatHelper.ConvertDateTimeInt(DateTime.Now);
                 }

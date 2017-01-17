@@ -50,6 +50,7 @@ namespace SSMM.Services
                 if (DB.SaveChanges() > 0)
                 {
                     msg = "注册成功！";
+                    UserCache.Cache.UpdateCacheValue(email);
                     return true;
                 }
                 else
@@ -255,6 +256,7 @@ namespace SSMM.Services
                 if (DB.SaveChanges()>0)
                 {
                     info = "修改密码成功！";
+                    UserCache.Cache.UpdateCacheValue(email);
                     return true;
                 }
                 else

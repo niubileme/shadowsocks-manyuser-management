@@ -227,7 +227,7 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
         [HttpPost]
         public JsonResult CheckAlipayTransfer()
         {
-            var uid = RequestHelper.GetValue("uid"); ;
+            var uid = RequestHelper.GetValue("uid"); 
             var pid = RequestHelper.GetValue("pid");
             var pwd = RequestHelper.GetValue("pwd");
             var pcode = RequestHelper.GetValue("pcode");
