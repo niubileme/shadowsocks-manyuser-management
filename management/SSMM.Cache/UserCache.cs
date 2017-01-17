@@ -45,7 +45,7 @@ namespace SSMM.Cache
                         Id = user.Id,
                         UserName = user.UserName,
                         Email = user.Email,
-                        Password = user.Email,
+                        Password = user.Password,
                         QQ = user.QQ,
                         Address = user.Address,
                         Status = user.Status,

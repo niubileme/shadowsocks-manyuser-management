@@ -82,7 +82,7 @@ namespace SSMM.Helper
 
             if (cookie != null)
             {
-                return cookie.Value;
+                return HttpUtility.UrlDecode(cookie.Value);
             }
 
             return "";
@@ -90,7 +90,7 @@ namespace SSMM.Helper
 
         public static void SetValue(string keyName, string val)
         {
-            SetValue(keyName, val, 6);
+            SetValue(keyName, HttpUtility.UrlEncode(val), 2);
         }
 
         public static void SetValue(string keyName, string val, int expiresHour)

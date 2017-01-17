@@ -7,14 +7,14 @@
     var My = ViewData["My"] as MyProductDto;
     var Nodes = ViewData["Nodes"] as List<ServerNodeDto>;
 
-    var day = decimal.Round((decimal)(DateTime.Now - FormatHelper.GetTime(My.create_time)).TotalDays, 0);
-    var p1 = (Convert.ToDouble(day) / Convert.ToDouble(My.ProductExpirationDay) * 100).ToString();
+    var day = My.status ? decimal.Round((decimal)(DateTime.Now - FormatHelper.GetTime(My.create_time)).TotalDays, 0) : 0;
+    var p1 = My.status ? (Convert.ToDouble(day) / Convert.ToDouble(My.ProductExpirationDay) * 100).ToString() : "0";
     var p1style = Convert.ToDouble(p1) > 80 ? "progress-bar-danger" : "";
-    var t = FormatHelper.B2GB(My.d);
-    var p2 = (Convert.ToDouble(t) / Convert.ToDouble(My.ProductTraffic) * 100).ToString();
+    var t = My.status ? FormatHelper.B2GB(My.d) : 0;
+    var p2 = My.status ? (Convert.ToDouble(t) / Convert.ToDouble(My.ProductTraffic) * 100).ToString() : "0";
     var p2style = Convert.ToDouble(p2) > 80 ? "progress-bar-danger" : "";
+    var showp2 = Convert.ToDouble(p2) > 4 ? p2 + "%" : "";
 }
-
 <div class="row">
     <div class="col-lg-12">
         <div class="ibox">
@@ -24,9 +24,7 @@
         </div>
     </div>
 </div>
-
 <div class="row">
-
 
     <div class="col-md-6">
         <div class="ibox-content">
@@ -45,11 +43,9 @@
                         价格：@(My.ProductPrice.ToString("0.00"))元
                     </li>
                 </ul>
-
             </div>
         </div>
     </div>
-
     <div class="col-md-6">
         <div class="ibox-content">
             <div>
@@ -60,21 +56,17 @@
                 <div class="progress m-t">
                     <div style="width: @(p1)%;" class="progress-bar @p1style"></div>
                 </div>
-
                 <div class="m-t-lg">
                     <span class="font-bold">已用流量</span>
                     <span class="pull-right font-bold">@(t)GB / @(My.ProductTraffic)GB</span>
                 </div>
                 <div class="progress m-t">
-                    <div style="width: @(p2)%;" class="progress-bar @p2style"></div>
+                    <div style="width: @(p2)%;" class="progress-bar @p2style">@(showp2)</div>
                 </div>
-
             </div>
         </div>
     </div>
-
 </div>
-
 <div class="row m-t-lg">
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
@@ -87,47 +79,55 @@
                 </div>
             </div>
             <div class="ibox-content" id="onetext">
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th class="">名称</th>
-                                <th>服务器</th>
-                                <th>端口</th>
-                                <th>密码</th>
-                                <th class="">加密协议</th>
-                                <th class=""></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{
-                                if (Nodes != null && Nodes.Count > 0)
-                                {
-                                    foreach (var node in Nodes)
-                                    {
-                                        <tr>
-                                            <td class="">@node.Name</td>
-                                            <td>@(string.IsNullOrEmpty(node.CNAME) ? node.IP : node.CNAME)</td>
-                                            <td>@My.port</td>
-                                            <td>@My.password</td>
-                                            <td class="">rc4-md5</td>
-                                            <td class="">
-                                                <span class="label label-primary">显示二维码</span>
-                                            </td>
-                                        </tr>
+                @{
+                    if (My.status)
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="">名称</th>
+                                        <th>服务器</th>
+                                        <th>端口</th>
+                                        <th>密码</th>
+                                        <th class="">加密协议</th>
+                                        <th class=""></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        if (Nodes != null && Nodes.Count > 0)
+                                        {
+                                            foreach (var node in Nodes)
+                                            {
+                                    <tr>
+                                        <td class="">@node.Name</td>
+                                        <td>@(string.IsNullOrEmpty(node.CNAME) ? node.IP : node.CNAME)</td>
+                                        <td>@My.port</td>
+                                        <td>@My.password</td>
+                                        <td class="">rc4-md5</td>
+                                        <td class="">
+                                            <span class="label label-primary">显示二维码</span>
+                                        </td>
+                                    </tr>
+                                            }
+                                        }
                                     }
-                                }
-                            }
+                                </tbody>
+                            </table>
+                        </div>
 
-                        </tbody>
-                    </table>
-                </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="alert alert-danger">服务节点不可用！请先购买服务后使用！</div>
+                                        }
+                }
+
             </div>
-
         </div>
     </div>
 </div>
-
 @section footscript{
     <script>
         $(document).ready(function () {

@@ -10,7 +10,7 @@
 
     var t1 = FormatHelper.B2GB(SS.transfer_enable);
     var t2 = FormatHelper.B2GB(SS.d);
-    var d = decimal.Round((decimal)(FormatHelper.GetTime(SS.expiration_time) - DateTime.Now).TotalDays, 0);
+    var d = SS.status ? decimal.Round((decimal)(FormatHelper.GetTime(SS.expiration_time) - DateTime.Now).TotalDays, 0) : 0;
     d = d < 0 ? 0 : d;
 }
 <!-- 详情 -->
@@ -111,7 +111,7 @@
                         @*&nbsp;
                             <a href="/UserCenter/Trade/Recharge" class="btn btn-outline btn-warning">充值</a>*@
                         &nbsp;
-                        <a href="" class="btn btn-outline btn-success">提现</a>
+                        <a href="#" class="btn btn-outline btn-success">提现</a>
                     </div>
                 </div>
             </div>

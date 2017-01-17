@@ -47,7 +47,7 @@ namespace SSMM.Services
                 var max = Convert.ToInt32(range.Split('&')[1]);
                 using (var DB = new SSMMEntities())
                 {
-                    var current = DB.SS.OrderByDescending(x => x.port).SingleOrDefault();
+                    var current = DB.SS.OrderByDescending(x => x.port).FirstOrDefault();
                     if (current == null)
                         port = min;
                     else

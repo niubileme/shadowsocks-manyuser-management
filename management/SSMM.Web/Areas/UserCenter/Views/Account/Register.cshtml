@@ -74,6 +74,11 @@
                     showmsg("Email不能为空！");
                     return false;
                 }
+                var emailreg = /\w+([-+.]\w+)*@@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+                if (!emailreg.test(email)) {
+                    showmsg("请输入正确的Email格式！");
+                    return false;
+                }
                 if ($.trim(upwd).length <= 0) {
                     showmsg("密码不能为空！");
                     return false;
