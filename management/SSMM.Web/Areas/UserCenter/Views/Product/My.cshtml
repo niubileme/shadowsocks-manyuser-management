@@ -27,7 +27,7 @@
         if (!My.status)
         {
             <div class="col-lg-12">
-                <div class="alert alert-danger">服务不存在或已过期！请先购买服务后再使用！ &nbsp;&nbsp;<a  href="/UserCenter/Product/List">购买服务</a></div>
+                <div class="alert alert-danger">服务不存在或已过期！请先购买服务后再使用！ &nbsp;&nbsp;<a href="/UserCenter/Product/List">购买服务</a></div>
             </div>
         }
     }
@@ -109,12 +109,12 @@
                                             {
                                                 <tr>
                                                     <td class="">@node.Name</td>
-                                                    <td>@(string.IsNullOrEmpty(node.CNAME) ? node.IP : node.CNAME)</td>
+                                                    <td>@node.IP</td>
                                                     <td>@My.port</td>
                                                     <td>@My.password</td>
                                                     <td class="">rc4-md5</td>
                                                     <td class="">
-                                                        <span class="label label-primary">显示二维码</span>
+                                                        <span class="label label-primary showQRbtn" qr="@node.QRCode">显示二维码</span>
                                                     </td>
                                                 </tr>
                                             }
@@ -134,10 +134,34 @@
         </div>
     </div>
 </div>
+
+<div id="showQRCode" class="modal fade" tabindex="-1" role="dialog" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">二维码</h4>
+            </div>
+            <div class="modal-body">
+                <div id="qrcode" style="width: 256px;margin: 40px auto;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @section footscript{
+    <script src="~/Content/js/qrcode.min.js"></script>
     <script>
         $(document).ready(function () {
-
+            var qrcode = new QRCode('qrcode');
+            //生成二维码
+            $('.showQRbtn').click(function () {
+                var qrtxt = $(this).attr('qr');
+                qrcode.clear();
+                qrcode.makeCode(qrtxt);
+                $('#showQRCode').modal('show');
+            });
         });
     </script>
 }

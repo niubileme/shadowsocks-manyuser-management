@@ -29,11 +29,26 @@
                 showRefresh: true,
                 columns: [
                       {
+                          title: 'Id',
+                          field: 'Id',
+                          align: 'center',
+                          width: 50
+                      },
+                      {
                           title: '交易号',
                           field: 'TradeNumber',
                           align: 'center',
                           width: 100
                       },
+                        {
+                            title: '产品价格',
+                            field: 'Price',
+                            align: 'center',
+                            width: 60,
+                            formatter: function (value, row, index) {
+                                return value.toFixed(2) + '元';
+                            }
+                        },
                         {
                             title: '交易价格',
                             field: 'Amount',
@@ -56,13 +71,13 @@
                               title: '支付类型',
                               field: 'Type',
                               align: 'center',
-                              width: 60
+                              width: 100
                           },
                            {
                                title: '当前状态',
                                field: 'Status',
                                align: 'center',
-                               width: 50
+                               width: 40
                            },
                             {
                                 title: '用户ID',
@@ -80,7 +95,7 @@
                                 title: '用户Email',
                                 field: 'Email',
                                 align: 'center',
-                                width: 100
+                                width: 180
                             }
                 ]
             });

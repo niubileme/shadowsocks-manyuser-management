@@ -124,6 +124,7 @@
     <Content Include="Content\img\pcalipayremark.png" />
     <Content Include="Content\js\inspinia.js" />
     <Content Include="Content\js\main.js" />
+    <Content Include="Content\js\qrcode.min.js" />
     <Content Include="Content\plugins\gritter\images\gritter-light.png" />
     <Content Include="Content\plugins\gritter\images\gritter-long.png" />
     <Content Include="Content\plugins\gritter\images\gritter.png" />

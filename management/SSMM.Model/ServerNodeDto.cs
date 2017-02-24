@@ -15,5 +15,7 @@ namespace SSMM.Model
         public string Description { get; set; }
         public sbyte Status { get; set; }
         public int SortNum { get; set; }
+
+        public string QRCode { get; set; }
     }
 }

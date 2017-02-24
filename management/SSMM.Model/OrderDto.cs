@@ -12,6 +12,7 @@ namespace SSMM.Model
         public string TradeNumber { get; set; }
         public string ProductId { get; set; }
         public string ProductName { get; set; }
+        public decimal Price { get; set; }
         public decimal Amount { get; set; }
         public DateTime CreateTime { get; set; }
         public sbyte Status { get; set; }

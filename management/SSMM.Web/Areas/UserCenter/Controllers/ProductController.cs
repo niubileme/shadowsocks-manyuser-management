@@ -33,7 +33,7 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
             if (my == null || !my.status)
                 //服务不存在 或 已过期
                 my = new MyProductDto();
-            var nodes = ServerNodeService.GetAll();
+            var nodes = ServerNodeService.GetAll(my);
             ViewData["My"] = my;
             ViewData["Nodes"] = nodes;
             return View();

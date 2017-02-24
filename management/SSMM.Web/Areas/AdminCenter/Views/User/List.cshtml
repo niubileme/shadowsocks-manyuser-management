@@ -115,7 +115,7 @@
                                  title: '注册时间',
                                  field: 'CreateTime',
                                  align: 'center',
-                                 width: 150,
+                                 width: 160,
                                  formatter: function (value, row, index) {
                                      return (eval(value.replace(/\/Date\((\d+)\)\//gi, "new Date($1)"))).Format("yyyy-MM-dd hh:mm:ss");
                                  }
@@ -132,17 +132,17 @@
                                       return '<span class="label label-danger">异常</span>';
                                   }
                               }
-                          },
-                          {
-                              title: '操作',
-                              align: 'center',
-                              formatter: function (value, row, index) {
-                                  return [
-                     '<button type="button" class="btn btn-danger btn-sm updatestatusbtn">修改</button>'
-                                  ].join('');
-                              },
-                              events: "operateEvents"
                           }
+                     //     {
+                     //         title: '操作',
+                     //         align: 'center',
+                     //         formatter: function (value, row, index) {
+                     //             return [
+                     //'<button type="button" class="btn btn-danger btn-sm updatestatusbtn">修改</button>'
+                     //             ].join('');
+                     //         },
+                     //         events: "operateEvents"
+                     //     }
                 ]
             });
         });

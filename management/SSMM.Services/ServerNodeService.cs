@@ -1,4 +1,5 @@
 ﻿using SSMM.Entity;
+using SSMM.Helper;
 using SSMM.Model;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace SSMM.Services
     public class ServerNodeService
     {
 
-        public static List<ServerNodeDto> GetAll()
+        public static List<ServerNodeDto> GetAll(MyProductDto my)
         {
             var nodes = new List<ServerNodeDto>();
             using (var DB = new SSMMEntities())
@@ -27,7 +28,8 @@ namespace SSMM.Services
                         CNAME = x.CNAME,
                         Description = x.Description,
                         Status = x.Status,
-                        SortNum = x.SortNum
+                        SortNum = x.SortNum,
+                        QRCode = $"ss://{FormatHelper.EncodeBase64ByUTF8($"rc4-md5:{my.password}@{x.IP}:{my.port}")}"
                     });
                 });
             }

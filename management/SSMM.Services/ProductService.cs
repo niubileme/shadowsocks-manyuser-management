@@ -22,6 +22,7 @@ namespace SSMM.Services
                           join product in DB.Product
                           on order.ProductId equals product.Id
                           where ss.userid == userid
+                          orderby order.CreateTime descending
                           select new MyProductDto
                           {
                               ProductId = product.Id,
@@ -41,7 +42,7 @@ namespace SSMM.Services
                               expiration_time = ss.expiration_time,
                               create_time = ss.create_time,
                               userid = ss.userid
-                          }).SingleOrDefault();
+                          }).FirstOrDefault();
                 if (my == null)
                     return null;
                 return my;

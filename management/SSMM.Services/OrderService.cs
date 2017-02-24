@@ -27,6 +27,7 @@ namespace SSMM.Services
                     TradeNumber = order.TradeNumber,
                     ProductId = order.ProductId,
                     ProductName = order.ProductName,
+                    Price = order.Price,
                     Amount = order.Amount,
                     CreateTime = order.CreateTime,
                     Status = order.Status,
@@ -42,7 +43,6 @@ namespace SSMM.Services
         /// </summary>
         public static List<OrderDto> GetOrderList(int offset, int limit, out int totalcount, string key = null)
         {
-            var models = new List<OrderDto>();
             using (var DB = new SSMMEntities())
             {
                 totalcount = DB.Order.Count();
@@ -56,6 +56,7 @@ namespace SSMM.Services
                                 TradeNumber = T1.TradeNumber,
                                 ProductId = T1.ProductId,
                                 ProductName = T1.ProductName,
+                                Price = T1.Price,
                                 Amount = T1.Amount,
                                 CreateTime = T1.CreateTime,
                                 Status = T1.Status,
@@ -66,31 +67,14 @@ namespace SSMM.Services
                             }
                             );
                 if (!string.IsNullOrEmpty(key))
-                    list = list.Where(x => x.TradeNumber.Contains(key) || x.ProductName.Contains(key));
+                    list = list.Where(x => x.TradeNumber.Contains(key) || x.Email.Contains(key) || x.UserId.Equals(key));
 
                 var result = list.OrderByDescending(x => x.CreateTime)
                                   .Skip(offset)
                                   .Take(limit)
                                   .ToList();
-                result.ForEach(x =>
-                {
-                    models.Add(new OrderDto()
-                    {
-                        Id = x.Id,
-                        TradeNumber = x.TradeNumber,
-                        ProductId = x.ProductId,
-                        ProductName = x.ProductName,
-                        Amount = x.Amount,
-                        CreateTime = x.CreateTime,
-                        Status = x.Status,
-                        Type = x.Type,
-                        UserId = x.UserId,
-                        UserName = x.UserName,
-                        Email = x.Email
-                    });
-                });
+                return result;
             }
-            return models;
         }
     }
 }
