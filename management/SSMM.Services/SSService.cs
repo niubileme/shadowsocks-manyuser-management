@@ -45,16 +45,23 @@ namespace SSMM.Services
                     throw new Exception("请先后台配置ss连接端口范围");
                 var min = Convert.ToInt32(range.Split('&')[0]);
                 var max = Convert.ToInt32(range.Split('&')[1]);
+                //生成所有可使用的端口
+                var all = new List<int>();
+                for (int i = min; i <= max; i++)
+                {
+                    all.Add(i);
+                }
+                //获取所有已使用的端口
+                var ports = new List<int>();
                 using (var DB = new SSMMEntities())
                 {
-                    var current = DB.SS.OrderByDescending(x => x.port).FirstOrDefault();
-                    if (current == null)
-                        port = min;
-                    else
-                        port = current.port + 1;
+                    ports = DB.SS.OrderBy(x => x.port).Select(x => x.port).ToList();
                 }
-                if (port > max)
-                    throw new Exception("端口已超过最大范围");
+                //获取差集
+                var except = all.Except(ports).ToList();
+                if (except.Count < 1)
+                    throw new Exception($"{min}-{max}之间的端口已被占用！");
+                port = except.First();
                 return port;
             }
         }

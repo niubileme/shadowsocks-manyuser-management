@@ -318,7 +318,6 @@ namespace SSMM.Services
                 }
                 else
                 {
-                    ss.id = tradeno;
                     ss.t = FormatHelper.ConvertDateTimeInt(DateTime.Now);//ss服务端更新时间
                     ss.u = 0;//上传流量
                     ss.d = 0;//下载流量
@@ -420,7 +419,6 @@ namespace SSMM.Services
                 }
                 else
                 {
-                    ss.id = tradeno;
                     ss.t = FormatHelper.ConvertDateTimeInt(DateTime.Now);//ss服务端更新时间
                     ss.u = 0;//上传流量
                     ss.d = 0;//下载流量
