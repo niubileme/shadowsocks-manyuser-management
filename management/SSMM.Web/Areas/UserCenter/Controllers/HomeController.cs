@@ -17,7 +17,8 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
             ViewData["User"] = user;
             //SS
             var ss = SSService.Query(user.Id);
-            if (ss == null)
+            if (ss == null||!ss.status)
+                //新用户 或者 服务已到期的用户 ss信息应为空
                 ss = new Model.SSDto();
             ViewData["SS"] = ss;
             //公告信息

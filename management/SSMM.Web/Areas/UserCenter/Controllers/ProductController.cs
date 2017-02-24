@@ -30,7 +30,8 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
             var email = CookieHelper.Email;
             var user = UserCache.Cache.GetValue(email);
             var my = ProductService.MyInfo(user.Id);
-            if (my == null)
+            if (my == null || !my.status)
+                //服务不存在 或 已过期
                 my = new MyProductDto();
             var nodes = ServerNodeService.GetAll();
             ViewData["My"] = my;

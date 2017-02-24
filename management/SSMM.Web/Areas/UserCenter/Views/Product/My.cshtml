@@ -23,9 +23,16 @@
             </div>
         </div>
     </div>
+    @{
+        if (!My.status)
+        {
+            <div class="col-lg-12">
+                <div class="alert alert-danger">服务不存在或已过期！请先购买服务后再使用！ &nbsp;&nbsp;<a  href="/UserCenter/Product/List">购买服务</a></div>
+            </div>
+        }
+    }
 </div>
 <div class="row">
-
     <div class="col-md-6">
         <div class="ibox-content">
             <div>
@@ -100,16 +107,16 @@
                                         {
                                             foreach (var node in Nodes)
                                             {
-                                    <tr>
-                                        <td class="">@node.Name</td>
-                                        <td>@(string.IsNullOrEmpty(node.CNAME) ? node.IP : node.CNAME)</td>
-                                        <td>@My.port</td>
-                                        <td>@My.password</td>
-                                        <td class="">rc4-md5</td>
-                                        <td class="">
-                                            <span class="label label-primary">显示二维码</span>
-                                        </td>
-                                    </tr>
+                                                <tr>
+                                                    <td class="">@node.Name</td>
+                                                    <td>@(string.IsNullOrEmpty(node.CNAME) ? node.IP : node.CNAME)</td>
+                                                    <td>@My.port</td>
+                                                    <td>@My.password</td>
+                                                    <td class="">rc4-md5</td>
+                                                    <td class="">
+                                                        <span class="label label-primary">显示二维码</span>
+                                                    </td>
+                                                </tr>
                                             }
                                         }
                                     }
@@ -120,10 +127,9 @@
                                         }
                                         else
                                         {
-                                            <div class="alert alert-danger">服务节点不可用！请先购买服务后使用！</div>
+                                            <div class="alert alert-danger">服务节点不可用！请先购买服务后使用！&nbsp;&nbsp;<a href="/UserCenter/Product/List">购买服务</a></div>
                                         }
                 }
-
             </div>
         </div>
     </div>
