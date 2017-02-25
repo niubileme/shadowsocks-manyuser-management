@@ -136,9 +136,11 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
             }
             //清除会话
             Session.Remove("ValidateCode");
+            //aff
+            var affcode = CookieHelper.AffCode;
             var info = "";
             //注册
-            var result = UserService.Register(username, email, password, out info);
+            var result = UserService.Register(username, email, password, affcode, out info);
             if (!result)
             {
                 return Json(new { result = false, info = info }, JsonRequestBehavior.DenyGet);

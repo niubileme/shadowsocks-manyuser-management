@@ -14,12 +14,13 @@ namespace SSMM.Helper
         private const string IM = "ISMANAGER";
         private const string UN = "UN";
         private const string E = "EMAIL";
+        private const string AFF = "AFFCODE";
 
         public static string Domain
         {
             get
             {
-                //var dom = ".xxx.com";
+                //var dom = ".autumnss.com";
                 var dom = "";
                 return dom;
             }
@@ -35,6 +36,11 @@ namespace SSMM.Helper
         {
             get { return GetValue(E); }
             set { SetValue(E, value); }
+        }
+        public static string AffCode
+        {
+            get { return GetValue(AFF); }
+            set { SetValue(AFF, value, 24 * 7); }//7天有效期
         }
 
         public static void SetLogin(string email, string username, int ismanager)

@@ -22,7 +22,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Code" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Des" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="CreateTime" Type="datetime" Precision="0" Nullable="false" />
@@ -132,6 +132,7 @@
           <Property Name="CreateTime" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="IsManager" Type="tinyint" Nullable="false" />
           <Property Name="AffCode" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ParentId" Type="int" />
         </EntityType>
         <EntityContainer Name="SSMMModelStoreContainer">
           <EntitySet Name="Bill" EntityType="Self.Bill" Schema="SSMM" store:Type="Tables" />
@@ -263,6 +264,7 @@
           <Property Name="CreateTime" Type="DateTime" Nullable="false" />
           <Property Name="IsManager" Type="SByte" Nullable="false" />
           <Property Name="AffCode" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ParentId" Type="Int32" />
         </EntityType>
         <EntityContainer Name="SSMMEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Bill" EntityType="Self.Bill" />
@@ -405,6 +407,7 @@
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="SSMMModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Email" ColumnName="Email" />

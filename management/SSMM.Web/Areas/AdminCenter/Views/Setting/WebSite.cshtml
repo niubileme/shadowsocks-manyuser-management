@@ -9,6 +9,14 @@
     <div class="col-lg-12">
         <form class="form-horizontal" id="form">
             <div class="form-group">
+                <label class="col-sm-2 control-label">网站Url </label>
+                <div class="col-sm-10">
+                    <input type="text" id="url" class="form-control" placeholder="网站Url" value="@ViewBag.WebSiteUrl">
+                    <span class="help-block m-b-none">网站域名，后面需要带上/ ，如： http://localhost:4777/ </span>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
                 <label class="col-sm-2 control-label">网站标题</label>
                 <div class="col-sm-10">
                     <input type="text" id="title" class="form-control" placeholder="网站标题" value="@ViewBag.WebSiteTitle">
@@ -60,6 +68,7 @@
             });
             $('#btnsubmit').click(function () {
                 $('.msg').addClass('hidden');
+                var url = $('#url').val();
                 var title = $('#title').val();
                 var keywords = $('#keywords').val();
                 var des = $('#des').val();
@@ -68,7 +77,7 @@
                     url: "/AdminCenter/Setting/WebSitePost",
                     dataType: "json",
                     type: "post",
-                    data: { title: title, keywords: keywords, des: des, code: code },
+                    data: { url: url, title: title, keywords: keywords, des: des, code: code },
                     success: function (data) {
                         if (data.result) {
                             showmsg('修改成功！')

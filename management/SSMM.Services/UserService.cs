@@ -16,12 +16,7 @@ namespace SSMM.Services
         /// <summary>
         /// 注册用户
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="email"></param>
-        /// <param name="password"></param>
-        /// <param name="msg"></param>
-        /// <returns></returns>
-        public static bool Register(string username, string email, string password, out string msg)
+        public static bool Register(string username, string email, string password, string affcode, out string msg)
         {
             msg = "";
             using (var DB = new SSMMEntities())
@@ -32,6 +27,14 @@ namespace SSMM.Services
                 {
                     msg = "Email已存在！";
                     return false;
+                }
+                //aff
+                var pid = 0;
+                if (!string.IsNullOrEmpty(affcode))
+                {
+                    var parent = DB.User.FirstOrDefault(x => x.AffCode == affcode);
+                    if (parent != null)
+                        pid = parent.Id;
                 }
                 //添加
                 DB.User.Add(new User()
@@ -45,7 +48,8 @@ namespace SSMM.Services
                     Balance = 0,
                     CreateTime = DateTime.Now,
                     IsManager = 0,
-                    AffCode = Guid.NewGuid().ToString("n")
+                    AffCode = Guid.NewGuid().ToString("n"),
+                    ParentId = pid
                 });
                 if (DB.SaveChanges() > 0)
                 {
@@ -72,37 +76,6 @@ namespace SSMM.Services
         {
             msg = "";
             currentuser = null;
-            //using (var DB = new SSMMEntities())
-            //{
-            //    //检查用户是否存在
-            //    var user = DB.User.FirstOrDefault(x => x.Email == email);
-            //    if (user == null)
-            //    {
-            //        msg = "该用户不存在！";
-            //        return false;
-            //    }
-            //    //判断密码
-            //    if (FormatHelper.GetMD5ByString(password) != user.Password)
-            //    {
-            //        msg = "输入的密码不正确！";
-            //        return false;
-            //    }
-            //    currentuser = new UserDto()
-            //    {
-            //        Id = user.Id,
-            //        UserName = user.UserName,
-            //        Email = user.Email,
-            //        Password = user.Email,
-            //        QQ = user.QQ,
-            //        Address = user.Address,
-            //        Status = user.Status,
-            //        Balance = user.Balance,
-            //        CreateTime = user.CreateTime,
-            //        IsManager = user.IsManager,
-            //        AffCode = user.AffCode
-            //    };
-            //    return true;
-            //}
             //通过缓存判断
             var user = UserCache.Cache.GetValue(email);
             if (user == null)
@@ -120,20 +93,7 @@ namespace SSMM.Services
                     return false;
                 }
             }
-            currentuser = new UserDto()
-            {
-                Id = user.Id,
-                UserName = user.UserName,
-                Email = user.Email,
-                Password = user.Email,
-                QQ = user.QQ,
-                Address = user.Address,
-                Status = user.Status,
-                Balance = user.Balance,
-                CreateTime = user.CreateTime,
-                IsManager = user.IsManager,
-                AffCode = user.AffCode
-            };
+            currentuser = user;
             return true;
         }
 
@@ -172,7 +132,8 @@ namespace SSMM.Services
                         Balance = x.Balance,
                         CreateTime = x.CreateTime,
                         IsManager = x.IsManager,
-                        AffCode = x.AffCode
+                        AffCode = x.AffCode,
+                        ParentId = x.ParentId.HasValue ? x.ParentId.Value : 0
                     });
                 });
             }
@@ -229,31 +190,34 @@ namespace SSMM.Services
                     Balance = user.Balance,
                     CreateTime = user.CreateTime,
                     IsManager = user.IsManager,
-                    AffCode = user.AffCode
+                    AffCode = user.AffCode,
+                    ParentId = user.ParentId.HasValue ? user.ParentId.Value : 0
                 };
             }
         }
 
-
-        public static bool RestPassword(string email,string oldpwd, string newpwd, out string info)
+        /// <summary>
+        /// 充值密码
+        /// </summary>
+        public static bool RestPassword(string email, string oldpwd, string newpwd, out string info)
         {
             info = "";
-            using (var DB=new SSMMEntities())
+            using (var DB = new SSMMEntities())
             {
-                var user = DB.User.SingleOrDefault(x=>x.Email==email);
-                if (user==null)
+                var user = DB.User.SingleOrDefault(x => x.Email == email);
+                if (user == null)
                 {
                     info = "该用户不存在！";
                     return false;
                 }
                 oldpwd = FormatHelper.GetMD5ByString(oldpwd);
-                if (oldpwd!=user.Password)
+                if (oldpwd != user.Password)
                 {
                     info = "原始密码不正确！";
                     return false;
                 }
                 user.Password = FormatHelper.GetMD5ByString(newpwd);
-                if (DB.SaveChanges()>0)
+                if (DB.SaveChanges() > 0)
                 {
                     info = "修改密码成功！";
                     UserCache.Cache.UpdateCacheValue(email);
@@ -267,5 +231,36 @@ namespace SSMM.Services
             }
         }
 
+
+        /// <summary>
+        /// 获取邀请客户列表
+        /// </summary>
+        public static List<UserDto> GetCustomers(int userid)
+        {
+            var users = new List<UserDto>();
+            using (var DB = new SSMMEntities())
+            {
+                var list = DB.User.Where(x => x.ParentId == userid).OrderByDescending(x => x.CreateTime).ToList();
+                list.ForEach(x =>
+                {
+                    users.Add(new UserDto()
+                    {
+                        Id = x.Id,
+                        UserName = x.UserName,
+                        Email = x.Email,
+                        Password = x.Email,
+                        QQ = x.QQ,
+                        Address = x.Address,
+                        Status = x.Status,
+                        Balance = x.Balance,
+                        CreateTime = x.CreateTime,
+                        IsManager = x.IsManager,
+                        AffCode = x.AffCode,
+                        ParentId = x.ParentId.HasValue ? x.ParentId.Value : 0
+                    });
+                });
+            }
+            return users;
+        }
     }
 }

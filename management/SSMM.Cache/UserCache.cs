@@ -52,7 +52,8 @@ namespace SSMM.Cache
                         Balance = user.Balance,
                         CreateTime = user.CreateTime,
                         IsManager = user.IsManager,
-                        AffCode = user.AffCode
+                        AffCode = user.AffCode,
+                        ParentId = user.ParentId.HasValue ? user.ParentId.Value : 0
                     };
                     return dto;
                 }
@@ -77,7 +78,8 @@ namespace SSMM.Cache
                     Balance = value.Balance,
                     CreateTime = value.CreateTime,
                     IsManager = value.IsManager,
-                    AffCode = value.AffCode
+                    AffCode = value.AffCode,
+                    ParentId = value.ParentId.HasValue ? value.ParentId.Value : 0
                 });
             }
             return dic;

@@ -155,6 +155,7 @@ namespace SSMM.Services
             {
                 var request = (HttpWebRequest)WebRequest.Create(apiurl);
                 request.Method = "get";
+                request.Timeout = 1000 * 5;
                 var response = (HttpWebResponse)request.GetResponse();
                 using (StreamReader sr = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
                 {
@@ -164,6 +165,7 @@ namespace SSMM.Services
             catch (Exception)
             {
                 code = "";
+                remark = "支付服务响应失败！请稍后再试！";
             }
             if (string.IsNullOrEmpty(code))
             {

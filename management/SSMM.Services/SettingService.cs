@@ -23,25 +23,33 @@ namespace SSMM.Services
                 {
                     if (val.Value == value) return true;
                     val.Value = value;
-                    if (DB.SaveChanges() > 0)
+                }
+                else
+                {
+                    DB.Setting.Add(new Setting()
                     {
-                        SettingCache.Cache.UpdateCacheValue(key);
-                        return true;
-                    }
+                        Key = key,
+                        Value = value
+                    });
+                }
+                if (DB.SaveChanges() > 0)
+                {
+                    SettingCache.Cache.UpdateCacheValue(key);
+                    return true;
                 }
                 return false;
             }
         }
 
-        public static bool WebSite(string title, string keywords, string des, string code)
+        public static bool WebSite(string url, string title, string keywords, string des, string code)
         {
-            return Set(SettingFlag.WebSiteTitle, title) && Set(SettingFlag.WebSiteKeywords, keywords) && Set(SettingFlag.WebSiteDescription, des) && Set(SettingFlag.StatisticalCode, code);
+            return Set(SettingFlag.WebSiteUrl, url) && Set(SettingFlag.WebSiteTitle, title) && Set(SettingFlag.WebSiteKeywords, keywords) && Set(SettingFlag.WebSiteDescription, des) && Set(SettingFlag.StatisticalCode, code);
 
         }
 
-        public static bool Basic(string alipayaccount, string alipayremarksearchapi,string portrange)
+        public static bool Basic(string alipayaccount, string alipayremarksearchapi, string portrange, int rebatenum)
         {
-            return Set(SettingFlag.AlipayAccount, alipayaccount) && Set(SettingFlag.AlipayRemarkSearchApi, alipayremarksearchapi)&& Set(SettingFlag.SSPortRange, portrange);
+            return Set(SettingFlag.AlipayAccount, alipayaccount) && Set(SettingFlag.AlipayRemarkSearchApi, alipayremarksearchapi) && Set(SettingFlag.SSPortRange, portrange) && Set(SettingFlag.RebateNum, rebatenum.ToString());
 
         }
 

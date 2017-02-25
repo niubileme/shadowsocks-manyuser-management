@@ -1,4 +1,6 @@
-﻿using SSMM.Helper;
+﻿using SSMM.Cache;
+using SSMM.Helper;
+using SSMM.Model;
 using SSMM.Services;
 using System;
 using System.Collections.Generic;
@@ -15,6 +17,10 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
             var email = CookieHelper.Email;
             var user = UserService.Query(email);
             ViewData["User"] = user;
+            //推广链接
+            var website = SettingCache.Cache.Get(SettingFlag.WebSiteUrl);
+            var affurl= $"{website}?aff={user.AffCode}";
+            ViewData["AffUrl"] = affurl;
             //SS
             var ss = SSService.Query(user.Id);
             if (ss == null||!ss.status)

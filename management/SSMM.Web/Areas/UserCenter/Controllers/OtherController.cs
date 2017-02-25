@@ -1,4 +1,7 @@
-﻿using SSMM.Services;
+﻿using SSMM.Cache;
+using SSMM.Helper;
+using SSMM.Model;
+using SSMM.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +41,23 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
             if (notice == null)
                 return RedirectToAction("Notice");
             ViewData["Notice"] = notice;
+            return View();
+        }
+
+
+
+        /// <summary>
+        /// 推广计划
+        /// </summary>
+        public ActionResult Aff()
+        {
+            var user = UserCache.Cache.GetValue(CookieHelper.Email);
+            var website= SettingCache.Cache.Get(SettingFlag.WebSiteUrl);
+            var num = SettingCache.Cache.Get(SettingFlag.RebateNum);
+            var customers = UserService.GetCustomers(user.Id);
+            ViewData["Url"] = $"{website}?aff={user.AffCode}";
+            ViewData["RebateNum"] = num;
+            ViewData["Customers"] = customers;
             return View();
         }
     }

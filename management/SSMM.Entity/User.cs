@@ -25,5 +25,6 @@ namespace SSMM.Entity
         public System.DateTime CreateTime { get; set; }
         public sbyte IsManager { get; set; }
         public string AffCode { get; set; }
+        public Nullable<int> ParentId { get; set; }
     }
 }

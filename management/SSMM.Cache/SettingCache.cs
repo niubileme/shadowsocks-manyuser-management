@@ -71,7 +71,7 @@ namespace SSMM.Cache
             if (dto != null)
                 return dto.Value;
             else
-                return null;
+                return "";
         }
 
     }

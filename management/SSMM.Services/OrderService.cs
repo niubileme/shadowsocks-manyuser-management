@@ -14,6 +14,20 @@ namespace SSMM.Services
     public class OrderService
     {
 
+        /// <summary>
+        /// 判断是否为新用户
+        /// 没有购买服务的
+        /// </summary>
+        public static bool IsNew(int userid)
+        {
+            using (var DB = new SSMMEntities())
+            {
+                return DB.Order.Count(x => x.UserId == userid) == 0;
+            }
+        }
+
+
+
         public static OrderDto Query(string tradeno)
         {
             using (var DB = new SSMMEntities())

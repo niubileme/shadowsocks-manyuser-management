@@ -9,6 +9,10 @@ namespace SSMM.Model
     public enum SettingFlag
     {
         /// <summary>
+        /// 网站Url
+        /// </summary>
+        WebSiteUrl,
+        /// <summary>
         /// 网站标题
         /// </summary>
         WebSiteTitle,
@@ -24,6 +28,11 @@ namespace SSMM.Model
         /// 统计代码
         /// </summary>
         StatisticalCode,
+
+        /// <summary>
+        /// 返佣比例
+        /// </summary>
+        RebateNum,
 
 
         /// <summary>

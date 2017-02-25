@@ -19,5 +19,6 @@ namespace SSMM.Model
         public DateTime CreateTime { get; set; }
         public sbyte IsManager { get; set; }
         public string AffCode { get; set; }
+        public int ParentId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SSMM.Cache;
+using SSMM.Helper;
 using SSMM.Model;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,10 @@ namespace SSMM.Web.Controllers
             ViewBag.WebSiteTitle = SettingCache.Cache.Get(SettingFlag.WebSiteTitle);
             ViewBag.WebSiteKeywords = SettingCache.Cache.Get(SettingFlag.WebSiteKeywords);
             ViewBag.WebSiteDescription = SettingCache.Cache.Get(SettingFlag.WebSiteDescription);
+            //aff
+            var affcode = RequestHelper.GetValue("aff");
+            if (!string.IsNullOrEmpty(affcode))
+                CookieHelper.AffCode = affcode;
             return View();
         }
     }
