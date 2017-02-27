@@ -5,18 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="SSMMModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.1" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Bill">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="CreateTime" Type="datetime" Precision="0" Nullable="false" />
-          <Property Name="Type" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="Status" Type="tinyint" Nullable="false" />
-          <Property Name="TransferAccount" Type="varchar" MaxLength="255" Nullable="false" />
-        </EntityType>
         <EntityType Name="CouponCode">
           <Key>
             <PropertyRef Name="Id" />
@@ -29,6 +17,15 @@
           <Property Name="ExpirationTime" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="MaxCount" Type="int" Nullable="false" />
           <Property Name="Status" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Message" Type="text" Nullable="false" />
         </EntityType>
         <EntityType Name="Notice">
           <Key>
@@ -68,7 +65,7 @@
           <Property Name="IsRest" Type="tinyint" Nullable="false" />
           <Property Name="SortNum" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Recharge">
+        <EntityType Name="Record">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -76,8 +73,9 @@
           <Property Name="Amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="CreateTime" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="Type" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Status" Type="tinyint" Nullable="false" />
+          <Property Name="Info" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Remark" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="ServerNode">
           <Key>
@@ -135,12 +133,12 @@
           <Property Name="ParentId" Type="int" />
         </EntityType>
         <EntityContainer Name="SSMMModelStoreContainer">
-          <EntitySet Name="Bill" EntityType="Self.Bill" Schema="SSMM" store:Type="Tables" />
           <EntitySet Name="CouponCode" EntityType="Self.CouponCode" Schema="SSMM" store:Type="Tables" />
+          <EntitySet Name="Log" EntityType="Self.Log" Schema="SSMM" store:Type="Tables" />
           <EntitySet Name="Notice" EntityType="Self.Notice" Schema="SSMM" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="SSMM" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="SSMM" store:Type="Tables" />
-          <EntitySet Name="Recharge" EntityType="Self.Recharge" Schema="SSMM" store:Type="Tables" />
+          <EntitySet Name="Record" EntityType="Self.Record" Schema="SSMM" store:Type="Tables" />
           <EntitySet Name="ServerNode" EntityType="Self.ServerNode" Schema="SSMM" store:Type="Tables" />
           <EntitySet Name="Setting" EntityType="Self.Setting" Schema="SSMM" store:Type="Tables" />
           <EntitySet Name="SS" EntityType="Self.SS" Schema="SSMM" store:Type="Tables" />
@@ -150,18 +148,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SSMMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Bill">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Amount" Type="Decimal" Nullable="false" />
-          <Property Name="CreateTime" Type="DateTime" Nullable="false" />
-          <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="Status" Type="SByte" Nullable="false" />
-          <Property Name="TransferAccount" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-        </EntityType>
         <EntityType Name="Notice">
           <Key>
             <PropertyRef Name="Id" />
@@ -199,17 +185,6 @@
           <Property Name="Price" Type="Decimal" Nullable="false" />
           <Property Name="IsRest" Type="SByte" Nullable="false" />
           <Property Name="SortNum" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Recharge">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Amount" Type="Decimal" Nullable="false" />
-          <Property Name="CreateTime" Type="DateTime" Nullable="false" />
-          <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Status" Type="SByte" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="ServerNode">
           <Key>
@@ -267,16 +242,16 @@
           <Property Name="ParentId" Type="Int32" />
         </EntityType>
         <EntityContainer Name="SSMMEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Bill" EntityType="Self.Bill" />
           <EntitySet Name="Notice" EntityType="Self.Notice" />
           <EntitySet Name="Order" EntityType="Self.Order" />
           <EntitySet Name="Product" EntityType="Self.Product" />
-          <EntitySet Name="Recharge" EntityType="Self.Recharge" />
           <EntitySet Name="ServerNode" EntityType="Self.ServerNode" />
           <EntitySet Name="Setting" EntityType="Self.Setting" />
           <EntitySet Name="SS" EntityType="Self.SS" />
           <EntitySet Name="User" EntityType="Self.User" />
           <EntitySet Name="CouponCode" EntityType="SSMMModel.CouponCode" />
+          <EntitySet Name="Log" EntityType="SSMMModel.Log" />
+          <EntitySet Name="Record" EntityType="SSMMModel.Record" />
         </EntityContainer>
         <EntityType Name="CouponCode">
           <Key>
@@ -291,25 +266,33 @@
           <Property Name="MaxCount" Type="Int32" Nullable="false" />
           <Property Name="Status" Type="SByte" Nullable="false" />
         </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Record">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Info" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SSMMModelStoreContainer" CdmEntityContainer="SSMMEntities">
-          <EntitySetMapping Name="Bill">
-            <EntityTypeMapping TypeName="SSMMModel.Bill">
-              <MappingFragment StoreEntitySet="Bill">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="TransferAccount" ColumnName="TransferAccount" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Notice">
             <EntityTypeMapping TypeName="SSMMModel.Notice">
               <MappingFragment StoreEntitySet="Notice">
@@ -348,18 +331,6 @@
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="IsRest" ColumnName="IsRest" />
                 <ScalarProperty Name="SortNum" ColumnName="SortNum" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Recharge">
-            <EntityTypeMapping TypeName="SSMMModel.Recharge">
-              <MappingFragment StoreEntitySet="Recharge">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -432,6 +403,29 @@
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="Des" ColumnName="Des" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Log">
+            <EntityTypeMapping TypeName="SSMMModel.Log">
+              <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Record">
+            <EntityTypeMapping TypeName="SSMMModel.Record">
+              <MappingFragment StoreEntitySet="Record">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Info" ColumnName="Info" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

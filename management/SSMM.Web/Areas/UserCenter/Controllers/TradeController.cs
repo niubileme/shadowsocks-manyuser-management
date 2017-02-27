@@ -32,7 +32,7 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
                 return Json(new { result = false, info = "交易号不能为空！" }, JsonRequestBehavior.DenyGet);
             }
             var info = "";
-            var result = TradeService.AccountRecharge(email, tradeno, out info);
+            var result = false;
             return Json(new { result = result, info = info }, JsonRequestBehavior.DenyGet);
         }
 

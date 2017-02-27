@@ -59,10 +59,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bill.cs">
+    <Compile Include="CouponCode.cs">
       <DependentUpon>SSMM.tt</DependentUpon>
     </Compile>
-    <Compile Include="CouponCode.cs">
+    <Compile Include="Log.cs">
       <DependentUpon>SSMM.tt</DependentUpon>
     </Compile>
     <Compile Include="Notice.cs">
@@ -75,7 +75,7 @@
       <DependentUpon>SSMM.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Recharge.cs">
+    <Compile Include="Record.cs">
       <DependentUpon>SSMM.tt</DependentUpon>
     </Compile>
     <Compile Include="ServerNode.cs">

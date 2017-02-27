@@ -27,59 +27,7 @@ namespace SSMM.Services
             }
         }
 
-        /// <summary>
-        /// 账户充值
-        /// </summary>
-        public static bool AccountRecharge(string email, string tradeno, out string info)
-        {
-            info = "";
-            //验证是否已记录
-            if (TradeNoIsExist(tradeno, PaymentType.支付宝转账))
-            {
-                info = "该交易号已充值！";
-                return false;
-            }
-            //查询转账记录
-            var remark = "";
-            decimal amount = 0;
-            if (!QueryAlipayTradeNoSearchApi(tradeno, out amount, out remark))
-            {
-                info = "没有找到相关充值记录！请确定交易号是否正确！";
-                return false;
-            }
-            var CurrentUser = UserCache.Cache.GetValue(email);
-            if (CurrentUser == null)
-            {
-                info = "请确保账号正确，且正常登录！";
-                return false;
-            }
-            //插入记录
-            using (var DB = new SSMMEntities())
-            {
-                //余额
-                var user = DB.User.Find(CurrentUser.Id);
-                user.Balance += amount;
-                //记录
-                DB.Recharge.Add(new Recharge()
-                {
-                    Amount = amount,
-                    CreateTime = DateTime.Now,
-                    Status = 1,
-                    Type = PaymentType.支付宝转账.ToString(),
-                    UserId = user.Id
-                });
-                if (DB.SaveChanges() > 0)
-                {
-                    info = $"充值成功！金额：{amount.ToString("0.00")}元";
-                    return true;
-                }
-                else
-                {
-                    info = "出现异常！请稍后再试！";
-                    return false;
-                }
-            }
-        }
+       
 
 
         /// <summary>
@@ -332,6 +280,17 @@ namespace SSMM.Services
                     ss.expiration_time = FormatHelper.ConvertDateTimeInt(DateTime.Now.AddDays(product.ExpirationDay));//过期时间
                     ss.create_time = FormatHelper.ConvertDateTimeInt(DateTime.Now);
                 }
+                //返佣
+                if (user.ParentId.Value != 0)
+                {
+                    var parent = DB.User.Find(user.ParentId.Value);
+                    if (parent != null)
+                    {
+                        var num = Convert.ToInt32(SettingCache.Cache.Get(SettingFlag.RebateNum)) * 0.01;
+                        var agentamounts = amount * (decimal)num;//返佣金额为最终优惠后的实际交易价格的返佣百分比
+                        parent.Balance += agentamounts;
+                    }
+                }
                 if (DB.SaveChanges() > 0)
                 {
                     info = "支付成功！";
@@ -433,6 +392,17 @@ namespace SSMM.Services
                     ss.expiration_time = FormatHelper.ConvertDateTimeInt(DateTime.Now.AddDays(product.ExpirationDay));//过期时间
                     ss.create_time = FormatHelper.ConvertDateTimeInt(DateTime.Now);
                 }
+                //返佣
+                if (user.ParentId.Value != 0)
+                {
+                    var parent = DB.User.Find(user.ParentId.Value);
+                    if (parent != null)
+                    {
+                        var num = Convert.ToInt32(SettingCache.Cache.Get(SettingFlag.RebateNum)) * 0.01;
+                        var agentamounts = amount * (decimal)num;//返佣金额为最终优惠后的实际交易价格的返佣百分比
+                        parent.Balance += agentamounts;
+                    }
+                }
                 if (DB.SaveChanges() > 0)
                 {
                     info = "支付成功！";
@@ -452,42 +422,5 @@ namespace SSMM.Services
 
 
 
-        /// <summary>
-        /// 提现列表
-        /// </summary>
-        /// <param name="offset"></param>
-        /// <param name="limit"></param>
-        /// <param name="totalcount"></param>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public static List<BillDto> GetBillList(int offset, int limit, out int totalcount, string key = null)
-        {
-            var models = new List<BillDto>();
-            using (var DB = new SSMMEntities())
-            {
-                var list = DB.Bill.Where(x => true);
-                if (!string.IsNullOrEmpty(key))
-                    list = list.Where(x => x.TransferAccount.Contains(key));
-                totalcount = list.Count();
-                var result = list.OrderByDescending(x => x.CreateTime)
-                                  .Skip(offset)
-                                  .Take(limit)
-                                  .ToList();
-                result.ForEach(x =>
-                {
-                    models.Add(new BillDto()
-                    {
-                        Id = x.Id,
-                        Amount = x.Amount,
-                        CreateTime = x.CreateTime,
-                        Type = x.Type,
-                        UserId = x.UserId,
-                        Status = x.Status,
-                        TransferAccount = x.TransferAccount
-                    });
-                });
-            }
-            return models;
-        }
     }
 }

@@ -5,16 +5,16 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="66f4383a0b5f42dfbf228e0d312be772" Name="Diagram1">
-        <EntityTypeShape EntityType="SSMMModel.Bill" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SSMMModel.Notice" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SSMMModel.Order" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SSMMModel.Product" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SSMMModel.Recharge" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SSMMModel.ServerNode" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SSMMModel.Setting" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SSMMModel.SS" Width="1.5" PointX="0.625" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SSMMModel.User" Width="1.5" PointX="2.75" PointY="7.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SSMMModel.CouponCode" Width="1.5" PointX="5.375" PointY="7.75" />
+        <EntityTypeShape EntityType="SSMMModel.Log" Width="1.5" PointX="7.375" PointY="7.75" />
+        <EntityTypeShape EntityType="SSMMModel.Record" Width="1.5" PointX="9.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -12,14 +12,11 @@ namespace SSMM.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class Bill
+    public partial class Log
     {
         public int Id { get; set; }
-        public decimal Amount { get; set; }
         public System.DateTime CreateTime { get; set; }
         public string Type { get; set; }
-        public int UserId { get; set; }
-        public sbyte Status { get; set; }
-        public string TransferAccount { get; set; }
+        public string Message { get; set; }
     }
 }

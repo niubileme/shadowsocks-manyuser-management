@@ -35,8 +35,8 @@ namespace SSMM.Web.Areas.AdminCenter.Controllers
             var offset = RequestHelper.GetInt("offset");
             var limit = RequestHelper.GetInt("limit");
             var key = RequestHelper.GetValue("search");
-            int total;
-            var list = TradeService.GetBillList(offset, limit, out total, key);
+            int total=0;
+            var list = "";
             return Json(new { rows = list, total = total }, JsonRequestBehavior.AllowGet);
         }
     }
