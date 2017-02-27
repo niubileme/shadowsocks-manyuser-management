@@ -1,4 +1,5 @@
-﻿using SSMM.Services.Core;
+﻿using SSMM.Entity;
+using SSMM.Services.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace SSMM.Services
         /// <summary>
         /// 写入调试信息
         /// </summary>
-        public static void Debug(string msg, Exception ex=null)
+        public static void Debug(string msg, Exception ex = null)
         {
             if (Config.LOG_LEVENL >= 3)
             {
@@ -45,7 +46,18 @@ namespace SSMM.Services
 
         private static void WriteLog(string type, string msg, Exception ex = null)
         {
-           
+            using (var DB = new SSMMEntities())
+            {
+                var exception = ex == null ? "" : $"{ex.Message},{ex.StackTrace}";
+                var message = $"[Message]:{msg}  [Exception]:{exception}";
+                DB.Log.Add(new Log()
+                {
+                    CreateTime = DateTime.Now,
+                    Type = type,
+                    Message = message
+                });
+                DB.SaveChanges();
+            }
         }
     }
 }

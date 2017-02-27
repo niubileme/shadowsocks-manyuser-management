@@ -18,7 +18,7 @@ namespace SSMM.Services.Core
         /// 3.输出错误信息、正常信息和调试信息
         /// ===================================
         /// </summary>
-        public const int LOG_LEVENL = 1;
+        public const int LOG_LEVENL = 3;
 
 
         public static string GetAppSetting(string key)

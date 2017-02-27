@@ -156,6 +156,7 @@
     <Compile Include="Areas\UserCenter\Controllers\OtherController.cs" />
     <Compile Include="Areas\UserCenter\Controllers\ProductController.cs" />
     <Compile Include="Areas\UserCenter\UserCenterAreaRegistration.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Ext\LoginAuthorizeAttribute.cs" />
     <Compile Include="Ext\ManagerAuthorizeAttribute.cs" />
@@ -208,6 +209,7 @@
     <Content Include="Areas\AdminCenter\Views\CouponCode\Add.cshtml" />
     <Content Include="Areas\UserCenter\Views\Other\Aff.cshtml" />
     <None Include="Properties\PublishProfiles\SSMM.pubxml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

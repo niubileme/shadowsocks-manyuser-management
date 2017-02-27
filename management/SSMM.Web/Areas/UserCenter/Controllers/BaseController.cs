@@ -19,8 +19,12 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
             // 标记异常已处理
             filterContext.ExceptionHandled = true;
 
+            var url = HttpUtility.UrlEncode(System.Web.HttpContext.Current.Request.Url.ToString());
             //log
-            LogService.Error("UserCenter.BaseController", filterContext.Exception);
+            LogService.Error($"UserCenter.BaseController {url}", filterContext.Exception);
+
+            // 跳转到错误页
+            filterContext.Result = new RedirectResult("/Error/NotFound?returnurl=" + url);
         }
 
 
