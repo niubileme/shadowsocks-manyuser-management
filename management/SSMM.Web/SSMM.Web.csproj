@@ -194,7 +194,7 @@
     <Content Include="Areas\AdminCenter\Views\Product\List.cshtml" />
     <Content Include="Areas\AdminCenter\Views\Product\Add.cshtml" />
     <Content Include="Areas\AdminCenter\Views\Trade\OrderList.cshtml" />
-    <Content Include="Areas\AdminCenter\Views\Trade\BillList.cshtml" />
+    <Content Include="Areas\AdminCenter\Views\Trade\RecordList.cshtml" />
     <Content Include="Areas\AdminCenter\Views\Notice\List.cshtml" />
     <Content Include="Areas\AdminCenter\Views\Notice\Add.cshtml" />
     <Content Include="Areas\AdminCenter\Views\Setting\WebSite.cshtml" />

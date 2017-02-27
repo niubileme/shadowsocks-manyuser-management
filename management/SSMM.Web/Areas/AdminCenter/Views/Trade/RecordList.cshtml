@@ -15,7 +15,7 @@
     <script>
         $(function () {
             $('#billlist').bootstrapTable({
-                url: "/AdminCenter/Trade/GetBillList",
+                url: "/AdminCenter/Trade/GetRecordList",
                 toolbar: '.toolbar',
                 search: true,
                 searchOnEnterKey: true,
@@ -35,7 +35,7 @@
                           width: 100
                       },
                         {
-                            title: '提现金额',
+                            title: '金额',
                             field: 'Amount',
                             align: 'center',
                             width: 60,
@@ -44,7 +44,7 @@
                             }
                         },
                             {
-                                title: '提现时间',
+                                title: '时间',
                                 field: 'CreateTime',
                                 align: 'center',
                                 width: 150,
@@ -53,29 +53,28 @@
                                 }
                             },
                           {
-                              title: '提现类型',
+                              title: '类型',
                               field: 'Type',
                               align: 'center',
                               width: 60
                           },
-                           {
-                               title: '当前状态',
-                               field: 'Status',
-                               align: 'center',
-                               width: 50
-                           },
                             {
-                                title: '提现用户ID',
+                                title: '用户ID',
                                 field: 'UserId',
                                 align: 'center',
                                 width: 60
                             },
                             {
-                                title: '转账账户',
-                                field: 'TransferAccount',
+                                title: '备注',
+                                field: 'Remark',
                                 align: 'center',
                                 width: 80
-                            }
+                            },
+                           {
+                               title: '详情',
+                               field: 'Info',
+                               align: 'center'
+                           },
                 ]
             });
         });

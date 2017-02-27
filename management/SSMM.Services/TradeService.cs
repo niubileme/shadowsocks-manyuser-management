@@ -438,7 +438,35 @@ namespace SSMM.Services
         #endregion
 
 
-
+        public static List<RecordDto> GetRecordList(int offset, int limit, out int totalcount, string key = null)
+        {
+            var records = new List<RecordDto>();
+            using (var DB = new SSMMEntities())
+            {
+                var list = DB.Record.Where(x => true);
+                if (!string.IsNullOrEmpty(key))
+                    list = list.Where(x => x.Type.Contains(key) || x.Remark.Contains(key));
+                totalcount = list.Count();
+                var result = list.OrderByDescending(x => x.CreateTime)
+                                  .Skip(offset)
+                                  .Take(limit)
+                                  .ToList();
+                result.ForEach(x =>
+                {
+                    records.Add(new RecordDto()
+                    {
+                        Id = x.Id,
+                        Amount = x.Amount,
+                        CreateTime = x.CreateTime,
+                        Type = x.Type,
+                        Info = x.Info,
+                        UserId = x.UserId,
+                        Remark = x.Remark
+                    });
+                });
+            }
+            return records;
+        }
 
     }
 }

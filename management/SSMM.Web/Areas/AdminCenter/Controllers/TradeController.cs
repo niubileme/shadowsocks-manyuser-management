@@ -25,18 +25,18 @@ namespace SSMM.Web.Areas.AdminCenter.Controllers
             return Json(new { rows = list, total = total }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult BillList()
+        public ActionResult RecordList()
         {
             return View();
         }
 
-        public JsonResult GetBillList()
+        public JsonResult GetRecordList()
         {
             var offset = RequestHelper.GetInt("offset");
             var limit = RequestHelper.GetInt("limit");
             var key = RequestHelper.GetValue("search");
-            int total=0;
-            var list = "";
+            int total = 0;
+            var list = TradeService.GetRecordList(offset, limit, out total, key);
             return Json(new { rows = list, total = total }, JsonRequestBehavior.AllowGet);
         }
     }
