@@ -27,7 +27,7 @@ namespace SSMM.Services
             }
         }
 
-       
+
 
 
         /// <summary>
@@ -289,6 +289,15 @@ namespace SSMM.Services
                         var num = Convert.ToInt32(SettingCache.Cache.Get(SettingFlag.RebateNum)) * 0.01;
                         var agentamounts = amount * (decimal)num;//返佣金额为最终优惠后的实际交易价格的返佣百分比
                         parent.Balance += agentamounts;
+                        DB.Record.Add(new Record()
+                        {
+                            Amount = agentamounts,
+                            CreateTime = DateTime.Now,
+                            Type = RecordType.返佣.ToString(),
+                            Info = $"用户[{user.Id}]{user.Email}购买了{product.Name},产品价格{product.Price.ToString("0.00")}元,最终交易价格{amount.ToString("0.00")}元,返佣百分比{num * 100}%,返佣金额{agentamounts.ToString("0.00")}元",
+                            UserId = parent.Id,
+                            Remark = PaymentType.账户余额.ToString()
+                        });
                     }
                 }
                 if (DB.SaveChanges() > 0)
@@ -401,6 +410,15 @@ namespace SSMM.Services
                         var num = Convert.ToInt32(SettingCache.Cache.Get(SettingFlag.RebateNum)) * 0.01;
                         var agentamounts = amount * (decimal)num;//返佣金额为最终优惠后的实际交易价格的返佣百分比
                         parent.Balance += agentamounts;
+                        DB.Record.Add(new Record()
+                        {
+                            Amount = agentamounts,
+                            CreateTime = DateTime.Now,
+                            Type = RecordType.返佣.ToString(),
+                            Info = $"用户[{user.Id}]{user.Email}购买了{product.Name},产品价格{product.Price.ToString("0.00")}元,最终交易价格{amount.ToString("0.00")}元,返佣百分比{num * 100}%,返佣金额{agentamounts.ToString("0.00")}元",
+                            UserId = parent.Id,
+                            Remark = PaymentType.支付宝转账.ToString()
+                        });
                     }
                 }
                 if (DB.SaveChanges() > 0)

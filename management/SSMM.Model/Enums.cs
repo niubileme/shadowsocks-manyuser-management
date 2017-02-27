@@ -70,4 +70,10 @@ namespace SSMM.Model
     };
 
 
+    public enum RecordType
+    {
+        充值,
+        提现,
+        返佣,
+    };
 }
