@@ -1,4 +1,5 @@
-﻿using SSMM.Helper;
+﻿using SSMM.Cache;
+using SSMM.Helper;
 using SSMM.Model;
 using SSMM.Services;
 using SSMM.Web.Ext;
@@ -157,6 +158,23 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
             SessionHelper.SetValue("ValidateCode", code);
             byte[] bytes = ValidateCode.CreateValidateGraphic(code);
             return File(bytes, @"image/jpeg");
+        }
+
+
+        [LoginAuthorize]
+        public ActionResult Record()
+        {
+            return View();
+        }
+
+        public JsonResult GetRecordList()
+        {
+            var user = UserCache.Cache.GetValue(CookieHelper.Email);
+            var offset = RequestHelper.GetInt("offset");
+            var limit = RequestHelper.GetInt("limit");
+            int total = 0;
+            var list = OrderService.GetMyOrder(user.Id, offset, limit, out total);
+            return Json(new { rows = list, total = total }, JsonRequestBehavior.AllowGet);
         }
     }
 }

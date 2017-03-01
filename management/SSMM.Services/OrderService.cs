@@ -90,5 +90,40 @@ namespace SSMM.Services
                 return result;
             }
         }
+
+        /// <summary>
+        /// 我的账单
+        /// </summary>
+        public static List<OrderDto> GetMyOrder(int userid, int offset, int limit, out int totalcount)
+        {
+            var result = new List<OrderDto>();
+            using (var DB = new SSMMEntities())
+            {
+                totalcount = DB.Order.Count(x => x.UserId == userid);
+
+                var list = DB.Order.Where(x => x.UserId == userid)
+                                  .OrderByDescending(x => x.CreateTime)
+                                  .Skip(offset)
+                                  .Take(limit)
+                                  .ToList();
+                list.ForEach(x =>
+                {
+                    result.Add(new OrderDto()
+                    {
+                        Id = x.Id,
+                        TradeNumber = x.TradeNumber,
+                        ProductId = x.ProductId,
+                        ProductName = x.ProductName,
+                        Price = x.Price,
+                        Amount = x.Amount,
+                        CreateTime = x.CreateTime,
+                        Status = x.Status,
+                        Type = x.Type,
+                        UserId = x.UserId
+                    });
+                });
+                return result;
+            }
+        }
     }
 }

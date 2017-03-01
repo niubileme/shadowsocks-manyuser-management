@@ -8,6 +8,7 @@
     var SS = ViewData["SS"] as SSDto;
     var Notices = ViewData["Notices"] as List<NoticeDto>;
     var AffUrl = ViewData["AffUrl"];
+    var RebateNum = ViewData["RebateNum"];
 
     var t1 = FormatHelper.B2GB(SS.transfer_enable);
     var t2 = FormatHelper.B2GB(SS.d);
@@ -133,7 +134,7 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-                        <code>@(AffUrl)</code>               <br /><br />         邀请小伙伴使用，你将获得15%的佣金。
+                        <code>@(AffUrl)</code>               <br /><br />         邀请小伙伴使用，你将获得@(RebateNum)%的佣金。
                     </div>
                 </div>
             </div>

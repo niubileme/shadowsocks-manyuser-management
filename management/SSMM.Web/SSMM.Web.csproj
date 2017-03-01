@@ -155,6 +155,7 @@
     <Compile Include="Areas\UserCenter\Controllers\TradeController.cs" />
     <Compile Include="Areas\UserCenter\Controllers\OtherController.cs" />
     <Compile Include="Areas\UserCenter\Controllers\ProductController.cs" />
+    <Compile Include="Areas\UserCenter\Controllers\WikiController.cs" />
     <Compile Include="Areas\UserCenter\UserCenterAreaRegistration.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
@@ -208,6 +209,8 @@
     <Content Include="Areas\AdminCenter\Views\CouponCode\List.cshtml" />
     <Content Include="Areas\AdminCenter\Views\CouponCode\Add.cshtml" />
     <Content Include="Areas\UserCenter\Views\Other\Aff.cshtml" />
+    <Content Include="Areas\UserCenter\Views\Account\Record.cshtml" />
+    <Content Include="Areas\UserCenter\Views\Wiki\DownLoad.cshtml" />
     <None Include="Properties\PublishProfiles\SSMM.pubxml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <None Include="Web.Debug.config">

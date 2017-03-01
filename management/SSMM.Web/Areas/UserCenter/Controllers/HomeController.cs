@@ -21,6 +21,8 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
             var website = SettingCache.Cache.Get(SettingFlag.WebSiteUrl);
             var affurl= $"{website}?aff={user.AffCode}";
             ViewData["AffUrl"] = affurl;
+            var num = SettingCache.Cache.Get(SettingFlag.RebateNum);
+            ViewData["RebateNum"] = num;
             //SS
             var ss = SSService.Query(user.Id);
             if (ss == null||!ss.status)
