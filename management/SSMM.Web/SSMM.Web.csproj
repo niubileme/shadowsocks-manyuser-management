@@ -211,6 +211,10 @@
     <Content Include="Areas\UserCenter\Views\Other\Aff.cshtml" />
     <Content Include="Areas\UserCenter\Views\Account\Record.cshtml" />
     <Content Include="Areas\UserCenter\Views\Wiki\DownLoad.cshtml" />
+    <Content Include="Areas\UserCenter\Views\Wiki\Windows.cshtml" />
+    <Content Include="Areas\UserCenter\Views\Wiki\MacOS.cshtml" />
+    <Content Include="Areas\UserCenter\Views\Wiki\Android.cshtml" />
+    <Content Include="Areas\UserCenter\Views\Wiki\IOS.cshtml" />
     <None Include="Properties\PublishProfiles\SSMM.pubxml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <None Include="Web.Debug.config">

@@ -13,5 +13,22 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
         {
             return View();
         }
+
+        public ActionResult Windows()
+        {
+            return View();
+        }
+        public ActionResult MacOS()
+        {
+            return View();
+        }
+        public ActionResult Android()
+        {
+            return View();
+        }
+        public ActionResult IOS()
+        {
+            return View();
+        }
     }
 }
