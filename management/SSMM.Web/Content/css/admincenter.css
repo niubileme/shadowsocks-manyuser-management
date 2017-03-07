@@ -118,3 +118,111 @@
     background: white;
     border: 1px solid #e7eaec;
 }
+
+
+/** top tiles  */
+.tile_count {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+.tile_count .tile_stats_count {
+  border-bottom: 1px solid #D9DEE4;
+  padding: 0 10px 0 20px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+@media (min-width: 992px) {
+  .tile_count .tile_stats_count {
+    margin-bottom: 10px;
+    border-bottom: 0;
+    padding-bottom: 10px;
+  }
+}
+.tile_count .tile_stats_count:before {
+  content:""; 
+  position: absolute; 
+  left: 0; 
+  height: 65px;
+  border-left: 2px solid #ADB2B5;
+  margin-top: 10px;
+}
+@media (min-width:992px) {
+  .tile_count .tile_stats_count:first-child:before {
+    border-left: 0;
+  }
+}
+.tile_count .tile_stats_count .count {
+  font-size: 30px;
+  line-height: 47px;
+  font-weight: 600;
+}
+@media (min-width:768px) {
+  .tile_count .tile_stats_count .count {
+    font-size: 40px;
+  }
+}
+@media (min-width: 992px) and (max-width: 1100px) {
+  .tile_count .tile_stats_count .count {
+    font-size: 30px;
+  }
+}
+.tile_count .tile_stats_count span {
+  font-size: 12px;
+}
+@media (min-width:768px) {
+  .tile_count .tile_stats_count span {
+    font-size: 13px;
+  }
+}
+.tile_count .tile_stats_count .count_bottom i {
+  width: 12px;
+}
+
+.ibox-content {
+  clear: both;
+}
+.ibox-heading {
+  background-color: #f3f6fb;
+  border-bottom: none;
+}
+.ibox-heading h3 {
+  font-weight: 200;
+  font-size: 24px;
+}
+.ibox-title h5 {
+  display: inline-block;
+  font-size: 14px;
+  margin: 0 0 7px;
+  padding: 0;
+  text-overflow: ellipsis;
+  float: left;
+}
+.ibox-title .label {
+  float: left;
+  margin-left: 4px;
+}
+.ibox-tools {
+  display: inline-block;
+  float: right;
+  margin-top: 0;
+  position: relative;
+  padding: 0;
+}
+.ibox-tools a {
+  cursor: pointer;
+  margin-left: 5px;
+  color: #c4c4c4;
+}
+.ibox-tools a.btn-primary {
+  color: #fff;
+}
+.ibox-tools .dropdown-menu > li > a {
+  padding: 4px 10px;
+  font-size: 12px;
+}
+.ibox .open > .dropdown-menu {
+  left: auto;
+  right: 0;
+}

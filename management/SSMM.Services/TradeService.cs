@@ -26,10 +26,7 @@ namespace SSMM.Services
                 return trade != null;
             }
         }
-
-
-
-
+        
         /// <summary>
         /// 生成支付宝转账唯一code
         /// </summary>

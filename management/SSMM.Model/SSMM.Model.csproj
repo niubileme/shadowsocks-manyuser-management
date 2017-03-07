@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlipayTradeResult.cs" />
+    <Compile Include="Charts\AmountChartsModel.cs" />
+    <Compile Include="Charts\PaymentChartsModel.cs" />
     <Compile Include="CouponCodeDto.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="MyProductDto.cs" />

@@ -197,7 +197,7 @@ namespace SSMM.Services
         }
 
         /// <summary>
-        /// 充值密码
+        /// 重置密码
         /// </summary>
         public static bool RestPassword(string email, string oldpwd, string newpwd, out string info)
         {
@@ -228,6 +228,18 @@ namespace SSMM.Services
                     info = "修改密码失败！";
                     return false;
                 }
+            }
+        }
+
+        /// <summary>
+        /// 总用户数
+        /// </summary>
+        /// <returns></returns>
+        public static int TotalCount()
+        {
+            using (var DB = new SSMMEntities())
+            {
+                return DB.User.Count();
             }
         }
 

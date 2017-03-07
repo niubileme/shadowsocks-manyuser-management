@@ -3,9 +3,193 @@
     ViewBag.Title = "管理后台首页";
     Layout = "~/Areas/AdminCenter/Views/Shared/_AdminCenterLayout.cshtml";
 
-
+    var UserTotalCount = ViewData["UserTotalCount"];
+    var CurrentMonthAmounts = ViewData["CurrentMonthAmounts"];
+    var LastMonthAmounts = ViewData["LastMonthAmounts"];
+    //var TodayTaskCount = ViewData["TodayTaskCount"];
+    //var RunningTaskCount = ViewData["RunningTaskCount"];
+    //var TotalReadNum = ViewData["TotalReadNum"];
+    //var RunningReadNum = ViewData["RunningReadNum"];
 }
 
+<div class="row">
+    <div class="col-lg-3">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h3>注册用户</h3>
+            </div>
+            <div class="ibox-content">
+                <h1 class="no-margins">@UserTotalCount</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h3>上月充值</h3>
+            </div>
+            <div class="ibox-content">
+                <h1 class="no-margins">@LastMonthAmounts</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h3>当月充值</h3>
+            </div>
+            <div class="ibox-content">
+                <h1 class="no-margins">@CurrentMonthAmounts</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div id="amountcharts" style="width:750px;height:400px;">
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div id="typecharts" style="width:400px;height:400px;">
+        </div>
+    </div>
+</div>
 
 
+@section footscript{
+   <script src="//cdn.bootcss.com/echarts/3.4.0/echarts.min.js"></script>
+    <script>
+        $(function () {
+            getchartsdatas();
+        })
+      
+        function getchartsdatas() {
+            $.ajax({
+                url: "/AdminCenter/Home/GetCharts",
+                type: "post",
+                //data: { d1: start, d2: end },
+                dataType: "json",
+                beforeSend: function () {
+                },
+                success: function (data) {
+                    if (data.msg) {
+                        amountChart(data.amountCharts);
+                        typeChart(data.typeCharts);
+                    }
+                }
+            });
+
+        }
+        function amountChart(data) {
+            var myChart = echarts.init(document.getElementById('amountcharts'));
+            var option = {
+                color: ['#ff3d3d', '#00a0e9', '#f603ff', '#00b419', '#5f52a0'],
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    x: 'left',
+                    padding: [10, 20, 0, 20],
+                    data: ['支付宝订单数', '支付宝充值金额'],
+                    selected: {
+                        '支付宝订单数': true,
+                        '支付宝充值金额': true
+                    }
+                },
+                grid: {
+                    left: '0',
+                    right: '3%',
+                    bottom: '3%',
+                    top: '13%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    splitLine: { //网格线
+                        show: true,
+                        lineStyle: {
+                            color: ['#b1b1b1'],
+                            type: 'dashed'
+                        }
+                    },
+                    data: data.xAxis
+                },
+                yAxis: {
+                    splitLine: { //网格线
+                        show: true,
+                        lineStyle: {
+                            color: ['#b1b1b1'],
+                            type: 'dashed'
+                        }
+                    }
+                },
+                series: [{
+                    name: '支付宝订单数',
+                    type: 'line',
+                    data: data.numSeries,
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top' //值显示
+                        }
+                    }
+                }, {
+                    name: '支付宝充值金额',
+                    type: 'line',
+                    data: data.amountsSeries,
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top'
+                        }
+                    }
+                }]
+            };
+            myChart.setOption(option);
+        }
+        function typeChart(data) {
+            var myChart = echarts.init(document.getElementById('typecharts'));
+            var option = {
+                title: {
+                    text: '支付渠道',
+                    subtext: '所有订单的付款方式',
+                    x: 'center'
+                },
+                color: ['#8fc31f', '#f35833', '#00ccff', '#ffcc00'],
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'right',
+                    data: ['账户余额', '支付宝转账']
+                },
+                series: [
+                    {
+                        name: '支付渠道',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '60%'],
+                        data: [
+                            { value: data.AliPayNum, name: '支付宝转账' },
+                            { value: data.AccountBalanceNum, name: '账户余额' }
+                        ],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+
+            myChart.setOption(option);
+        }
+    </script>
+}
 

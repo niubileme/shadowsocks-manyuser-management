@@ -2,8 +2,10 @@
 using SSMM.Entity;
 using SSMM.Helper;
 using SSMM.Model;
+using SSMM.Model.Charts;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -26,7 +28,56 @@ namespace SSMM.Services
             }
         }
 
+        public static decimal GetAmount(DateTime starttime, DateTime endtime)
+        {
+            using (var DB = new SSMMEntities())
+            {
+                try
+                {
+                    return DB.Order.Where(x => x.CreateTime >= starttime && x.CreateTime < endtime && x.Type == PaymentType.支付宝转账.ToString()).Sum(x => x.Amount);
 
+                }
+                catch (Exception)
+                {
+                    return 0;
+                }
+            }
+        }
+
+
+        public static AmountChartsModel GetAmountCharts(DateTime starttime, DateTime endtime)
+        {
+            using (var DB = new SSMMEntities())
+            {
+                var list = DB.Order.Where(x => x.CreateTime >= starttime && x.CreateTime < endtime && x.Type == PaymentType.支付宝转账.ToString()).ToList();
+                var list2 = list.GroupBy(x => x.CreateTime.ToString("MM-dd")).OrderBy(x => x.Key).Select(x => new
+                {
+                    date = x.Key,
+                    num = x.Count(),
+                    amounts = x.Sum(g => g.Amount)
+                });
+                var result = new AmountChartsModel();
+                foreach (var item in list2)
+                {
+                    result.xAxis.Add(item.date);
+                    result.numSeries.Add(item.num.ToString());
+                    result.amountsSeries.Add(item.amounts.ToString());
+                }
+                return result;
+            }
+        }
+
+        public static PaymentChartsModel GetOrderPaymentTypeCharts(DateTime starttime, DateTime endtime)
+        {
+            using (var DB = new SSMMEntities())
+            {
+                var list = DB.Order.Where(x => x.CreateTime >= starttime && x.CreateTime < endtime);
+                var result = new PaymentChartsModel();
+                result.AliPayNum = list.Where(x => x.Type == PaymentType.支付宝转账.ToString()).Count();
+                result.AccountBalanceNum = list.Where(x => x.Type == PaymentType.账户余额.ToString()).Count();
+                return result;
+            }
+        }
 
         public static OrderDto Query(string tradeno)
         {
