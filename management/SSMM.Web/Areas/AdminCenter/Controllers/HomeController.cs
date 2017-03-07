@@ -41,9 +41,7 @@ namespace SSMM.Web.Areas.AdminCenter.Controllers
             DateTime now = DateTime.Now;
             DateTime d1 = new DateTime(now.Year, now.Month, 1);
             DateTime d2 = d1.AddMonths(1).AddDays(-1).AddHours(24);
-            //上上月
-            d1 = d1.AddMonths(-2);
-            d2 = d2.AddMonths(-2);
+
             var amountCharts = OrderService.GetAmountCharts(d1, d2);
             var typeCharts = OrderService.GetOrderPaymentTypeCharts(d1, d2);
             return Json(new { msg = true, amountCharts = amountCharts , typeCharts = typeCharts }, JsonRequestBehavior.DenyGet);

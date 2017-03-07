@@ -45,7 +45,7 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row" style="margin-top:30px;">
     <div class="col-lg-8">
         <div id="amountcharts" style="width:750px;height:400px;">
         </div>
@@ -84,6 +84,11 @@
         function amountChart(data) {
             var myChart = echarts.init(document.getElementById('amountcharts'));
             var option = {
+                title: {
+                    text: '订单详情',
+                    subtext: '当月订单的下单数量和充值金额',
+                    x: 'center'
+                },
                 color: ['#ff3d3d', '#00a0e9', '#f603ff', '#00b419', '#5f52a0'],
                 tooltip: {
                     trigger: 'axis'
@@ -154,7 +159,7 @@
             var option = {
                 title: {
                     text: '支付渠道',
-                    subtext: '所有订单的付款方式',
+                    subtext: '当月订单的付款方式',
                     x: 'center'
                 },
                 color: ['#8fc31f', '#f35833', '#00ccff', '#ffcc00'],

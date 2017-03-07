@@ -2,12 +2,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>@ViewBag.Title</title>
-
     <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- Morris -->
@@ -16,17 +13,14 @@
     <link href="~/Content/plugins/gritter/jquery.gritter.css" rel="stylesheet" />
     <link href="//cdn.bootcss.com/toastr.js/2.1.3/toastr.min.css" rel="stylesheet">
     <link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
-
     <link href="~/Content/css/usercenter.css" rel="stylesheet" />
     @RenderSection("headscript", false)
 </head>
-
 <body>
     <div id="wrapper">
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav metismenu" id="side-menu">
-
                     <li class="landing_link">
                         <a href="/UserCenter/Home/Index"><i class="fa fa-th-large"></i> <span class="nav-label">用户中心</span></a>
                     </li>
@@ -38,46 +32,37 @@
                             <li><a href="/UserCenter/Account/Record">我的账单</a></li>
                         </ul>
                     </li>
-
                     <li>
                         <a href="/UserCenter/Product/My"><i class="fa fa-server"></i> <span class="nav-label">我的服务</span></a>
                     </li>
-
                     <li>
                         <a href="/UserCenter/Product/List"><i class="fa fa-shopping-cart"></i> <span class="nav-label">购买服务</span></a>
                     </li>
-
 
                     <li>
                         <a href="#"><i class="fa fa-book"></i> <span class="nav-label">使用教程</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
                             <li><a href="/UserCenter/Wiki/DownLoad">客户端下载</a></li>
-                            <li><a href="/UserCenter/Wiki/Windows">Windows教程</a></li>
-                            <li><a href="/UserCenter/Wiki/MacOS">Mac教程</a></li>
-                            <li><a href="/UserCenter/Wiki/Android">Android教程</a></li>
-                            <li><a href="/UserCenter/Wiki/IOS">IOS教程</a></li>
+                            <li><a href="/UserCenter/Wiki/Windows" target="_blank">Windows教程</a></li>
+                            <li><a href="/UserCenter/Wiki/MacOS" target="_blank">Mac教程</a></li>
+                            <li><a href="/UserCenter/Wiki/Android" target="_blank">Android教程</a></li>
+                            <li><a href="/UserCenter/Wiki/IOS" target="_blank">IOS教程</a></li>
                         </ul>
                     </li>
-
                     <li>
                         <a href="/UserCenter/Other/Notice"><i class="fa fa-bell"></i> <span class="nav-label">公告信息</span></a>
                     </li>
-
                     <li>
                         <a href="/UserCenter/Other/Aff"><i class="fa fa-universal-access"></i> <span class="nav-label">推广计划</span></a>
                     </li>
-
                     @*<li>
-        <a href="/UserCenter/Other/FAQ"><i class="fa fa-question-circle"></i> <span class="nav-label">常见问题</span></a>
-    </li>*@
+                            <a href="/UserCenter/Other/FAQ"><i class="fa fa-question-circle"></i> <span class="nav-label">常见问题</span></a>
+                        </li>*@
                 </ul>
-
             </div>
         </nav>
-
         <div id="page-wrapper" class="gray-bg">
             <div class="row border-bottom">
-
                 <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
                     <div class="navbar-header">
                         <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
@@ -98,23 +83,18 @@
                             }
                         </li>
 
-
                         <!-- 退出登录 -->
                         <li>
                             <a href="/UserCenter/Account/LoginOut">
                                 <i class="fa fa-sign-out"></i> 退出
                             </a>
                         </li>
-
                     </ul>
-
                 </nav>
             </div>
-
             <div class="wrapper wrapper-content">
                 @RenderBody()
             </div>
-
 
             <div class="footer">
                 <div>
@@ -123,9 +103,7 @@
             </div>
         </div>
 
-
     </div>
-
     <!-- Mainly scripts -->
     <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
     <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

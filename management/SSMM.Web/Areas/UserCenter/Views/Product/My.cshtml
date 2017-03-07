@@ -8,8 +8,11 @@
     var Nodes = ViewData["Nodes"] as List<ServerNodeDto>;
 
     var day = My.status ? decimal.Round((decimal)(DateTime.Now - FormatHelper.GetTime(My.create_time)).TotalDays, 0) : 0;
-    var p1 = My.status ? (Convert.ToDouble(day) / Convert.ToDouble(My.ProductExpirationDay) * 100).ToString() : "0";
+    //通过小时计算，精确百分比
+    var hour = My.status ? decimal.Round((decimal)(DateTime.Now - FormatHelper.GetTime(My.create_time)).TotalHours, 0) : 0;
+    var p1 = My.status ? (Convert.ToDouble(hour) / (Convert.ToDouble(My.ProductExpirationDay) * 24) * 100).ToString() : "0";
     var p1style = Convert.ToDouble(p1) > 80 ? "progress-bar-danger" : "";
+    var showp1 = Convert.ToDouble(p1) > 4 ? p1 + "%" : "";
     var t = My.status ? FormatHelper.B2GB(My.d) : 0;
     var p2 = My.status ? (Convert.ToDouble(t) / Convert.ToDouble(My.ProductTraffic) * 100).ToString() : "0";
     var p2style = Convert.ToDouble(p2) > 80 ? "progress-bar-danger" : "";
@@ -61,7 +64,7 @@
                     <span class="pull-right font-bold">@(day)天 / @(My.ProductExpirationDay)天</span>
                 </div>
                 <div class="progress m-t">
-                    <div style="width: @(p1)%;" class="progress-bar @p1style"></div>
+                    <div style="width: @(p1)%;" class="progress-bar @p1style">@(showp1)</div>
                 </div>
                 <div class="m-t-lg">
                     <span class="font-bold">已用流量</span>
@@ -134,8 +137,7 @@
         </div>
     </div>
 </div>
-
-<div id="showQRCode" class="modal fade" tabindex="-1" role="dialog" >
+<div id="showQRCode" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -148,7 +150,6 @@
         </div>
     </div>
 </div>
-
 
 @section footscript{
     <script src="~/Content/js/qrcode.min.js"></script>
