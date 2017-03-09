@@ -112,7 +112,7 @@
                                             {
                                                 <tr>
                                                     <td class="">@node.Name</td>
-                                                    <td>@node.IP</td>
+                                                    <td>@(string.IsNullOrEmpty(node.CNAME) ? node.IP : node.CNAME)</td>
                                                     <td>@My.port</td>
                                                     <td>@My.password</td>
                                                     <td class="">rc4-md5</td>
