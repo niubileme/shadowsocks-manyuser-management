@@ -278,7 +278,7 @@ namespace SSMM.Services
                     ss.create_time = FormatHelper.ConvertDateTimeInt(DateTime.Now);
                 }
                 //返佣
-                if (user.ParentId.Value != 0)
+                if (user.ParentId.HasValue)
                 {
                     var parent = DB.User.Find(user.ParentId.Value);
                     if (parent != null)
@@ -399,7 +399,7 @@ namespace SSMM.Services
                     ss.create_time = FormatHelper.ConvertDateTimeInt(DateTime.Now);
                 }
                 //返佣
-                if (user.ParentId.Value != 0)
+                if (user.ParentId.HasValue)
                 {
                     var parent = DB.User.Find(user.ParentId.Value);
                     if (parent != null)

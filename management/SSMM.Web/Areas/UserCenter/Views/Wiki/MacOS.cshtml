@@ -3,15 +3,98 @@
     Layout = null;
 }
 
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>MacOS</title>
+    <meta charset="utf-8">
+    <title>Mac使用教程</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            padding-top: 20px;
+            padding-bottom: 40px;
+        }
+
+        .container-narrow {
+            margin: 0 auto;
+            max-width: 700px;
+        }
+
+            .container-narrow > hr {
+                margin: 30px 0;
+            }
+
+        .jumbotron {
+            margin: 60px 0;
+            text-align: center;
+        }
+
+            .jumbotron h1 {
+                font-size: 72px;
+                line-height: 1;
+            }
+
+            .jumbotron .btn {
+                font-size: 21px;
+                padding: 14px 24px;
+            }
+
+        .marketing {
+            margin: 60px 0;
+        }
+
+            .marketing p + h4 {
+                margin-top: 28px;
+            }
+    </style>
+    <link rel="shortcut icon" href="favicon.png">
 </head>
 <body>
-    <div> 
+    <div class="container">
+        <div class="header">
+            <ul class="nav nav-pills pull-right">
+                <li><a href="/" title="首页">首页</a></li>
+                <li><a href="/UserCenter/Home/Index" title="用户中心">用户中心</a></li>
+                <li><a href="/UserCenter/Wiki/DownLoad" title="客户端下载">客户端下载</a></li>
+            </ul>
+            <h3 class="text-muted">秋名山SS AutumnSS.com</h3>
+        </div>
+
+
+        <div class="container">
+            <div class="row white">
+                <h2 class="centered">MacOS使用教程</h2>
+                <hr>
+                <div class="col-lg-8 col-lg-offset-2 centered">
+                    <img src="~/Content/img/doc/mac1.jpg" /> <h2><strong>MacOS</strong></h2><br>
+                    <h3><strong>一、下载客户端</strong></h3><br>
+                    <a href="/UserCenter/Wiki/DownLoad" target="_blank">DownLoad</a><br><br>
+                    <h3><strong>二、.打开下载的dmg文件，将程序图标拖到右边的Applications，安装完成</strong></h3><br>
+                    <img src="~/Content/img/doc/mac2.png" /><br><br>
+                    <h3><strong>三、进入Launchpad，打开ShadowsocksX程序，程序图标出现在右上方，点击图标-“服务器”-“服务器设定”。</strong></h3><br>
+                    <img src="~/Content/img/doc/mac3.png" /><br /><br />
+                    <h3><strong>四、填写服务器信息</strong></h3><br>
+                    通过<a href="/UserCenter/Product/My" target="_blank">我的服务</a>获取服务器信息，正确填写服务器地址、端口、密码和加密方式，填写完成后，右上角拖动开始连接<br><br>
+                    <img src="~/Content/img/doc/mac4.png" /><br><br>
+                    <h3><strong>五、选择刚刚配置好的服务器，点“打开Shadowsocks”，完成设置</strong></h3><br>
+                    <img src="~/Content/img/doc/mac5.png" /> <br><br>
+                    <h3><strong>六、Safari或Chrome无需设置，开始科学上网</strong></h3><br>
+                    <img src="~/Content/img/doc/mac6.png" /> <br><br>
+                    <h3><strong><a href="/UserCenter/Home/Index">返回用户中心</a><br><br><a href="/">回主页</a></p></strong></h3><br>
+                </div>
+                <!-- row -->
+            </div>
+        </div>
+        <!-- container -->
+
+
+        <div class="footer">
+            <div>
+                @Html.Partial("Footer_Partial")
+            </div>
+        </div>
     </div>
 </body>
 </html>

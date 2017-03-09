@@ -3,15 +3,101 @@
     Layout = null;
 }
 
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>IOS</title>
+    <meta charset="utf-8">
+    <title>iOS使用教程</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            padding-top: 20px;
+            padding-bottom: 40px;
+        }
+
+        .container-narrow {
+            margin: 0 auto;
+            max-width: 700px;
+        }
+
+            .container-narrow > hr {
+                margin: 30px 0;
+            }
+
+        .jumbotron {
+            margin: 60px 0;
+            text-align: center;
+        }
+
+            .jumbotron h1 {
+                font-size: 72px;
+                line-height: 1;
+            }
+
+            .jumbotron .btn {
+                font-size: 21px;
+                padding: 14px 24px;
+            }
+
+        .marketing {
+            margin: 60px 0;
+        }
+
+            .marketing p + h4 {
+                margin-top: 28px;
+            }
+    </style>
+    <link rel="shortcut icon" href="favicon.png">
 </head>
 <body>
-    <div> 
+    <div class="container">
+        <div class="header">
+            <ul class="nav nav-pills pull-right">
+                <li><a href="/" title="首页">首页</a></li>
+                <li><a href="/UserCenter/Home/Index" title="用户中心">用户中心</a></li>
+                <li><a href="/UserCenter/Wiki/DownLoad" title="客户端下载">客户端下载</a></li>
+            </ul>
+            <h3 class="text-muted">秋名山SS AutumnSS.com</h3>
+        </div>
+
+
+        <div class="container">
+            <div class="row white">
+                <h2 class="centered">iOS使用教程</h2>
+                <hr>
+                <div class="col-lg-8 col-lg-offset-2 centered">
+                    <img src="~/Content/img/doc/ios1.jpg" /> <h2><strong>未越狱iOS</strong></h2><br>
+                    <h3><strong>一、下载客户端</strong></h3><br>
+                    <a href="/UserCenter/Wiki/DownLoad" target="_blank">DownLoad</a><br><br>
+                     通过在 Apple Store 中购买 shadowrocket <br><br>
+                    <h3><strong>二、下载后打开app</strong></h3><br>
+                    <img src="~/Content/img/doc/ios2.jpg" /><br><br>
+                    <h3><strong>三、设置服务器信息</strong></h3><br>
+                    通过<a href="/UserCenter/Product/My" target="_blank">我的服务</a> — 服务节点 — 显示二维码<br><br>
+                    开启程序界面，点击图中的扫描二维码按钮。<br><br>
+                    <img src="~/Content/img/doc/ios3.jpg" /><br><br>
+                    <h3><strong>四、启动代理前会提示您同意添加一个 VPN 连接，选择 Allow，还会需要验证指纹或者锁屏密码；</strong></h3><br>
+                    <img src="~/Content/img/doc/ios4.jpg" /><br><br>
+                    <h3><strong>五、最后点击［Not Connected］后面的开关，看到信息变为 [Connected]，左上角出现VPN就可以使用啦</strong></h3><br>
+                    <img src="~/Content/img/doc/ios5.jpg" /> <br><br>
+                    <br><br>
+                    <img src="~/Content/img/doc/ios1.jpg" /> <h2><strong>已越狱iOS</strong></h2><br>
+                    <h3><strong> 直接在 Cydia 里搜索 Shadowsocks安装</strong></h3><br>
+                    <h3><strong><a href="/UserCenter/Home/Index">返回用户中心</a><br><br><a href="/">回主页</a></p></strong></h3><br>
+                </div>
+                <!-- row -->
+            </div>
+        </div>
+        <!-- container -->
+
+
+        <div class="footer">
+            <div>
+                @Html.Partial("Footer_Partial")
+            </div>
+        </div>
     </div>
 </body>
 </html>
