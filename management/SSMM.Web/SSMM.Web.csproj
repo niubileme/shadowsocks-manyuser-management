@@ -119,7 +119,6 @@
     <Content Include="Content\css\usercenter.css" />
     <Content Include="Content\img\a1.jpg" />
     <Content Include="Content\img\alipay_qr.png" />
-    <Content Include="Content\img\alipay_qr2.png" />
     <Content Include="Content\img\bg_4.jpg" />
     <Content Include="Content\img\doc\android1.jpg" />
     <Content Include="Content\img\doc\android2.jpg" />
@@ -231,6 +230,7 @@
     <Content Include="Areas\UserCenter\Views\Wiki\MacOS.cshtml" />
     <Content Include="Areas\UserCenter\Views\Wiki\Android.cshtml" />
     <Content Include="Areas\UserCenter\Views\Wiki\IOS.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\SSMM.pubxml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <None Include="Web.Debug.config">
