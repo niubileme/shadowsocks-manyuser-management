@@ -50,6 +50,7 @@ namespace SSMM.Web.Areas.AdminCenter.Controllers
             var portrange = SettingCache.Cache.Get(SettingFlag.SSPortRange).Split('&');
             ViewBag.SSPortMin = portrange[0];
             ViewBag.SSPortMax = portrange[1];
+            ViewBag.WebSiteInfo = FormatHelper.HtmlDecode(SettingCache.Cache.Get(SettingFlag.WebSiteInfo));
             return View();
         }
 
@@ -61,12 +62,13 @@ namespace SSMM.Web.Areas.AdminCenter.Controllers
             var portmin = RequestHelper.GetInt("portmin");
             var portmax = RequestHelper.GetInt("portmax");
             var rebatenum = RequestHelper.GetInt("rebatenum");
+            var websiteinfo = RequestHelper.GetValue("websiteinfo");
             if (string.IsNullOrEmpty(alipayaccount) || string.IsNullOrEmpty(alipayremarksearchapi) || portmin <= 0 || portmax <= 0 || portmax > 65535)
             {
                 return Json(new { result = false, info = "该参数不能为空！" }, JsonRequestBehavior.DenyGet);
             }
             var range = $"{portmin}&{portmax}";
-            var result = SettingService.Basic(alipayaccount, alipayremarksearchapi, range, rebatenum);
+            var result = SettingService.Basic(alipayaccount, alipayremarksearchapi, range, rebatenum, websiteinfo);
             LogService.Info($"修改Basic >>> {result} --- {alipayaccount}:{alipayremarksearchapi}");
             return Json(new { result = result }, JsonRequestBehavior.DenyGet);
         }

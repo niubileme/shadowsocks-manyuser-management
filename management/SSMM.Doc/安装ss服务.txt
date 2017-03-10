@@ -1,0 +1,46 @@
+﻿先安装git、m2crypto
+yum -y install git m2crypto
+
+clone到本地root下
+cd
+git clone  https://github.com/niubileme/shadowsocks-manyuser.git
+
+
+
+创建数据库
+create database SSMM;
+use SSMM;
+source /root/shadowsocks-manyuser/shadowsocks/ssmm.sql;
+
+
+修改配置
+/root/shadowsocks-manyuser/shadowsocks/config.py
+PS：PANEL_VERSION选择V2
+
+
+查看所有端口
+netstat -ntlp
+
+
+开放端口
+iptables -I INPUT -p tcp -m tcp --dport 端口 -j ACCEPT
+PS：    12450: 表示允许 12450 及以上的端口 ，也可以指定 12450:15550 这样的范围
+
+
+保存设置
+iptables-save
+
+重启防火墙
+service iptables restart
+
+
+
+常规启动
+python servers.py 
+PS：是 servers.py 不是 server.py
+
+后台运行
+python servers.py &
+
+查看是否运行
+ps -ef | grep servers.py

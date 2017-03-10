@@ -1,1 +1,8 @@
-﻿<strong>&copy; 2016 </strong>&nbsp;&nbsp;秋名山SS&nbsp;&nbsp;<a href="http://autumnss.com">AutumnSS.com</a> 
+﻿@using SSMM.Helper
+@using SSMM.Cache
+@using SSMM.Model
+@{
+    var code = FormatHelper.HtmlDecode(SettingCache.Cache.Get(SettingFlag.StatisticalCode));
+}
+<strong>&copy; 2016 </strong>&nbsp;&nbsp;秋名山SS&nbsp;&nbsp;<a href="http://autumnss.com">AutumnSS.com</a>
+<div style="display:none">@Html.Raw(code)</div>

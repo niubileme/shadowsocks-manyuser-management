@@ -3541,7 +3541,7 @@ code {
   color: #ca4440;
   font-size: 90%;
   padding: 2px 4px;
-  white-space: nowrap;
+  white-space: normal;
 }
 .ibox {
   clear: both;

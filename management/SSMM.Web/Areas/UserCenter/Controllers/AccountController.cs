@@ -21,6 +21,8 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
         [LoginAuthorize]
         public ActionResult Index()
         {
+            var user = UserCache.Cache.GetOriginalValue(CookieHelper.Email);
+            ViewData["User"] = user;
             return View();
         }
 

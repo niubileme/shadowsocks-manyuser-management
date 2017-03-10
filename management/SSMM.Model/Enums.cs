@@ -34,6 +34,10 @@ namespace SSMM.Model
         /// </summary>
         RebateNum,
 
+        /// <summary>
+        /// 站点公告
+        /// </summary>
+        WebSiteInfo,
 
         /// <summary>
         /// 支付宝账号

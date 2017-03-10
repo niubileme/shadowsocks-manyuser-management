@@ -17,6 +17,9 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
             var email = CookieHelper.Email;
             var user = UserService.Query(email);
             ViewData["User"] = user;
+            //站点信息
+            var info = SettingCache.Cache.Get(SettingFlag.WebSiteInfo);
+            ViewData["WebSiteInfo"] = FormatHelper.HtmlDecode(info);
             //推广链接
             var website = SettingCache.Cache.Get(SettingFlag.WebSiteUrl);
             var affurl= $"{website}?aff={user.AffCode}";

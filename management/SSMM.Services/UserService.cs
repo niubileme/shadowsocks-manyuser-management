@@ -77,7 +77,9 @@ namespace SSMM.Services
             msg = "";
             currentuser = null;
             //通过缓存判断
-            var user = UserCache.Cache.GetValue(email);
+            //var user = UserCache.Cache.GetValue(email);
+            //不使用缓存，防止数据库修改后，cache更新不及时
+            var user = UserCache.Cache.GetOriginalValue(email);
             if (user == null)
             {
                 msg = "该用户不存在！";

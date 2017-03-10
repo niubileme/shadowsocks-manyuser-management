@@ -47,9 +47,9 @@ namespace SSMM.Services
 
         }
 
-        public static bool Basic(string alipayaccount, string alipayremarksearchapi, string portrange, int rebatenum)
+        public static bool Basic(string alipayaccount, string alipayremarksearchapi, string portrange, int rebatenum, string websiteinfo)
         {
-            return Set(SettingFlag.AlipayAccount, alipayaccount) && Set(SettingFlag.AlipayRemarkSearchApi, alipayremarksearchapi) && Set(SettingFlag.SSPortRange, portrange) && Set(SettingFlag.RebateNum, rebatenum.ToString());
+            return Set(SettingFlag.AlipayAccount, alipayaccount) && Set(SettingFlag.AlipayRemarkSearchApi, alipayremarksearchapi) && Set(SettingFlag.SSPortRange, portrange) && Set(SettingFlag.RebateNum, rebatenum.ToString()) && Set(SettingFlag.WebSiteInfo, websiteinfo);
 
         }
 

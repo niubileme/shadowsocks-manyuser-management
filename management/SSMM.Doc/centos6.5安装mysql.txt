@@ -1,0 +1,54 @@
+﻿centos 6.5 安装 mysql
+
+
+1.先安装mysql
+
+查看是否已安装mysql
+rpm -qa | grep mysql
+
+有的话 就卸载
+rpm -e mysql　　// 普通删除模式
+rpm -e --nodeps mysql　　// 强力删除模式，如果使用上面命令删除时，提示有依赖的其它文件，则用该命令可以对其进行强力删除
+
+通过yum来进行mysql的安装
+yum install -y mysql-server mysql mysql-devel 
+ps：并不是只安装客户端mysql就行，需要安装服务端mysql-server
+
+查看mysql版本
+rpm -qi mysql-server
+
+启动mysql
+service mysqld start
+停止mysql
+service mysqld stop
+重启mysql
+service mysqld restart
+
+查看是否开机自启动
+chkconfig --list | grep mysqld
+
+设置开机自启动
+chkconfig mysqld on
+
+设置mysql初始密码
+mysqladmin -u root password '密码'
+
+登录命令 
+mysql -u root -p
+
+
+mysql在windows平台大小写敏感
+根据网上的信息在my.ini下面的mysqld的配置下面添加lower_case_table_names= 1就可以了。
+但是实际在MySQL 5.7下面设置之后死活重启不了。实际测试之后发现需要设置lower_case_table_names=2。
+
+
+开启mysql远程连接权限
+grant all privileges on *.* to root@"%" identified by "密码" with grant option;
+flush privileges;
+
+PS：
+*.*：第一个*代表数据库名；第二个*代表表名。这里的意思是所有数据库里的所有表都授权给用户
+root：授予root账号
+%：表示授权的用户IP可以指定，这里代表任意的IP地址都能访问
+密码：root的密码
+第二句：刷新权限信息，让设置立即生效
