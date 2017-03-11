@@ -1,13 +1,16 @@
 ﻿先安装git、m2crypto
 yum -y install git m2crypto
 
+使用pip 安装 cymysql
+pip install cymysql
+
 clone到本地root下
 cd
 git clone  https://github.com/niubileme/shadowsocks-manyuser.git
 
 
 
-创建数据库
+创建数据库 (已安装 可以不用管)
 create database SSMM;
 use SSMM;
 source /root/shadowsocks-manyuser/shadowsocks/ssmm.sql;
@@ -15,7 +18,7 @@ source /root/shadowsocks-manyuser/shadowsocks/ssmm.sql;
 
 修改配置
 /root/shadowsocks-manyuser/shadowsocks/config.py
-PS：PANEL_VERSION选择V2
+PS：修改mysql地址 ，root 密码 
 
 
 查看所有端口
