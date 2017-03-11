@@ -11,12 +11,14 @@
     //通过小时计算，精确百分比
     var hour = My.status ? decimal.Round((decimal)(DateTime.Now - FormatHelper.GetTime(My.create_time)).TotalHours, 0) : 0;
     var p1 = My.status ? decimal.Round(hour / (My.ProductExpirationDay * 24) * 100, 2) : 0;
+    p1 = p1 > 100 ? 100 : p1;
     var p1style = p1 > 80 ? "progress-bar-danger" : "";
-    var showp1 = p1 > 4 ? p1 + "%" : "";
+    var showp1 = p1 > 5 ? p1 + "%" : "";
     var t = My.status ? FormatHelper.B2GB(My.d) : 0;
     var p2 = My.status ? decimal.Round(t / My.ProductTraffic * 100, 2) : 0;
+    p2 = p2 > 100 ? 100 : p2;
     var p2style = p2 > 80 ? "progress-bar-danger" : "";
-    var showp2 = p2 > 4 ? p2 + "%" : "";
+    var showp2 = p2 > 5 ? p2 + "%" : "";
 }
 <div class="row">
     <div class="col-lg-12">
