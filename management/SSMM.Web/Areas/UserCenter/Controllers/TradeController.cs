@@ -48,7 +48,7 @@ namespace SSMM.Web.Areas.UserCenter.Controllers
             if (product == null)
                 return RedirectToAction("List", "Product");
             //判断是否为新用户，体验套餐只能购买一次
-            if (product.Price <= 5)
+            if (product.Price <= 3)
             {
                 var user = UserCache.Cache.GetValue(CookieHelper.Email);
                 if (!OrderService.IsNew(user.Id))
