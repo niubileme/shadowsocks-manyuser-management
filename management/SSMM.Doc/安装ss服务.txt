@@ -18,7 +18,8 @@ source /root/shadowsocks-manyuser/shadowsocks/ssmm.sql;
 
 修改配置
 /root/shadowsocks-manyuser/shadowsocks/config.py
-PS：修改mysql地址 ，root 密码 
+PS：只需要修改mysql地址 ，用户名， 密码 ，数据库使用SSMM
+其他设置保持默认
 
 
 查看所有端口
