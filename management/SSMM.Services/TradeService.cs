@@ -333,6 +333,7 @@ namespace SSMM.Services
                     info = "该产品不存在！请重新支付！";
                     return false;
                 }
+                amount = product.Price;
                 //优惠码
                 var couponcode = new CouponCodeDto();
                 if (CouponCodeService.Query(pcode, out couponcode))
